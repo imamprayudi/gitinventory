@@ -19,21 +19,21 @@ class IncomingController extends Controller
         { 
             //  mengambil data dari json
             //  **
-            $invesawebversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
+            $gitversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
         }
         else
         {
             //  mengambil data dari json
             //  **
-            $invesawebversions = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
+            $gitversions = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
         }
         
         
-        // $invesawebversions = DB::table('tbl_sync_version')->get();
+        // $gitversions = DB::table('tbl_sync_version')->get();
 
         //  **
         //  return view
-        return view('admins.input', compact('invesawebversions'));
+        return view('admins.input', compact('gitversions'));
     }
 
     //  ***

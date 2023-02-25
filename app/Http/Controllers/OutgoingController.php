@@ -13,11 +13,11 @@ class OutgoingController extends Controller
     {
         //  **
         //  mengambil data version
-        $invesawebversions = DB::table('tbl_sync_version')->get();
+        $gitversions = DB::table('tbl_sync_version')->get();
 
         //  **
         //  return view
-        return view('admins.output', compact('invesawebversions'));
+        return view('admins.output', compact('gitversions'));
     }
 
     //  ***
