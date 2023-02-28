@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Http;
 
 class OutgoingController extends Controller
 {
@@ -13,7 +15,22 @@ class OutgoingController extends Controller
     {
         //  **
         //  mengambil data version
-        $gitversions = DB::table('tbl_sync_version')->get();
+        //  **
+        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
+        { 
+            //  mengambil data dari json
+            //  **
+            $gitversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
+        }
+        else
+        {
+            //  mengambil data dari json
+            //  **
+            $gitversions = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
+        }
+        
+        
+        // $gitversions = DB::table('tbl_sync_version')->get();
 
         //  **
         //  return view
