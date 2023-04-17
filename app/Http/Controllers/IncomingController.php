@@ -40,6 +40,7 @@ class IncomingController extends Controller
     //  loaddata
     public function loaddata(Request $request)
     {
+        return $request;
         //  action ajax
         if($request->ajax())
         {
@@ -53,21 +54,21 @@ class IncomingController extends Controller
             $partno     = $request->get('partno');
 
             //  konfigurasi pagination
-            // $counts = DB::select("call sync_disp_input(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
+            // $totalcount = DB::select("call sync_disp_input(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
             if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
             { 
                 //  mengambil data dari json
                 //  **
-                $counts = Http::get('http://136.198.117.118/api_invesa_test/json_input_sync.php');
+                $totalcount = Http::get('http://136.198.117.118/api_invesa_test/json_input_sync.php');
             }
             else
             {
                 //  mengambil data dari json
                 //  **
-                $counts = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_input_sync.php');
+                $totalcount = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_input_sync.php');
             }
-            return $counts;
-            // if(empty($counts))
+            return $request;
+            // if(empty($totalcount))
             // {
             //     $totalcount = 0;
             // }

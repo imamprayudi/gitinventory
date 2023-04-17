@@ -557,8 +557,7 @@ function download(){
 
 //  ***
 //  start ajax
-$(document).ready(function()
-{
+$(document).ready(function(){
     //  buat tanggal
     var d       = new Date();
     var stmonth   = d.getMonth();
