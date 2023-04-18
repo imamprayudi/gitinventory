@@ -16,7 +16,7 @@ class SessionAuthInvesaWeb
      */
     public function handle($request, Closure $next)
     {
-        if(!$request->session()->has('session_invesaweb_id'))
+        if(!$request->session()->has('session_gitinventory_id'))
         {
 			return redirect('/login');
         }
