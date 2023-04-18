@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('activeinput', 'active')
+@section('activematerial', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -69,7 +69,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Data Pemasukkan <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Data Material <p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -115,11 +115,12 @@
 @endsection
 
 @section('stylejavascript')
+
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script>
 //  ***
 //  load data
-var url = "{{ route('input.loaddata') }}";
+var url = "{{ route('material.loaddata') }}";
 function loaddata()
 {
     //  variable
@@ -301,7 +302,7 @@ function search()
 
 //  ***
 //  function pagination
-var urlpaging = "{{ route('input.pagination') }}";
+var urlpaging = "{{ route('material.pagination') }}";
 function first(jumlahHalaman)
 {
     //  variable
@@ -553,7 +554,7 @@ function download(){
     var jnsdokbc    = $("#jnsdokbc").val();
     var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
-    window.open("input/download?stdate="+stdate+"&endate="+endate+"&jnsdokbc="+jnsdokbc+"&nodokbc="+nodokbc+"&partno="+partno+"");
+    window.open("material/download?stdate="+stdate+"&endate="+endate+"&jnsdokbc="+jnsdokbc+"&nodokbc="+nodokbc+"&partno="+partno+"");
 }
 
 //  ***

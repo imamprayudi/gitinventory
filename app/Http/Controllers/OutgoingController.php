@@ -126,9 +126,9 @@ class OutgoingController extends Controller
         }
         else{
            //  menghapus session
-           $request->session()->forget('session_invesaweb_id');
-           $request->session()->forget('session_invesaweb_userid');
-           $request->session()->forget('session_invesaweb_username');
+           $request->session()->forget('session_gitinventory_id');
+           $request->session()->forget('session_gitinventory_userid');
+           $request->session()->forget('session_gitinventory_username');
            return redirect('/logins');
         }
     }
@@ -223,9 +223,9 @@ class OutgoingController extends Controller
         }
         else{
            //  menghapus session
-           $request->session()->forget('session_invesaweb_id');
-           $request->session()->forget('session_invesaweb_userid');
-           $request->session()->forget('session_invesaweb_username');
+           $request->session()->forget('session_gitinventory_id');
+           $request->session()->forget('session_gitinventory_userid');
+           $request->session()->forget('session_gitinventory_username');
            return redirect('/logins');
         }
     }

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class IncomingController extends Controller
+class MaterialController extends Controller
 {
     //  **
     //  index
@@ -33,7 +32,7 @@ class IncomingController extends Controller
 
         //  **
         //  return view
-        return view('admins.input', compact('gitversions'));
+        return view('admins.material', compact('gitversions'));
     }
 
     //  ***
@@ -41,61 +40,96 @@ class IncomingController extends Controller
     public function loaddata(Request $request)
     {
         // return $request;
+        // return $request->ajax();
         //  action ajax
-        // if($request->ajax())
-        // {
+        if($request->ajax())
+        {
             //  variable
             $output     = '';
             $jumlahDataPerHalaman = 10;
+            $halamanAktif= 1;
+            $awalData   = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
             $stdate     = $request->get('stdate');
             $endate     = $request->get('endate');
             $jnsdokbc   = $request->get('jnsdokbc');
             $nodokbc    = $request->get('nodokbc');
             $partno     = $request->get('partno');
 
+            //  konfigurasi pagination
+            // $totalcount = DB::select("call sync_disp_input(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
             if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
             { 
                 //  mengambil data dari json
                 //  **
-                $totalcount = Http::get('http://136.198.117.118/api_invesa_test/json_input_sync.php',[
+                $data = Http::get('http://136.198.117.118/api_invesa_test/json_material.php',[
                     'valstdate' => $stdate,
                     'valednate' => $endate,
                     'valjnsdok' => $jnsdokbc,
                     'valnodok' => $nodokbc,
                     'valpartno' => $partno,
-                    'jumlahDataPerHalaman' => $jumlahDataPerHalaman
+                    'start' => $awalData,
+                    'limit' => $jumlahDataPerHalaman
                 ]);
             }
             else
             {
                 //  mengambil data dari json
                 //  **
-                $totalcount = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_input_sync.php',[
+                $data = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_material.php',[
                     'valstdate' => $stdate,
                     'valednate' => $endate,
                     'valjnsdok' => $jnsdokbc,
                     'valnodok' => $nodokbc,
                     'valpartno' => $partno,
-                    'jumlahDataPerHalaman' => $jumlahDataPerHalaman
+                    'start' => $awalData,
+                    'limit' => $jumlahDataPerHalaman
                 ]);
             }
+            // return $data;
+            $totalcount = $data['totalCount'];
+            if($totalcount > 0){
+                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
+                // $halamanAktif           = 1;
+                // $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
-            return $totalcount;
-            //  konfigurasi pagination
-            // $totalcount = DB::select("call sync_disp_input(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-            // if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-            // { 
-                //  mengambil data dari json
-                //  **
-            //     $totalcount = Http::get('http://136.198.117.118/api_invesa_test/json_input_sync.php');
-            // }
-            // else
-            // {
-                //  mengambil data dari json
-                //  **
-            //     $totalcount = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_input_sync.php');
-            // }
-            // return $totalcount;
+                // //  mengambil data table
+                // $sql    = DB::select("call sync_disp_input({$awalData}, {$jumlahDataPerHalaman}, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
+                $nomor  = $awalData;
+                foreach($data['rows'] as $rowdata)
+                {
+                    $no = ++$nomor;
+                    $output .= '
+                    <tr>
+                        <td align="right"><medium class="text-muted">'.$no.'</medium></td>
+                        <td>'.$rowdata['jnsdokbc'].'</td>
+                        <td>'.$rowdata['nodokbc'].'</td>
+                        <td>'.$rowdata['datedokbc'].'</td>
+                        <td>'.$rowdata['buktiterima'].'</td>
+                        <td>'.$rowdata['dateterima'].'</td>
+                        <td>'.$rowdata['buktiinvoice'].'</td>
+                        <td>'.$rowdata['dateinvoice'].'</td>
+                        <td>'.$rowdata['supplier'].'</td>
+                        <td>'.$rowdata['partno'].'</td>
+                        <td>'.$rowdata['partname'].'</td>
+                        <td align="right">'.number_format($rowdata['qty'], 0).'</td>
+                        <td>'.$rowdata['unit'].'</td>
+                        <td align="right">'.number_format($rowdata['price'], 0).'</td>
+                        <td>'.$rowdata['currency'].'</td>
+                        <td class="text-center">'.$rowdata['input_user'].'<br>'.$rowdata['input_date'].'</td>
+                    </tr>
+                    ';
+                }
+            }
+            else{
+                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
+                // $halamanAktif           = 0;
+                // $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
+                $output = '
+                <tr>
+                <td class="text-center" colspan="16">No Data Found</td>
+                </tr>
+                ';
+            }
             // if(empty($totalcount))
             // {
             //     $totalcount = 0;
@@ -109,54 +143,54 @@ class IncomingController extends Controller
             //     } 
             // }
             
-            //  check total data
-            if($totalcount > 0)
-            {
-                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-                $halamanAktif           = 1;
-                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
+            // //  check total data
+            // if($totalcount > 0)
+            // {
+            //     $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
+            //     $halamanAktif           = 1;
+            //     $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
-                //  mengambil data table
-                $sql    = DB::select("call sync_disp_input({$awalData}, {$jumlahDataPerHalaman}, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-                $nomor  = $awalData;
-                foreach($sql as $rowdata)
-                {
-                    $no = ++$nomor;
-                    $output .= '
-                    <tr>
-                        <td align="right"><medium class="text-muted">'.$no.'</medium></td>
-                        <td>'.$rowdata->jnsdokbc.'</td>
-                        <td>'.$rowdata->nodokbc.'</td>
-                        <td>'.$rowdata->datedokbc.'</td>
-                        <td>'.$rowdata->buktiterima.'</td>
-                        <td>'.$rowdata->dateterima.'</td>
-                        <td>'.$rowdata->buktiinvoice.'</td>
-                        <td>'.$rowdata->dateinvoice.'</td>
-                        <td>'.$rowdata->supplier.'</td>
-                        <td>'.$rowdata->partno.'</td>
-                        <td>'.$rowdata->partname.'</td>
-                        <td align="right">'.number_format($rowdata->qty, 0).'</td>
-                        <td>'.$rowdata->unit.'</td>
-                        <td align="right">'.number_format($rowdata->price, 0).'</td>
-                        <td>'.$rowdata->currency.'</td>
-                        <td class="text-center">'.$rowdata->input_user.'<br>'.$rowdata->input_date.'</td>
-                    </tr>
-                    ';
-                }
-            }
-            else
-            {
-                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-                $halamanAktif           = 0;
-                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
-                $output = '
-                <tr>
-                <td class="text-center" colspan="16">No Data Found</td>
-                </tr>
-                ';
-            }
+            //     //  mengambil data table
+            //     $sql    = DB::select("call sync_disp_input({$awalData}, {$jumlahDataPerHalaman}, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
+            //     $nomor  = $awalData;
+            //     foreach($sql as $rowdata)
+            //     {
+            //         $no = ++$nomor;
+            //         $output .= '
+            //         <tr>
+            //             <td align="right"><medium class="text-muted">'.$no.'</medium></td>
+            //             <td>'.$rowdata->jnsdokbc.'</td>
+            //             <td>'.$rowdata->nodokbc.'</td>
+            //             <td>'.$rowdata->datedokbc.'</td>
+            //             <td>'.$rowdata->buktiterima.'</td>
+            //             <td>'.$rowdata->dateterima.'</td>
+            //             <td>'.$rowdata->buktiinvoice.'</td>
+            //             <td>'.$rowdata->dateinvoice.'</td>
+            //             <td>'.$rowdata->supplier.'</td>
+            //             <td>'.$rowdata->partno.'</td>
+            //             <td>'.$rowdata->partname.'</td>
+            //             <td align="right">'.number_format($rowdata->qty, 0).'</td>
+            //             <td>'.$rowdata->unit.'</td>
+            //             <td align="right">'.number_format($rowdata->price, 0).'</td>
+            //             <td>'.$rowdata->currency.'</td>
+            //             <td class="text-center">'.$rowdata->input_user.'<br>'.$rowdata->input_date.'</td>
+            //         </tr>
+            //         ';
+            //     }
+            // }
+            // else
+            // {
+            //     $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
+            //     $halamanAktif           = 0;
+            //     $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
+            //     $output = '
+            //     <tr>
+            //     <td class="text-center" colspan="16">No Data Found</td>
+            //     </tr>
+            //     ';
+            // }
             
-            //  mengirim data ke view
+            // //  mengirim data ke view
             $data = array(
                 'table_data'    => $output,
                 'totalcount'    => $totalcount,
@@ -164,14 +198,14 @@ class IncomingController extends Controller
                 'jumlahHalaman' => $jumlahHalaman
             );
             echo json_encode($data);
-        // }
-        // else{
-        //    //  menghapus session
-        //    $request->session()->forget('session_gitinventory_id');
-        //    $request->session()->forget('session_gitinventory_userid');
-        //    $request->session()->forget('session_gitinventory_username');
-        //    return redirect('/logins');
-        // }
+        }
+        else{
+           //  menghapus session
+           $request->session()->forget('session_gitinventory_id');
+           $request->session()->forget('session_gitinventory_userid');
+           $request->session()->forget('session_gitinventory_username');
+           return redirect('/logins');
+        }
     }
 
     //  ***

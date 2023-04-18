@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\OutgoingController;
+use App\Http\Controllers\MaterialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +46,10 @@ Route::get('/output', [OutgoingController::class,'index'])->middleware('sesauthg
 Route::get('/output/loaddata', [OutgoingController::class,'loaddata'])->middleware('sesauthgitinventory')->name('output.loaddata');
 Route::get('/output/pagination', [OutgoingController::class,'pagination'])->middleware('sesauthgitinventory')->name('output.pagination');
 Route::get('/output/download', [OutgoingController::class,'download'])->middleware('sesauthgitinventory')->name('output.download');
+
+//  **
+//  Material
+Route::get('/material', [MaterialController::class,'index'])->middleware('sesauthgitinventory');
+Route::get('/material/loaddata', [MaterialController::class,'loaddata'])->middleware('sesauthgitinventory')->name('material.loaddata');
+Route::get('/material/pagination', [MaterialController::class,'pagination'])->middleware('sesauthgitinventory')->name('material.pagination');
+Route::get('/material/download', [MaterialController::class,'download'])->middleware('sesauthgitinventory')->name('material.download');
