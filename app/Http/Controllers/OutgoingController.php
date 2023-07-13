@@ -9,41 +9,56 @@ use Illuminate\Support\Facades\Http;
 
 class OutgoingController extends Controller
 {
+
+    protected $domain = "https://svr1.jvc-jein.co.id/";
+    protected $url = "api_invesa_test/";
+
+    public function __construct(){
+        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
+        {
+            $this->domain ="http://136.198.117.118/";
+        }
+    }
+
     //  **
     //  index
     public function index(Request $request)
     {
-        //  **
-        //  mengambil data version
-        //  **
-        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        { 
-            //  mengambil data dari json
-            //  **
-            $gitversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
-        }
-        else
-        {
-            //  mengambil data dari json
-            //  **
-            $gitversions = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
-        }
-        
-        
-        // $gitversions = DB::table('tbl_sync_version')->get();
+        $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
+        $gitversions = $gitversions['version'];
+         return view('admins.output', compact('gitversions'));
 
-        //  **
-        //  return view
-        return view('admins.output', compact('gitversions'));
+        // //  **
+        // //  mengambil data version
+        // //  **
+        // if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
+        // {
+        //     //  mengambil data dari json
+        //     //  **
+        //     $gitversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
+        // }
+        // else
+        // {
+        //     //  mengambil data dari json
+        //     //  **
+        //     $gitversions = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
+        // }
+
+
+        // // $gitversions = DB::table('tbl_sync_version')->get();
+
+        // //  **
+        // //  return view
+        // return view('admins.output', compact('gitversions'));
     }
 
     //  ***
     //  loaddata
-    public function loaddata(Request $request)
+    public function loaddata(Request $request, $valjmlhal=1)
     {
         //  action ajax
-        if($request->ajax())
-        {
+        // if($request->ajax())
+        // {
             //  variable
             $output     = '';
             $jumlahDataPerHalaman = 10;
@@ -53,54 +68,48 @@ class OutgoingController extends Controller
             $nodokbc    = $request->get('nodokbc');
             $partno     = $request->get('partno');
 
+            $counts = Http::get($this->domain.$this->url."json_output_sync.php",[
+                'valstdate' => $stdate,
+                'valendate' => $endate,
+                'valjnsdok' => $jnsdokbc,
+                'valnodok' => $nodokbc,
+                'valpartno' => $partno,
+                'page' => 0,
+                'limit' => 1
+            ]);
+
             //  konfigurasi pagination
-            $counts = DB::select("call sync_disp_output(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-            if(empty($counts))
+            if(empty($counts['totalCount']))
             {
                 $totalcount = 0;
             }
             else
             {
-                foreach($counts as &$row)
-                {
-                    $row        = get_object_vars($row);
-                    $totalcount = $row['totalcount'];
-                } 
+                $totalcount = $counts['totalCount'];
             }
-            
+
             //  check total data
             if($totalcount > 0)
             {
                 $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-                $halamanAktif           = 1;
+                $halamanAktif           = intval($valjmlhal);;
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = DB::select("call sync_disp_output({$awalData}, {$jumlahDataPerHalaman}, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
+                $sql    = Http::get($this->domain.$this->url."json_output_sync.php",[
+                    'valstdate' => $stdate,
+                    'valendate' => $endate,
+                    'valjnsdok' => $jnsdokbc,
+                    'valnodok' => $nodokbc,
+                    'valpartno' => $partno,
+                    'page' => $awalData,
+                    'limit' => $jumlahDataPerHalaman
+                ]);
                 $nomor  = $awalData;
-                foreach($sql as $rowdata)
+                foreach($sql['rows'] as $rowdata)
                 {
                     $no = ++$nomor;
-                    $output .= '
-                    <tr>
-                        <td align="right"><medium class="text-muted">'.$no.'</medium></td>
-                        <td>'.$rowdata->jnsdokbc.'</td>
-                        <td>'.$rowdata->nodokbc.'</td>
-                        <td>'.$rowdata->datedokbc.'</td>
-                        <td>'.$rowdata->buktikirim.'</td>
-                        <td>'.$rowdata->datekirim.'</td>
-                        <td>'.$rowdata->buktiinvoice.'</td>
-                        <td>'.$rowdata->dateinvoice.'</td>
-                        <td>'.$rowdata->supplier.'</td>
-                        <td>'.$rowdata->partno.'</td>
-                        <td>'.$rowdata->partname.'</td>
-                        <td align="right">'.number_format($rowdata->qty, 0).'</td>
-                        <td>'.$rowdata->unit.'</td>
-                        <td align="right">'.number_format($rowdata->price, 0).'</td>
-                        <td>'.$rowdata->currency.'</td>
-                        <td class="text-center">'.$rowdata->input_user.'<br>'.$rowdata->input_date.'</td>
-                    </tr>
-                    ';
+                    $output .= $this->return_data($no,$rowdata);
                 }
             }
             else
@@ -114,7 +123,7 @@ class OutgoingController extends Controller
                 </tr>
                 ';
             }
-            
+
             //  mengirim data ke view
             $data = array(
                 'table_data'    => $output,
@@ -123,22 +132,45 @@ class OutgoingController extends Controller
                 'jumlahHalaman' => $jumlahHalaman
             );
             echo json_encode($data);
-        }
-        else{
-           //  menghapus session
-           $request->session()->forget('session_gitinventory_id');
-           $request->session()->forget('session_gitinventory_userid');
-           $request->session()->forget('session_gitinventory_username');
-           return redirect('/logins');
-        }
+        // }
+        // else{
+        //    //  menghapus session
+        //    $request->session()->forget('session_gitinventory_id');
+        //    $request->session()->forget('session_gitinventory_userid');
+        //    $request->session()->forget('session_gitinventory_username');
+        //    return redirect('/logins');
+        // }
+    }
+
+    public function return_data($no,$rowdata)
+    {
+        return '<tr>
+                    <td align="right"><medium class="text-muted">'.$no.'</medium></td>
+                    <td>'.$rowdata['jnsdokbc'].'</td>
+                    <td>'.$rowdata['nodokbc'].'</td>
+                    <td>'.$rowdata['datedokbc'].'</td>
+                    <td>'.$rowdata['buktikirim'].'</td>
+                    <td>'.$rowdata['datekirim'].'</td>
+                    <td>'.$rowdata['buktiinvoice'].'</td>
+                    <td>'.$rowdata['dateinvoice'].'</td>
+                    <td>'.$rowdata['supplier'].'</td>
+                    <td>'.$rowdata['partno'].'</td>
+                    <td>'.$rowdata['partname'].'</td>
+                    <td align="right">'.$rowdata['qty'].'</td>
+                    <td>'.$rowdata['unit'].'</td>
+                    <td align="right">'.$rowdata['price'].'</td>
+                    <td>'.$rowdata['currency'].'</td>
+                    <td>'.$rowdata['input_user'].'<br>'.$rowdata['input_date'].'</td>
+                </tr>';
     }
 
     //  ***
     //  pagination
     public function pagination(Request $request)
     {
+        return $this->loaddata($request,$request->get('jumlahHalaman'));
         //  action ajax
-        if($request->ajax())
+        /* if($request->ajax())
         {
             //  variable
             $output     = '';
@@ -162,9 +194,9 @@ class OutgoingController extends Controller
                 {
                     $row        = get_object_vars($row);
                     $totalcount = $row['totalcount'];
-                } 
+                }
             }
-            
+
             //  check total data
             if($totalcount > 0)
             {
@@ -211,7 +243,7 @@ class OutgoingController extends Controller
                 </tr>
                 ';
             }
-            
+
             //  mengirim data ke view
             $data = array(
                 'table_data'    => $output,
@@ -227,7 +259,7 @@ class OutgoingController extends Controller
            $request->session()->forget('session_gitinventory_userid');
            $request->session()->forget('session_gitinventory_username');
            return redirect('/logins');
-        }
+        } */
     }
 
     //  ***
@@ -283,7 +315,7 @@ class OutgoingController extends Controller
         $no = 1;
         for ($i = 0; $i < count($datas); $i++) {
             $rowdata = $datas[$i];
-            
+
             echo '<tr>';
                 echo '<td align="right">'.$no.'</td>';
                 echo '<td>'.$rowdata->jnsdokbc.'</td>';

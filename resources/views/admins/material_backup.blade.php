@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('activegudangumum', 'active')
+@section('activematerial', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -11,19 +11,32 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="box-title">Search Data </h4>
+                        {{-- <div class="text-muted font-italic"><small>Please fill the box if you want to know</small></div> --}}
                     </div>
                     <div class="card-body card-block">
                         <div class="row form-group">
-                            <div class="col-4">
+                            <div class="col-2">
                                 <div class="card">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Start Date (mm/dd/yyyy)</small></div>
                                     <input type="date" class="form-control form-control-sm" name="stdate" id="stdate" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-2">
                                 <div class="card">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>End Date (mm/dd/yyyy)</small></div>
                                     <input type="date" class="form-control form-control-sm" name="endate" id="endate" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card">
+                                    <div class="bg-warning text-center"><small>BC Type</small></div>
+                                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card">
+                                    <div class="bg-warning text-center"><small>BC Number</small></div>
+                                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="nodokbc" id="nodokbc" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-4">
@@ -42,21 +55,21 @@
                                         <button type="button" class="btn btn-secondary btn-sm" id="btn_download">Download</button>
                                         <button type="button" class="btn btn-success btn-sm" id="btn_cari">Search</button>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+    
         <!--  Table data  -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Mutasi Gudang Umum <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Data Material <p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -66,6 +79,24 @@
                     <div class="table-stats order-table ov-h">
                         <table class="table table-striped table-hover">
                             <thead>
+                                <tr>
+                                    <th class="serial">#</th>
+                                    <th class="align-middle">BC Type</th>
+                                    <th class="align-middle">BC Number</th>
+                                    <th class="align-middle">BC Date</th>
+                                    <th class="align-middle">Incoming No</th>
+                                    <th class="align-middle">Incoming Date</th>
+                                    <th class="align-middle">Invoice No</th>
+                                    <th class="align-middle">Invoice Date</th>
+                                    <th class="align-middle">Supplier</th>
+                                    <th class="align-middle col-sm-2">Part No</th>
+                                    <th class="align-middle">Part Name</th>
+                                    <th class="align-middle">QTY</th>
+                                    <th class="align-middle">Unit</th>
+                                    <th class="align-middle">Price</th>
+                                    <th class="align-middle">Currency</th>
+                                    <th class="align-middle">Create by</th>
+                                </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -89,25 +120,26 @@
 <script>
 //  ***
 //  load data
-var url = "{{ route('gudangumum.loaddata') }}";
+var url = "{{ route('material.loaddata') }}";
 function loaddata()
 {
     //  variable
     var stdate      = $("#stdate").val().replace(/-/g, "");
     var endate      = $("#endate").val().replace(/-/g, "");
+    var jnsdokbc    = $("#jnsdokbc").val();
+    var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : url,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno },
+        data    : { stdate:stdate, endate:endate, jnsdokbc:jnsdokbc, nodokbc:nodokbc, partno:partno },
         dataType: 'json',
         success : function(data)
         {
             var valraquo = data.halamanAktif + 1;
             $("#loadingdata").remove();
-            $('thead').html(data.header);
             $('tbody').html(data.table_data);
             //  total count
             if(data.totalcount == 1)
@@ -164,13 +196,15 @@ function search()
     //  variable
     var stdate      = $("#stdate").val().replace(/-/g, "");
     var endate      = $("#endate").val().replace(/-/g, "");
+    var jnsdokbc    = $("#jnsdokbc").val();
+    var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : url,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno },
+        data    : { stdate:stdate, endate:endate, jnsdokbc:jnsdokbc, nodokbc:nodokbc, partno:partno },
         dataType: 'json',
         success : function(data)
         {
@@ -268,19 +302,21 @@ function search()
 
 //  ***
 //  function pagination
-var urlpaging = "{{ route('gudangumum.pagination') }}";
+var urlpaging = "{{ route('material.pagination') }}";
 function first(jumlahHalaman)
 {
     //  variable
     var stdate      = $("#stdate").val().replace(/-/g, "");
     var endate      = $("#endate").val().replace(/-/g, "");
+    var jnsdokbc    = $("#jnsdokbc").val();
+    var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : urlpaging,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+        data    : { stdate:stdate, endate:endate, jnsdokbc:jnsdokbc, nodokbc:nodokbc, partno:partno, jumlahHalaman: jumlahHalaman },
         dataType: 'json',
         success : function(data)
         {
@@ -323,13 +359,15 @@ function laquo(jumlahHalaman)
     //  variable
     var stdate      = $("#stdate").val().replace(/-/g, "");
     var endate      = $("#endate").val().replace(/-/g, "");
+    var jnsdokbc    = $("#jnsdokbc").val();
+    var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : urlpaging,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+        data    : { stdate:stdate, endate:endate, jnsdokbc:jnsdokbc, nodokbc:nodokbc, partno:partno, jumlahHalaman: jumlahHalaman },
         dataType: 'json',
         success : function(data)
         {
@@ -392,13 +430,15 @@ function raquo(jumlahHalaman)
     //  variable
     var stdate      = $("#stdate").val().replace(/-/g, "");
     var endate      = $("#endate").val().replace(/-/g, "");
+    var jnsdokbc    = $("#jnsdokbc").val();
+    var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : urlpaging,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+        data    : { stdate:stdate, endate:endate, jnsdokbc:jnsdokbc, nodokbc:nodokbc, partno:partno, jumlahHalaman: jumlahHalaman },
         dataType: 'json',
         success : function(data)
         {
@@ -461,13 +501,15 @@ function last(jumlahHalaman)
     //  variable
     var stdate      = $("#stdate").val().replace(/-/g, "");
     var endate      = $("#endate").val().replace(/-/g, "");
+    var jnsdokbc    = $("#jnsdokbc").val();
+    var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : urlpaging,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+        data    : { stdate:stdate, endate:endate, jnsdokbc:jnsdokbc, nodokbc:nodokbc, partno:partno, jumlahHalaman: jumlahHalaman },
         dataType: 'json',
         success : function(data)
         {
@@ -509,8 +551,10 @@ function last(jumlahHalaman)
 function download(){
     var stdate      = $("#stdate").val().replace(/-/g, "");
     var endate      = $("#endate").val().replace(/-/g, "");
+    var jnsdokbc    = $("#jnsdokbc").val();
+    var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
-    window.open("gudangumum/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
+    window.open("material/download?stdate="+stdate+"&endate="+endate+"&jnsdokbc="+jnsdokbc+"&nodokbc="+nodokbc+"&partno="+partno+"");
 }
 
 //  ***
@@ -530,6 +574,8 @@ $(document).ready(function(){
     //  set value
     $("#stdate").val(stdate);
     $("#endate").val(endate);
+    $("#jnsdokbc").val('');
+    $("#nodokbc").val('');
     $("#partno").val('');
 
     //  load data
@@ -540,6 +586,8 @@ $(document).ready(function(){
 
     //  search data
     $('#endate').change(function (){ search(); });
+    $("#jnsdokbc").keydown(function (e){ if(e.keyCode == 13){ search(); }});
+    $("#nodokbc").keydown(function (e){ if(e.keyCode == 13){ search(); }});
     $("#partno").keydown(function (e){ if(e.keyCode == 13){ search(); }});
     $("#btn_cari").click(function(){ search(); });
     $("#btn_download").click(function(){ download(); });
@@ -558,6 +606,8 @@ $(document).ready(function(){
         //  set value
         $("#stdate").val(stdate);
         $("#endate").val(endate);
+        $("#jnsdokbc").val('');
+        $("#nodokbc").val('');
         $("#partno").val('');
 
         // loaddata();
