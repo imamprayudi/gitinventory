@@ -73,7 +73,7 @@ class FinishgoodController extends Controller
            $request->session()->forget('session_gitinventory_id');
            $request->session()->forget('session_gitinventory_userid');
            $request->session()->forget('session_gitinventory_username');
-           return redirect('/logins');
+           return redirect('/login');
         }
     }
 

@@ -34,8 +34,8 @@ class IncomingController extends Controller
         // return $valjmlhal;
         // return $request;
         //  action ajax
-        // if($request->ajax())
-        // {
+        if($request->ajax())
+        {
             //  variable
             $output     = '';
             $jumlahDataPerHalaman = 10;
@@ -199,14 +199,14 @@ class IncomingController extends Controller
 
             //  mengirim data ke view
 
-       /*  // }
-        // else{
-        //    //  menghapus session
-        //    $request->session()->forget('session_gitinventory_id');
-        //    $request->session()->forget('session_gitinventory_userid');
-        //    $request->session()->forget('session_gitinventory_username');
-        //    return redirect('/logins');
-        // } */
+        }
+        else{
+           //  menghapus session
+           $request->session()->forget('session_gitinventory_id');
+           $request->session()->forget('session_gitinventory_userid');
+           $request->session()->forget('session_gitinventory_username');
+           return redirect('/login');
+        }
     }
 
     public function return_data($no,$rowdata)
@@ -324,7 +324,7 @@ class IncomingController extends Controller
         //    $request->session()->forget('session_gitinventory_id');
         //    $request->session()->forget('session_gitinventory_userid');
         //    $request->session()->forget('session_gitinventory_username');
-        //    return redirect('/logins');
+        //    return redirect('/login');
         // }
     }
 
@@ -341,11 +341,28 @@ class IncomingController extends Controller
         $filename   = 'Laporan Pemasukkan';
 
         //  execute database
-        $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
+        // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
+        // $datas = $this->domain.$this->url.'download_input.php';
 
+        $datas = Http::get($this->domain.$this->url."download_input.php",[
+                'stdate' => $stdate,
+                'endate' => $endate,
+                'jnsdokbc' => $jnsdokbc,
+                'nodokbc' => $nodokbc,
+                'partno' => $partno,
+                'filename' => $filename
+            ]);
+        // return $datas;
         //  untuk meyimpan data di excel
-        header("Content-type: application/vnd-ms-excel");
+        // $download = Http::get($this->domain.);
+        /* header("Content-type: application/vnd-ms-excel");
         header("Content-Disposition: attachment; filename=". $filename .".xls");
+        echo'<!DOCTYPE html>
+            <html>
+                <head>
+                <title>Download Excel</title>
+                </head>
+                <body>';
         echo '<table>';
             echo '<tr>';
             echo '<th colspan="6" style="font-size:18pt;" align="left">LAPORAN PEMASUKAN PER DOKUMEN</th>';
@@ -403,5 +420,6 @@ class IncomingController extends Controller
             $no++;
         }
         echo '</table>';
+        echo '</body></html>'; */
     }
 }

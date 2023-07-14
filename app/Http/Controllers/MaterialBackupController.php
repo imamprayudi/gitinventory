@@ -15,7 +15,7 @@ class MaterialController extends Controller
         //  mengambil data version
         //  **
         if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        { 
+        {
             //  mengambil data dari json
             //  **
             $gitversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
@@ -26,8 +26,8 @@ class MaterialController extends Controller
             //  **
             $gitversions = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
         }
-        
-        
+
+
         // $gitversions = DB::table('tbl_sync_version')->get();
 
         //  **
@@ -58,7 +58,7 @@ class MaterialController extends Controller
             //  konfigurasi pagination
             // $totalcount = DB::select("call sync_disp_input(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
             if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-            { 
+            {
                 //  mengambil data dari json
                 //  **
                 $data = Http::get('http://136.198.117.118/api_invesa_test/json_material.php',[
@@ -140,9 +140,9 @@ class MaterialController extends Controller
             //     {
             //         $row        = get_object_vars($row);
             //         $totalcount = $row['totalcount'];
-            //     } 
+            //     }
             // }
-            
+
             // //  check total data
             // if($totalcount > 0)
             // {
@@ -189,7 +189,7 @@ class MaterialController extends Controller
             //     </tr>
             //     ';
             // }
-            
+
             // //  mengirim data ke view
             $data = array(
                 'table_data'    => $output,
@@ -204,7 +204,7 @@ class MaterialController extends Controller
            $request->session()->forget('session_gitinventory_id');
            $request->session()->forget('session_gitinventory_userid');
            $request->session()->forget('session_gitinventory_username');
-           return redirect('/logins');
+           return redirect('/login');
         }
     }
 
@@ -237,9 +237,9 @@ class MaterialController extends Controller
                 {
                     $row        = get_object_vars($row);
                     $totalcount = $row['totalcount'];
-                } 
+                }
             }
-            
+
             //  check total data
             if($totalcount > 0)
             {
@@ -286,7 +286,7 @@ class MaterialController extends Controller
                 </tr>
                 ';
             }
-            
+
             //  mengirim data ke view
             $data = array(
                 'table_data'    => $output,
@@ -301,7 +301,7 @@ class MaterialController extends Controller
            $request->session()->forget('session_gitinventory_id');
            $request->session()->forget('session_gitinventory_userid');
            $request->session()->forget('session_gitinventory_username');
-           return redirect('/logins');
+           return redirect('/login');
         }
     }
 
@@ -358,7 +358,7 @@ class MaterialController extends Controller
         $no = 1;
         for ($i = 0; $i < count($datas); $i++) {
             $rowdata = $datas[$i];
-            
+
             echo '<tr>';
                 echo '<td align="right">'.$no.'</td>';
                 echo '<td>'.$rowdata->jnsdokbc.'</td>';
