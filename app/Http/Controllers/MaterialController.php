@@ -28,62 +28,45 @@ class MaterialController extends Controller
 
     //  ***
     //  loaddata
-    public function loaddata(Request $request,$valjmlhal=1)
+    public function loaddata(Request $request,$valjmlhal=1,$jumlahDataPerHalaman=10)
     {
         if($request->ajax())
         {
-            //  variable
-            $output     = '';
-            $jumlahDataPerHalaman = 10;
-            $halamanAktif= 1;
-            $awalData   = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
-            $stdate     = $request->get('stdate');
-            $endate     = $request->get('endate');
-            $partno     = $request->get('partno');
+            // parameter
+            $halamanAktif   = intval($valjmlhal);
+            $stdate         = $request->get('stdate');
+            $endate         = $request->get('endate');
+            $partno         = $request->get('partno');
+            $awalData       = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
-            // $data = Http::get($this->domain.$this->url.'json_material.php',[
-            //         'valstdate' => $stdate,
-            //         'valednate' => $endate,
-            //         'valpartno' => $partno,
-            //         'start' => 0,
-            //         'limit' => 1
-            //     ]);
-
+            $data = Http::get($this->domain.$this->url.'json_material.php',[
+                'valstdate' => $stdate,
+                'valendate' => $endate,
+                'valpartno' => $partno,
+                'start' => $awalData,
+                'limit' => $jumlahDataPerHalaman
+            ]);
             // return $data;
-            $data['totalCount'] = [];
             $totalcount = $data['totalCount'];
-            $totalcount = 0;
-            if($totalcount > 0){
-                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-                $halamanAktif           = intval($valjmlhal);
-                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
+            $jumlahHalaman  = ceil($totalcount / $jumlahDataPerHalaman);
+            $header = Helper::return_data_header($data['rows']);
 
-                // $data = Http::get($this->domain.$this->url.'json_material.php',[
-                //     'valstdate' => $stdate,
-                //     'valednate' => $endate,
-                //     'valpartno' => $partno,
-                //     'page' => $awalData,
-                //     'limit' => $jumlahDataPerHalaman
-                // ]);
-                $nomor  = $awalData;
-                $header = Helper::return_data_header($data['rows']);
-                $output = Helper::return_data_mutate($nomor,$data['rows']);
+            if($data['totalCount'] == 0){
+                $halamanAktif   = $halamanAktif - 1;
+                $awalData       = $awalData + 1;
+                $output         = Helper::no_data();
             }
             else{
-                $jumlahHalaman  = ceil($totalcount / $jumlahDataPerHalaman);
-                $halamanAktif   = 0;
-                $awalData       = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
-                $output = Helper::nodata();
+                $output = Helper::return_data_mutate($awalData,$data['rows']);
             }
 
-            $data = array(
+            return [
                 'header'        => $header,
                 'table_data'    => $output,
                 'totalcount'    => $totalcount,
                 'halamanAktif'  => $halamanAktif,
                 'jumlahHalaman' => $jumlahHalaman
-            );
-            echo json_encode($data);
+            ];
         }
         else{
            //  menghapus session
@@ -99,7 +82,6 @@ class MaterialController extends Controller
     public function pagination(Request $request)
     {
         return $this->loaddata($request,$request->get('jumlahHalaman'));
-
     }
 
     //  ***

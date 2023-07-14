@@ -7,7 +7,7 @@ class Helper
     {
         return "<tr><th class='align-middle'>NO</th><th class='align-middle'>PARTNO</th><th class='align-middle'>PARTNAME</th><th class='align-middle'>UNIT</th><th class='align-middle'>SALDO AWAL</th><th class='align-middle'>PEMASUKAN</th><th class='align-middle'>PENGELUARAN</th><th class='align-middle'>SALDO AKHIR</th><th class='align-middle'>LAST INPUT</th><th class='align-middle'>LAST OUTPUT</th></tr>";
 
-        $header = "<tr>";
+       /*  $header = "<tr>";
         $header .= "<th class='align-middle'>NO</th>";
         $disable = ["input_user","last_sync","output_user","last_output_sync"];
         foreach ($rowdata[0] as $key => $value) {
@@ -16,7 +16,7 @@ class Helper
             }
         }
         $header .= "</tr>";
-        return $header;
+        return $header; */
     }
     public static function return_data_mutate($nomor,$rowdata)
     {
