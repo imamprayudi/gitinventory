@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 class OutgoingController extends Controller
 {
 
-    protected $domain = "https://svr1.jvc-jein.co.id/";
+    protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
 
     public function __construct(){
@@ -41,7 +41,7 @@ class OutgoingController extends Controller
         // {
         //     //  mengambil data dari json
         //     //  **
-        //     $gitversions = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
+        //     $gitversions = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
         // }
 
 

@@ -8,7 +8,7 @@ use App\Helper;
 
 class GudangumumController extends Controller
 {
-    protected $domain = "https://svr1.jvc-jein.co.id/";
+    protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
 
     public function __construct(){

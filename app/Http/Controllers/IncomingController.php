@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Maatwebsite\Excel\Facades\Excel;
 
 class IncomingController extends Controller
 {
-    protected $domain = "https://svr1.jvc-jein.co.id/";
+    protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
 
     public function __construct(){
@@ -133,7 +134,7 @@ class IncomingController extends Controller
                 // {
                     //  mengambil data dari json
                     //  **
-                //     $totalcount = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_input_sync.php');
+                //     $totalcount = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_input_sync.php');
                 // }
                 // return $totalcount;
                 // if(empty($totalcount))
@@ -352,6 +353,8 @@ class IncomingController extends Controller
                 'partno' => $partno,
                 'filename' => $filename
             ]);
+
+        return Excel::download(new DataExport($datas["rows"]) , "{$filename}.xlsx" );
         // return $datas;
         //  untuk meyimpan data di excel
         // $download = Http::get($this->domain.);

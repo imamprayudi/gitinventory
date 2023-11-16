@@ -24,7 +24,7 @@ class MaterialController extends Controller
         {
             //  mengambil data dari json
             //  **
-            $gitversions = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
+            $gitversions = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
         }
 
 
@@ -75,7 +75,7 @@ class MaterialController extends Controller
             {
                 //  mengambil data dari json
                 //  **
-                $data = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_material.php',[
+                $data = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_material.php',[
                     'valstdate' => $stdate,
                     'valednate' => $endate,
                     'valjnsdok' => $jnsdokbc,

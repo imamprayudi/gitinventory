@@ -20,7 +20,7 @@ class DashboardController extends Controller
         //  cek ip access
         //  **
         if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        { 
+        {
             //  mengambil data dari json
             //  **
             $response           = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
@@ -31,7 +31,7 @@ class DashboardController extends Controller
         {
             //  mengambil data dari json
             //  **
-            $response           = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_version_sync.php');
+            $response           = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
             $obj                = json_decode($response);
             $gitversions        = $obj->version;
         }
