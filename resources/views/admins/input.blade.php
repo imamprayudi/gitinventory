@@ -55,14 +55,14 @@
                                         <button type="button" class="btn btn-secondary btn-sm" id="btn_download">Download</button>
                                         <button type="button" class="btn btn-success btn-sm" id="btn_cari">Search</button>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    
+
         <!--  Table data  -->
         <div class="row">
             <div class="col-lg-12">
@@ -80,7 +80,7 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="serial">#</th>
+                                    <th class="align-middle">No</th>
                                     <th class="align-middle">BC Type</th>
                                     <th class="align-middle">BC Number</th>
                                     <th class="align-middle">BC Date</th>
