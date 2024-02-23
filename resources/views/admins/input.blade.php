@@ -30,7 +30,16 @@
                             <div class="col-2">
                                 <div class="card">
                                     <div class="bg-warning text-center"><small>BC Type</small></div>
-                                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off">
+                                    <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
+                                        <option> 23BC </option>
+                                        <option> 26BC </option>
+                                        <option> 27BC </option>
+                                        <option> 27GB </option>
+                                        <option> 40BC </option>
+                                        <option> 262BC </option>
+                                    </select>
+                                    {{-- <select name="" id=""></select> --}}
+                                    {{-- <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off"> --}}
                                 </div>
                             </div>
                             <div class="col-2">
@@ -55,14 +64,14 @@
                                         <button type="button" class="btn btn-secondary btn-sm" id="btn_download">Download</button>
                                         <button type="button" class="btn btn-success btn-sm" id="btn_cari">Search</button>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    
+
         <!--  Table data  -->
         <div class="row">
             <div class="col-lg-12">
@@ -80,7 +89,7 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="serial">#</th>
+                                    <th class="align-middle">No</th>
                                     <th class="align-middle">BC Type</th>
                                     <th class="align-middle">BC Number</th>
                                     <th class="align-middle">BC Date</th>
@@ -578,7 +587,7 @@ $(document).ready(function(){
     $("#partno").val('');
 
     //  load data
-    loaddata();
+    // loaddata();
 
     //  trigger toogle
     $("#menuToggle").trigger('click');

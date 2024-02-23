@@ -77,14 +77,20 @@
                         </li>
                     </li>
                     <li class="menu-title">Laporan Mutasi</li><!-- /.menu-title -->
-                        <li class="@yield('activescrap')">
-                            <a href="{{ url('/scrap') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Scrap">&emsp;&emsp; Scrap</a>
-                        </li>
-                        <li class="@yield('activematerial')">
-                            <a href="{{ url('/material') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Material">&emsp;&emsp; Material</a>
-                        </li>
                         <li class="@yield('activegudangumum')">
                             <a href="{{ url('/gudangumum') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Gudang Umum">&emsp;&emsp; Gudang Umum</a>
+                        </li>
+                        <li class="@yield('activematerial')">
+                            <a href="{{ url('/material') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Material">&emsp;&emsp; Gudang Material</a>
+                        </li>
+                        <li class="@yield('activefinishgood')">
+                            <a href="{{ url('/finishgood') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Finish Good">&emsp;&emsp; Gudang Finished Goods</a>
+                        </li>
+                        <li class="@yield('activeproduction')">
+                            <a href="{{ url('/production') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Production">&emsp;&emsp; Production</a>
+                        </li>
+                        <li class="@yield('activescrap')">
+                            <a href="{{ url('/scrap') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Scrap">&emsp;&emsp; Gudang Scrap</a>
                         </li>
                     </li>
                     {{-- <li class="menu-title">Setup</li><!-- /.menu-title -->

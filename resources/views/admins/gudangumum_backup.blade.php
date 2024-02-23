@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('activeoutput', 'active')
+@section('activegudangumum', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -29,27 +29,19 @@
                             </div>
                             <div class="col-2">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>BC Type</small></div>
+                                    <div class="bg-warning text-center"><small>BC Type</small></div>
                                     <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>BC Number</small></div>
-                                    {{-- <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="nodokbc" id="nodokbc" autocomplete="off"> --}}
-                                    <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
-                                        <option> 23BC </option>
-                                        <option> 26BC </option>
-                                        <option> 27BC </option>
-                                        <option> 27GB </option>
-                                        <option> 40BC </option>
-                                        <option> 262BC </option>
-                                    </select>
+                                    <div class="bg-warning text-center"><small>BC Number</small></div>
+                                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="nodokbc" id="nodokbc" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>Part Number</small></div>
+                                    <div class="bg-warning text-center"><small>Part Number</small></div>
                                     <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="partno" id="partno" autocomplete="off">
                                 </div>
                             </div>
@@ -63,21 +55,21 @@
                                         <button type="button" class="btn btn-secondary btn-sm" id="btn_download">Download</button>
                                         <button type="button" class="btn btn-success btn-sm" id="btn_cari">Search</button>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+    
         <!--  Table data  -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Data Pengeluaran <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Data Gudang Umum <p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -88,12 +80,12 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="align-middle">No</th>
+                                    <th class="serial">#</th>
                                     <th class="align-middle">BC Type</th>
                                     <th class="align-middle">BC Number</th>
                                     <th class="align-middle">BC Date</th>
-                                    <th class="align-middle">Outgoing No</th>
-                                    <th class="align-middle">Outgoing Date</th>
+                                    <th class="align-middle">Incoming No</th>
+                                    <th class="align-middle">Incoming Date</th>
                                     <th class="align-middle">Invoice No</th>
                                     <th class="align-middle">Invoice Date</th>
                                     <th class="align-middle">Supplier</th>
@@ -123,11 +115,12 @@
 @endsection
 
 @section('stylejavascript')
+
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script>
 //  ***
 //  load data
-var url = "{{ route('output.loaddata') }}";
+var url = "{{ route('gudangumum.loaddata') }}";
 function loaddata()
 {
     //  variable
@@ -309,7 +302,7 @@ function search()
 
 //  ***
 //  function pagination
-var urlpaging = "{{ route('output.pagination') }}";
+var urlpaging = "{{ route('gudangumum.pagination') }}";
 function first(jumlahHalaman)
 {
     //  variable
@@ -561,13 +554,12 @@ function download(){
     var jnsdokbc    = $("#jnsdokbc").val();
     var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
-    window.open("output/download?stdate="+stdate+"&endate="+endate+"&jnsdokbc="+jnsdokbc+"&nodokbc="+nodokbc+"&partno="+partno+"");
+    window.open("gudangumum/download?stdate="+stdate+"&endate="+endate+"&jnsdokbc="+jnsdokbc+"&nodokbc="+nodokbc+"&partno="+partno+"");
 }
 
 //  ***
 //  start ajax
-$(document).ready(function()
-{
+$(document).ready(function(){
     //  buat tanggal
     var d       = new Date();
     var stmonth   = d.getMonth();
@@ -587,7 +579,7 @@ $(document).ready(function()
     $("#partno").val('');
 
     //  load data
-    // loaddata();
+    loaddata();
 
     //  trigger toogle
     $("#menuToggle").trigger('click');

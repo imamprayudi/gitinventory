@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
 
-class MaterialController extends Controller
+class FinishgoodController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
@@ -23,7 +23,7 @@ class MaterialController extends Controller
     {
         $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
         $gitversions = $gitversions['version'];
-        return view('admins.material', compact('gitversions'));
+        return view('admins.finishgood', compact('gitversions'));
     }
 
     //  ***
@@ -39,7 +39,7 @@ class MaterialController extends Controller
             $partno         = $request->get('partno');
             $awalData       = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
-            $data = Http::get($this->domain.$this->url.'json_material.php',[
+            $data = Http::get($this->domain.$this->url.'json_finishgood.php',[
                 'valstdate' => $stdate,
                 'valendate' => $endate,
                 'valpartno' => $partno,
@@ -98,7 +98,7 @@ class MaterialController extends Controller
 
         //  execute database
         // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        $datas = Http::get($this->domain.$this->url.'json_material.php',[
+        $datas = Http::get($this->domain.$this->url.'json_finishgood.php',[
                     'valstdate' => $stdate,
                     'valednate' => $endate,
                     'valpartno' => $partno
