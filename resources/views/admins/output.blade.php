@@ -30,13 +30,7 @@
                             <div class="col-2">
                                 <div class="card">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>BC Type</small></div>
-                                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>BC Number</small></div>
-                                    {{-- <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="nodokbc" id="nodokbc" autocomplete="off"> --}}
+                                    {{-- <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off"> --}}
                                     <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
                                         <option> 23BC </option>
                                         <option> 26BC </option>
@@ -45,6 +39,20 @@
                                         <option> 40BC </option>
                                         <option> 262BC </option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="card">
+                                    <div class="bg-warning bg-opacity-50 text-center"><small>BC Number</small></div>
+                                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="nodokbc" id="nodokbc" autocomplete="off">
+                                    {{-- <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
+                                        <option> 23BC </option>
+                                        <option> 26BC </option>
+                                        <option> 27BC </option>
+                                        <option> 27GB </option>
+                                        <option> 40BC </option>
+                                        <option> 262BC </option>
+                                    </select> --}}
                                 </div>
                             </div>
                             <div class="col-4">
