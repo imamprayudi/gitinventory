@@ -333,96 +333,24 @@ class IncomingController extends Controller
     //  download
     public function download(Request $request)
     {
-        //  global variable
         $stdate     = $request->get('stdate');
         $endate     = $request->get('endate');
         $jnsdokbc   = $request->get('jnsdokbc');
         $nodokbc    = $request->get('nodokbc');
         $partno     = $request->get('partno');
-        $filename   = 'Laporan Pemasukkan';
 
-        //  execute database
-        // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        // $datas = $this->domain.$this->url.'download_input.php';
-
-        $datas = Http::get($this->domain.$this->url."download_input.php",[
-                'stdate' => $stdate,
-                'endate' => $endate,
-                'jnsdokbc' => $jnsdokbc,
-                'nodokbc' => $nodokbc,
-                'partno' => $partno,
-                'filename' => $filename
-            ]);
-
-        return Excel::download(new DataExport($datas["rows"]) , "{$filename}.xlsx" );
-        // return $datas;
-        //  untuk meyimpan data di excel
-        // $download = Http::get($this->domain.);
-        /* header("Content-type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=". $filename .".xls");
-        echo'<!DOCTYPE html>
-            <html>
-                <head>
-                <title>Download Excel</title>
-                </head>
-                <body>';
-        echo '<table>';
-            echo '<tr>';
-            echo '<th colspan="6" style="font-size:18pt;" align="left">LAPORAN PEMASUKAN PER DOKUMEN</th>';
-            echo '</tr>';
-            echo '<tr>';
-                echo '<th></th>';
-            echo '</tr>';
-        echo '</table>';
-        echo '<table border="1">';
-            echo '<tr>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">No</th>';
-                echo '<th bgcolor="#C0C0C0" colspan="3">Dokumen Pabean</th>';
-                echo '<th bgcolor="#C0C0C0" colspan="2">Bukti Penerimaan Barang</th>';
-                echo '<th bgcolor="#C0C0C0" colspan="2">Invoice</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Pengirim</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Kode Barang</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Nama Barang</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Jumlah</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Satuan</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Nilai</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Mata Uang</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">User</th>';
-            echo '</tr>';
-            echo '<tr>';
-                echo '<th bgcolor="#C0C0C0">Jenis</th>';
-                echo '<th bgcolor="#C0C0C0">No</th>';
-                echo '<th bgcolor="#C0C0C0">TGL</th>';
-                echo '<th bgcolor="#C0C0C0">No</th>';
-                echo '<th bgcolor="#C0C0C0">TGL</th>';
-                echo '<th bgcolor="#C0C0C0">No</th>';
-                echo '<th bgcolor="#C0C0C0">TGL</th>';
-            echo '</tr>';
-        $no = 1;
-        for ($i = 0; $i < count($datas); $i++) {
-            $rowdata = $datas[$i];
-
-            echo '<tr>';
-                echo '<td align="right">'.$no.'</td>';
-                echo '<td>'.$rowdata->jnsdokbc.'</td>';
-                echo '<td>'.$rowdata->nodokbc.'</td>';
-                echo '<td>'.$rowdata->datedokbc.'</td>';
-                echo '<td>'.$rowdata->buktiterima.'</td>';
-                echo '<td>'.$rowdata->dateterima.'</td>';
-                echo '<td>'.$rowdata->buktiinvoice.'</td>';
-                echo '<td>'.$rowdata->dateinvoice.'</td>';
-                echo '<td>'.$rowdata->supplier.'</td>';
-                echo '<td>'.$rowdata->partno.'</td>';
-                echo '<td>'.$rowdata->partname.'</td>';
-                echo '<td align="right">'.number_format($rowdata->qty, 0).'</td>';
-                echo '<td>'.$rowdata->unit.'</td>';
-                echo '<td align="right">'.number_format($rowdata->price, 0).'</td>';
-                echo '<td>'.$rowdata->currency.'</td>';
-                echo '<td>'.$rowdata->input_user.'<br>'.$rowdata->input_date.'</td>';
-            echo '</tr>';
-            $no++;
-        }
-        echo '</table>';
-        echo '</body></html>'; */
+        //  mengambil data table
+        $sql    = Http::get($this->domain . $this->url . "json_download_incoming.php", [
+            'valstdate' => $stdate,
+            'valendate' => $endate,
+            'valjnsdok' => $jnsdokbc,
+            'valnodok' => $nodokbc,
+            'valpartno' => $partno
+        ]);
+        // return $this->domain . $this->url . "json_download_incoming.php";
+        $data = $sql['rows'];
+        //  menampilkan view
+        // return view('download.incoming', compact('sql'));
+        return view('download.incoming', compact('data'));
     }
 }
