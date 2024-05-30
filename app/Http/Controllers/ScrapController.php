@@ -10,6 +10,7 @@ class ScrapController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
+    protected $tempat = 'Gudang Scrap';
 
     public function __construct(){
         if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
@@ -23,59 +24,141 @@ class ScrapController extends Controller
     {
         $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
         $gitversions = $gitversions['version'];
-        return view('admins.scrap', compact('gitversions'));
+        $categories = [
+            "Bahan baku",
+            "Bahan penolong",
+            "Barang modal - Mesin",
+            "Barang modal - Spare part",
+            "Barang modal - Mould / Cetakan",
+            "Barang modal - Peralatan pabrik",
+            "Barang modal - Peralatan konstruksi",
+            "Peralatan perkantoran",
+            "Hasil produksi",
+            "Barang setengah jadi",
+            "Barang Pengemas atau Alat bantu pengemas",
+            "Bahan baku - Contoh",
+            "Hasil produksi - Contoh"
+        ];
+        return view('admins.scrap',compact('gitversions','categories'));
+        // $categories  = Http::get($this->domain.$this->url."json_category.php");
+        // return view('admins.scrap')
+        //         ->with('gitversion',$gitversions)
+        //         ->with('categories',$categories);
     }
 
     //  ***
     //  loaddata
     public function loaddata(Request $request,$valjmlhal=1,$jumlahDataPerHalaman=10)
     {
-        if($request->ajax())
-        {
-            // parameter
-            $halamanAktif   = intval($valjmlhal);
-            $stdate         = $request->get('stdate');
-            $endate         = $request->get('endate');
-            $partno         = $request->get('partno');
-            $awalData       = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
+        // return $request;
+        // return $valjmlhal;
+        // return $request;
+        //  action ajax
+        if ($request->ajax()) {
+            //  variable
+            $output     = '';
+            $jumlahDataPerHalaman = 10;
+            $periode     = $request->get('periode');
+            $partno     = $request->get('partno');
 
-            $data = Http::get($this->domain.$this->url.'json_scrap.php',[
-                'valstdate' => $stdate,
-                'valendate' => $endate,
-                'valpartno' => $partno,
-                'start' => $awalData,
-                'limit' => $jumlahDataPerHalaman
+            $counts = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+                'periode' => $periode,
+                'partno' => $partno,
+                'tempat' => $this->tempat,
+                'page' => 0,
+                'limit' => 1
             ]);
-            // return $data;
-            $totalcount = $data['totalCount'];
-            $jumlahHalaman  = ceil($totalcount / $jumlahDataPerHalaman);
-            $header = Helper::return_data_header($data['rows']);
 
-            if($data['totalCount'] == 0){
-                $halamanAktif   = $halamanAktif - 1;
-                $awalData       = $awalData + 1;
-                $output         = Helper::no_data();
-            }
-            else{
-                $output = Helper::return_data_mutate($awalData,$data['rows']);
+            // return $counts['totalCount'];
+            if (empty($counts['totalCount'])) {
+                $totalcount = 0;
+            } else {
+                $totalcount = $counts['totalCount'];
+                // foreach($counts as &$row)
+                // {
+                //     $row        = get_object_vars($row);
+                //     $totalcount = $row['totalcount'];
+                // }
             }
 
-            return [
-                'header'        => $header,
+            if ($totalcount > 0) {
+                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
+                $halamanAktif           = intval($valjmlhal);
+                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
+
+                //  mengambil data table
+                $sql    = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+                    'periode' => $periode,
+                    'partno' => $partno,
+                    'tempat' => $this->tempat,
+                    'page' => $awalData,
+                    'limit' => $jumlahDataPerHalaman
+                ]);
+                // return $sql['rows'];
+                $nomor  = $awalData;
+                foreach ($sql['rows'] as $rowdata) {
+                    // return $rowdata;
+                    $no = ++$nomor;
+                    $output .= Helper::return_data_mutasi($no, $rowdata);
+                }
+            } else {
+                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
+                $halamanAktif           = 0;
+                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
+                $output = '
+                <tr>
+                <td class="text-center" colspan="16">No Data Found</td>
+                </tr>
+                ';
+            }
+
+            $data = array(
                 'table_data'    => $output,
                 'totalcount'    => $totalcount,
                 'halamanAktif'  => $halamanAktif,
                 'jumlahHalaman' => $jumlahHalaman
-            ];
-        }
-        else{
-           //  menghapus session
-           $request->session()->forget('session_gitinventory_id');
-           $request->session()->forget('session_gitinventory_userid');
-           $request->session()->forget('session_gitinventory_username');
-           return redirect('/login');
+            );
+            echo json_encode($data);
+            //  mengirim data ke view
+
+        } else {
+            //  menghapus session
+            $request->session()->forget('session_gitinventory_id');
+            $request->session()->forget('session_gitinventory_userid');
+            $request->session()->forget('session_gitinventory_username');
+            return redirect('/login');
         }
     }
+
+    // public function return_data($no, $rowdata)
+    // {
+    //     /**"id": "1",
+    //   "kode_barang": "SCR_MTL_1121/1221/0122",
+    //   "nama_barang": "SCRAP BESI (EX PERUSAKAN)",
+    //   "satuan": "KG",
+    //   "saldo_awal": "0",
+    //   "pemasukan": "835.500",
+    //   "pengeluaran": "835.500",
+    //   "penyesuaian": "0",
+    //   "saldo_buku": "0.000",
+    //   "stock_opname": "0.000",
+    //   "keterangan": "" */
+    //     // return $rowdata;
+    //     return '<tr>
+    //                 <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+    //                 <td>' . $rowdata['kode_barang'] . '</td>
+    //                 <td>' . $rowdata['nama_barang'] . '</td>
+    //                 <td>' . $rowdata['satuan'] . '</td>
+    //                 <td align="right">' . $rowdata['saldo_awal'] . '</td>
+    //                 <td align="right">' . $rowdata['pemasukan'] . '</td>
+    //                 <td align="right">' . $rowdata['pengeluaran'] . '</td>
+    //                 <td align="right">' . $rowdata['penyesuaian'] . '</td>
+    //                 <td align="right">' . $rowdata['saldo_buku'] . '</td>
+    //                 <td align="right">' . $rowdata['stock_opname'] . '</td>
+    //                 <td align="right">' . $rowdata['selisih'] . '</td>
+    //                 <td>' . $rowdata['keterangan'] . '</td>
+    //             </tr>';
+    // }
 
     //  ***
     //  pagination
@@ -89,26 +172,29 @@ class ScrapController extends Controller
     public function download(Request $request)
     {
         //  global variable
-        $stdate     = $request->get('stdate');
-        $endate     = $request->get('endate');
+        // $stdate     = $request->get('stdate');
+        // $endate     = $request->get('endate');
         // $jnsdokbc   = $request->get('jnsdokbc');
         // $nodokbc    = $request->get('nodokbc');
+        $periode = $request->get('periode');
         $partno     = $request->get('partno');
-        $filename   = 'Laporan Mutasi Gudang Umum';
+        $tempat     = $this->tempat;
+        $filename   = 'Laporan Mutasi Barang Scrap';
 
         //  execute database
         // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        $datas = Http::get($this->domain.$this->url.'json_scrap.php',[
-                    'valstdate' => $stdate,
-                    'valednate' => $endate,
-                    'valpartno' => $partno
+        $datas = Http::get($this->domain.$this->url.'json_gudang_scrap.php',[
+                    'periode' => $periode,
+                    'partno' => $partno,
+                    'tempat' => $tempat
                 ]);
+
         //  untuk meyimpan data di excel
         header("Content-type: application/vnd-ms-excel");
         header("Content-Disposition: attachment; filename=". $filename .".xls");
         echo '<table>';
             echo '<tr>';
-            echo '<th colspan="6" style="font-size:18pt;" align="left">LAPORAN MUTASI GUDANG UMUM</th>';
+            echo '<th colspan="6" style="font-size:18pt;" align="left">'.strtoupper($filename).'</th>';
             echo '</tr>';
             echo '<tr>';
                 echo '<th></th>';
@@ -116,49 +202,36 @@ class ScrapController extends Controller
         echo '</table>';
         echo '<table border="1">';
             echo '<tr>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">No</th>';
-                echo '<th bgcolor="#C0C0C0" colspan="3">Dokumen Pabean</th>';
-                echo '<th bgcolor="#C0C0C0" colspan="2">Bukti Penerimaan Barang</th>';
-                echo '<th bgcolor="#C0C0C0" colspan="2">Invoice</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Pengirim</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Kode Barang</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Nama Barang</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Jumlah</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Satuan</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Nilai</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">Mata Uang</th>';
-                echo '<th bgcolor="#C0C0C0" rowspan="2">User</th>';
-            echo '</tr>';
-            echo '<tr>';
-                echo '<th bgcolor="#C0C0C0">Jenis</th>';
-                echo '<th bgcolor="#C0C0C0">No</th>';
-                echo '<th bgcolor="#C0C0C0">TGL</th>';
-                echo '<th bgcolor="#C0C0C0">No</th>';
-                echo '<th bgcolor="#C0C0C0">TGL</th>';
-                echo '<th bgcolor="#C0C0C0">No</th>';
-                echo '<th bgcolor="#C0C0C0">TGL</th>';
+                echo'<th bgcolor="#C0C0C0">No</th>';
+                echo'<th bgcolor="#C0C0C0">Kode Brg</th>';
+                echo'<th bgcolor="#C0C0C0">Nama Brg</th>';
+                echo'<th bgcolor="#C0C0C0">Sat</th>';
+                echo'<th bgcolor="#C0C0C0">Saldo Awal</th>';
+                echo'<th bgcolor="#C0C0C0">Pemasukan</th>';
+                echo'<th bgcolor="#C0C0C0">Pengeluaran</th>';
+                echo'<th bgcolor="#C0C0C0">Penyesuaian</th>';
+                echo'<th bgcolor="#C0C0C0">Saldo Buku</th>';
+                echo'<th bgcolor="#C0C0C0">Stock Opname</th>';
+                echo'<th bgcolor="#C0C0C0">Selisih</th>';
+                echo'<th bgcolor="#C0C0C0">Ket</th>';
             echo '</tr>';
         $no = 1;
-        for ($i = 0; $i < count($datas); $i++) {
-            $rowdata = $datas[$i];
+        for ($i = 0; $i < count($datas['rows']); $i++) {
+            $rowdata = $datas['rows'][$i];
 
             echo '<tr>';
                 echo '<td align="right">'.$no.'</td>';
-                echo '<td>'.$rowdata->jnsdokbc.'</td>';
-                echo '<td>'.$rowdata->nodokbc.'</td>';
-                echo '<td>'.$rowdata->datedokbc.'</td>';
-                echo '<td>'.$rowdata->buktiterima.'</td>';
-                echo '<td>'.$rowdata->dateterima.'</td>';
-                echo '<td>'.$rowdata->buktiinvoice.'</td>';
-                echo '<td>'.$rowdata->dateinvoice.'</td>';
-                echo '<td>'.$rowdata->supplier.'</td>';
-                echo '<td>'.$rowdata->partno.'</td>';
-                echo '<td>'.$rowdata->partname.'</td>';
-                echo '<td align="right">'.number_format($rowdata->qty, 0).'</td>';
-                echo '<td>'.$rowdata->unit.'</td>';
-                echo '<td align="right">'.number_format($rowdata->price, 0).'</td>';
-                echo '<td>'.$rowdata->currency.'</td>';
-                echo '<td>'.$rowdata->input_user.'<br>'.$rowdata->input_date.'</td>';
+                echo '<td>'.$rowdata['kode_barang'].'</td>';
+                echo '<td>'.$rowdata['nama_barang'].'</td>';
+                echo '<td>'.$rowdata['satuan'].'</td>';
+                echo '<td>'.$rowdata['saldo_awal'].'</td>';
+                echo '<td>'.$rowdata['pemasukan'].'</td>';
+                echo '<td>'.$rowdata['pengeluaran'].'</td>';
+                echo '<td>'.$rowdata['penyesuaian'].'</td>';
+                echo '<td>'.$rowdata['saldo_buku'].'</td>';
+                echo '<td>'.$rowdata['selisih'].'</td>';
+                echo '<td>'.$rowdata['stock_opname'].'</td>';
+                echo '<td>'.$rowdata['keterangan'].'</td>';
             echo '</tr>';
             $no++;
         }
