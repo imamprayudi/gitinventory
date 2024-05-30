@@ -56,6 +56,36 @@ class Helper
         return $body;
     }
 
+    public static function return_data_mutasi($no, $rowdata){
+        /**"id": "1",
+      "kode_barang": "SCR_MTL_1121/1221/0122",
+      "nama_barang": "SCRAP BESI (EX PERUSAKAN)",
+      "satuan": "KG",
+      "saldo_awal": "0",
+      "pemasukan": "835.500",
+      "pengeluaran": "835.500",
+      "penyesuaian": "0",
+      "saldo_buku": "0.000",
+      "stock_opname": "0.000",
+      "keterangan": "" */
+        // return $rowdata;
+        return '<tr>
+                    <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+                    <td>' . $rowdata['kode_barang'] . '</td>
+                    <td>' . $rowdata['nama_barang'] . '</td>
+                    <td>' . $rowdata['satuan'] . '</td>
+                    <td align="right">' . $rowdata['saldo_awal'] . '</td>
+                    <td align="right">' . $rowdata['pemasukan'] . '</td>
+                    <td align="right">' . $rowdata['pengeluaran'] . '</td>
+                    <td align="right">' . $rowdata['penyesuaian'] . '</td>
+                    <td align="right">' . $rowdata['saldo_buku'] . '</td>
+                    <td align="right">' . $rowdata['stock_opname'] . '</td>
+                    <td align="right">' . $rowdata['selisih'] . '</td>
+                    <td>' . $rowdata['keterangan'] . '</td>
+                </tr>';
+
+    }
+
     public static function no_data(){
         return '
                 <tr>

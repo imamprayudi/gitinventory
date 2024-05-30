@@ -51,34 +51,43 @@ Route::get('/output/loaddata', [OutgoingController::class,'loaddata'])->middlewa
 Route::get('/output/pagination', [OutgoingController::class,'pagination'])->middleware('sesauthgitinventory')->name('output.pagination');
 Route::get('/output/download', [OutgoingController::class,'download'])->middleware('sesauthgitinventory')->name('output.download');
 
-//  **
-//  Material
-Route::get('/material', [MaterialController::class,'index'])->middleware('sesauthgitinventory');
-Route::get('/material/loaddata', [MaterialController::class,'loaddata'])->middleware('sesauthgitinventory')->name('material.loaddata');
-Route::get('/material/pagination', [MaterialController::class,'pagination'])->middleware('sesauthgitinventory')->name('material.pagination');
-Route::get('/material/download', [MaterialController::class,'download'])->middleware('sesauthgitinventory')->name('material.download');
 
 //  **
-//  Gudangumum
-Route::get('/gudangumum', [GudangumumController::class,'index'])->middleware('sesauthgitinventory');
-Route::get('/gudangumum/loaddata', [GudangumumController::class,'loaddata'])->middleware('sesauthgitinventory')->name('gudangumum.loaddata');
-Route::get('/gudangumum/pagination', [GudangumumController::class,'pagination'])->middleware('sesauthgitinventory')->name('gudangumum.pagination');
-Route::get('/gudangumum/download', [GudangumumController::class,'download'])->middleware('sesauthgitinventory')->name('gudangumum.download');
-//  **
-//  Finishgood
-Route::get('/finishgood', [FinishgoodController::class,'index'])->middleware('sesauthgitinventory');
-Route::get('/finishgood/loaddata', [FinishgoodController::class,'loaddata'])->middleware('sesauthgitinventory')->name('finishgood.loaddata');
-Route::get('/finishgood/pagination', [FinishgoodController::class,'pagination'])->middleware('sesauthgitinventory')->name('finishgood.pagination');
-Route::get('/finishgood/download', [FinishgoodController::class,'download'])->middleware('sesauthgitinventory')->name('finishgood.download');
-//  **
-//  Production
-Route::get('/production', [ProductionController::class,'index'])->middleware('sesauthgitinventory');
-Route::get('/production/loaddata', [ProductionController::class,'loaddata'])->middleware('sesauthgitinventory')->name('production.loaddata');
-Route::get('/production/pagination', [ProductionController::class,'pagination'])->middleware('sesauthgitinventory')->name('production.pagination');
-Route::get('/production/download', [ProductionController::class,'download'])->middleware('sesauthgitinventory')->name('production.download');
+//  Finishe Goods
+Route::get('/finishgood', [FinishgoodController::class, 'index'])->middleware('sesauthgitinventory');
+Route::get('/finishgood/loaddata', [FinishgoodController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('finishgood.loaddata');
+Route::get('/finishgood/pagination', [FinishgoodController::class, 'pagination'])->middleware('sesauthgitinventory')->name('finishgood.pagination');
+Route::get('/finishgood/download', [FinishgoodController::class, 'download'])->middleware('sesauthgitinventory')->name('finishgood.download');
 //  **
 //  Scrap
-Route::get('/scrap', [ScrapController::class,'index'])->middleware('sesauthgitinventory');
-Route::get('/scrap/loaddata', [ScrapController::class,'loaddata'])->middleware('sesauthgitinventory')->name('scrap.loaddata');
-Route::get('/scrap/pagination', [ScrapController::class,'pagination'])->middleware('sesauthgitinventory')->name('scrap.pagination');
-Route::get('/scrap/download', [ScrapController::class,'download'])->middleware('sesauthgitinventory')->name('scrap.download');
+Route::get('/scrap', [ScrapController::class, 'index'])->middleware('sesauthgitinventory');
+Route::get('/scrap/loaddata', [ScrapController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('scrap.loaddata');
+Route::get('/scrap/pagination', [ScrapController::class, 'pagination'])->middleware('sesauthgitinventory')->name('scrap.pagination');
+Route::get('/scrap/download', [ScrapController::class, 'download'])->middleware('sesauthgitinventory')->name('scrap.download');
+
+//  **
+//  Material
+// Route::get('/material', [MaterialController::class,'index'])->middleware('sesauthgitinventory');
+// Route::get('/material/loaddata', [MaterialController::class,'loaddata'])->middleware('sesauthgitinventory')->name('material.loaddata');
+// Route::get('/material/pagination', [MaterialController::class,'pagination'])->middleware('sesauthgitinventory')->name('material.pagination');
+// Route::get('/material/download', [MaterialController::class,'download'])->middleware('sesauthgitinventory')->name('material.download');
+
+// //  **
+// //  Gudangumum
+// Route::get('/gudangumum', [GudangumumController::class,'index'])->middleware('sesauthgitinventory');
+// Route::get('/gudangumum/loaddata', [GudangumumController::class,'loaddata'])->middleware('sesauthgitinventory')->name('gudangumum.loaddata');
+// Route::get('/gudangumum/pagination', [GudangumumController::class,'pagination'])->middleware('sesauthgitinventory')->name('gudangumum.pagination');
+// Route::get('/gudangumum/download', [GudangumumController::class,'download'])->middleware('sesauthgitinventory')->name('gudangumum.download');
+// //  **
+// //  Finishgood
+// Route::get('/finishgood', [FinishgoodController::class,'index'])->middleware('sesauthgitinventory');
+// Route::get('/finishgood/loaddata', [FinishgoodController::class,'loaddata'])->middleware('sesauthgitinventory')->name('finishgood.loaddata');
+// Route::get('/finishgood/pagination', [FinishgoodController::class,'pagination'])->middleware('sesauthgitinventory')->name('finishgood.pagination');
+// Route::get('/finishgood/download', [FinishgoodController::class,'download'])->middleware('sesauthgitinventory')->name('finishgood.download');
+// //  **
+// //  Production
+// Route::get('/production', [ProductionController::class,'index'])->middleware('sesauthgitinventory');
+// Route::get('/production/loaddata', [ProductionController::class,'loaddata'])->middleware('sesauthgitinventory')->name('production.loaddata');
+// Route::get('/production/pagination', [ProductionController::class,'pagination'])->middleware('sesauthgitinventory')->name('production.pagination');
+// Route::get('/production/download', [ProductionController::class,'download'])->middleware('sesauthgitinventory')->name('production.download');
+

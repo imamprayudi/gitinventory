@@ -14,32 +14,36 @@
                     </div>
                     <div class="card-body card-block">
                         <div class="row form-group">
-                            <div class="col-4">
+                            {{-- <div class="col-4">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>Start Date (mm/dd/yyyy)</small></div>
-                                    <input type="date" class="form-control form-control-sm" name="stdate" id="stdate" autocomplete="off">
+                                    <div class="bg-warning text-center"><small>Item Category</small></div>
+                                    <select class="form-control form-control-sm text-uppercase" name="category" id="category">
+                                       @foreach ($categories as $key => $category)
+                                            <option value="{{ $key }}">{{ $category }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div> --}}
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
+                                    <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>End Date (mm/dd/yyyy)</small></div>
-                                    <input type="date" class="form-control form-control-sm" name="endate" id="endate" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-4">
+                            {{-- <div class="col-6">
                                 <div class="card">
                                     <div class="bg-warning text-center"><small>Part Number</small></div>
                                     <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="partno" id="partno" autocomplete="off">
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div>
+                            </div> --}}
+                            <div class="col-12 text-center">
+                                <div aria-label="Toolbar with button groups">
+                                    {{-- <div>
                                         &nbsp;
-                                    </div>
+                                    </div> --}}
                                     <div class="btn-group" role="group" aria-label="First group">
                                         <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
-                                        <button type="button" class="btn btn-secondary btn-sm" id="btn_download">Download</button>
+                                        {{-- <button type="button" class="btn btn-secondary btn-sm" id="btn_download">Download</button> --}}
                                         <button type="button" class="btn btn-success btn-sm" id="btn_cari">Search</button>
                                     </div>
                                 </div>
@@ -56,7 +60,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Mutasi Finish Good <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Barang Finished Goods <p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -66,6 +70,20 @@
                     <div class="table-stats order-table ov-h">
                         <table class="table table-striped table-hover">
                             <thead>
+                                <tr>
+                                    <th class="align-middle">No</th>
+                                    <th class="align-middle">Kode Brg</th>
+                                    <th class="align-middle">Nama Brg</th>
+                                    <th class="align-middle">Sat</th>
+                                    <th class="align-middle">Saldo Awal</th>
+                                    <th class="align-middle">Pemasukan</th>
+                                    <th class="align-middle">Pengeluaran</th>
+                                    <th class="align-middle">Penyesuaian</th>
+                                    <th class="align-middle">Saldo Buku</th>
+                                    <th class="align-middle">Stock Opname</th>
+                                    <th class="align-middle">Selisih</th>
+                                    <th class="align-middle">Ket</th>
+                                </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -93,8 +111,8 @@ var url = "{{ route('finishgood.loaddata') }}";
 function loaddata()
 {
     //  variable
-    var stdate      = $("#stdate").val().replace(/-/g, "");
-    var endate      = $("#endate").val().replace(/-/g, "");
+    // var stdate      = $("#stdate").val().replace(/-/g, "");
+    // var endate      = $("#endate").val().replace(/-/g, "");
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
@@ -162,18 +180,22 @@ function loaddata()
 function search()
 {
     //  variable
-    var stdate      = $("#stdate").val().replace(/-/g, "");
-    var endate      = $("#endate").val().replace(/-/g, "");
+    // var category      = $("#category").val();
+    var periode      = $("#periode").val().replace(/-/g, "");
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
+    // console.log(url);
+    // return;
     $.ajax({
         url     : url,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno },
+        // data    : { category:category, periode:periode, partno:partno },
+        data    : {  periode:periode, partno:partno },
         dataType: 'json',
         success : function(data)
         {
+            console.log("data => ",data);
             var vallaquo = data.halamanAktif - 1;
             var valraquo = data.halamanAktif + 1;
             $("#loadingdata").remove();
@@ -187,6 +209,7 @@ function search()
             {
                 $("#spn_totalcount").text("Total data "+data.totalcount+" records");
             }
+
             else
             {
                 $("#spn_totalcount").text("Data nothing");
@@ -533,7 +556,7 @@ $(document).ready(function(){
     $("#partno").val('');
 
     //  load data
-    loaddata();
+    // loaddata();
 
     //  trigger toogle
     $("#menuToggle").trigger('click');
@@ -541,7 +564,11 @@ $(document).ready(function(){
     //  search data
     $('#endate').change(function (){ search(); });
     $("#partno").keydown(function (e){ if(e.keyCode == 13){ search(); }});
-    $("#btn_cari").click(function(){ search(); });
+    // $("#btn_cari").click(function(){ search(); });
+    $("#btn_cari").click(
+        // console.log('clicked cari')
+    function(){ search(); }
+    );
     $("#btn_download").click(function(){ download(); });
     $("#btn_reset").click(function(){
         //  buat tanggal

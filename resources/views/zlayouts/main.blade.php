@@ -77,7 +77,7 @@
                         </li>
                     </li>
                     <li class="menu-title">Laporan Mutasi</li><!-- /.menu-title -->
-                        <li class="@yield('activegudangumum')">
+                        {{-- <li class="@yield('activegudangumum')">
                             <a href="{{ url('/gudangumum') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Gudang Umum">&emsp;&emsp; Gudang Umum</a>
                         </li>
                         <li class="@yield('activematerial')">
@@ -88,9 +88,18 @@
                         </li>
                         <li class="@yield('activeproduction')">
                             <a href="{{ url('/production') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Production">&emsp;&emsp; Production</a>
+                        </li> --}}
+                        <li class="@yield('active_bahan_baku')">
+                            <a href="{{ url('/bahan_baku') }}"><img src="./zlayouts/images/bahanbaku.png" height="14px" alt="Bahan Baku / Penolong">&emsp;&emsp; Bahan Baku / Penolong</a>
+                        </li>
+                        <li class="@yield('activefinishgood')">
+                            <a href="{{ url('/finishgood') }}"><img src="./zlayouts/images/finishgood.png" height="14px" alt="Finishgood">&emsp;&emsp; Barang Jadi</a>
+                        </li>
+                        <li class="@yield('active_mesin')">
+                            <a href="{{ url('/mesin') }}"><img src="./zlayouts/images/mesin.png" height="14px" alt="Mesin dan Peralatan">&emsp;&emsp; Mesin dan Peralatan</a>
                         </li>
                         <li class="@yield('activescrap')">
-                            <a href="{{ url('/scrap') }}"><img src="./zlayouts/images/input.png" height="14px" alt="Scrap">&emsp;&emsp; Gudang Scrap</a>
+                            <a href="{{ url('/scrap') }}"><img src="./zlayouts/images/scrap.png" height="14px" alt="Scrap">&emsp;&emsp; Barang Scrap</a>
                         </li>
                     </li>
                     {{-- <li class="menu-title">Setup</li><!-- /.menu-title -->
