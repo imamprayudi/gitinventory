@@ -103,16 +103,35 @@
                             </a>
                         </li>
                         <li class="@yield('active_bahan_baku')">
-                            <a href="{{ url('/bahan_baku') }}"><img src="./zlayouts/images/bahanbaku.png" height="14px" alt="Bahan Baku / Penolong">Bahan Baku / Penolong</a>
+                            <a href="{{ url('/bahan_baku') }}">
+                                <img src="./zlayouts/images/bahanbaku.png"
+                                height="14px" alt="Bahan Baku / Penolong">
+                                Bahan Baku / Penolong
+                            </a>
                         </li>
                         <li class="@yield('activefinishgood')">
-                            <a href="{{ url('/finishgood') }}"><img src="./zlayouts/images/finishgood.png" height="14px" alt="Finishgood">Barang Jadi</a>
+                            <a href="{{ url('/finishgood') }}">
+                                <img src="./zlayouts/images/finishgood.png"
+                                height="14px"
+                                alt="Finishgood">
+                                Barang Jadi
+                            </a>
                         </li>
                         <li class="@yield('active_mesin')">
-                            <a href="{{ url('/mesin') }}"><img src="./zlayouts/images/mesin.png" height="14px" alt="Mesin dan Peralatan">Mesin dan Peralatan</a>
+                            <a href="{{ url('/mesin') }}">
+                                <img src="./zlayouts/images/mesin.png"
+                                height="14px"
+                                alt="Mesin dan Peralatan">
+                                Mesin dan Peralatan
+                            </a>
                         </li>
                         <li class="@yield('activescrap')">
-                            <a href="{{ url('/scrap') }}"><img src="./zlayouts/images/scrap.png" height="14px" alt="Scrap">Barang Scrap</a>
+                            <a href="{{ url('/scrap') }}">
+                                <img src="./zlayouts/images/scrap.png"
+                                height="14px"
+                                alt="Scrap">
+                                Barang Scrap
+                            </a>
                         </li>
                     </li>
                 </ul>
@@ -153,21 +172,12 @@
         <footer class="site-footer">
             <div class="footer-inner bg-white" style="font-size:8pt;">
                 <div class="row">
-                    @if(date('Y') == 2022)
-                        <div class="col-sm-6">
-                            &copy; {{ date('Y') }} Team G.I.T
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            All Rights Reserved. Version {{ $gitversions }}
-                        </div>
-                    @else
-                        <div class="col-sm-6">
-                            &copy; 2022 - {{ date('Y') }} Team G.I.T
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            All Rights Reserved. Version {{ $gitversions }}
-                        </div>
-                    @endif
+                    <div class="col-sm-6">
+                        &copy; 2022 - {{ date('Y') }} Team G.I.T
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        All Rights Reserved. Version {{ $gitversions }}
+                    </div>
                 </div>
             </div>
         </footer>

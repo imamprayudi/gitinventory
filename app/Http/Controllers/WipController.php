@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
 
-class BahanBakuController extends Controller
+class WipController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
-    protected $tempat = 'Gudang Bahan Baku';
+    protected $tempat = '';
 
     public function __construct()
     {
@@ -39,7 +39,7 @@ class BahanBakuController extends Controller
             "Bahan baku - Contoh",
             "Hasil produksi - Contoh"
         ];
-        return view('admins.bahan_baku', compact('gitversions', 'categories'));
+        return view('admins.wip', compact('gitversions', 'categories'));
     }
 
     //  ***

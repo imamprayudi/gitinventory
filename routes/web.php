@@ -12,6 +12,9 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\FinishgoodController;
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\ScrapController;
+use App\Http\Controllers\WipController;
+use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\MesinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +68,9 @@ Route::get('/scrap/loaddata', [ScrapController::class, 'loaddata'])->middleware(
 Route::get('/scrap/pagination', [ScrapController::class, 'pagination'])->middleware('sesauthgitinventory')->name('scrap.pagination');
 Route::get('/scrap/download', [ScrapController::class, 'download'])->middleware('sesauthgitinventory')->name('scrap.download');
 
+Route::get('/wip', [WipController::class, 'index'])->middleware('sesauthgitinventory');
+Route::get('/bahan_baku', [BahanBakuController::class, 'index'])->middleware('sesauthgitinventory');
+Route::get('/mesin', [MesinController::class, 'index'])->middleware('sesauthgitinventory');
 //  **
 //  Material
 // Route::get('/material', [MaterialController::class,'index'])->middleware('sesauthgitinventory');
