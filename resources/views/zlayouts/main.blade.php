@@ -125,6 +125,14 @@
                                 Mesin dan Peralatan
                             </a>
                         </li>
+                        <li class="@yield('active_service')">
+                            <a href="{{ url('/service') }}">
+                                <img src="./zlayouts/images/service.png"
+                                height="14px"
+                                alt="Service Part">
+                                Service Part
+                            </a>
+                        </li>
                         <li class="@yield('activescrap')">
                             <a href="{{ url('/scrap') }}">
                                 <img src="./zlayouts/images/scrap.png"

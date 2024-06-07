@@ -15,6 +15,7 @@ use App\Http\Controllers\ScrapController;
 use App\Http\Controllers\WipController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\MesinController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,7 @@ Route::get('/scrap/download', [ScrapController::class, 'download'])->middleware(
 Route::get('/wip', [WipController::class, 'index'])->middleware('sesauthgitinventory');
 Route::get('/bahan_baku', [BahanBakuController::class, 'index'])->middleware('sesauthgitinventory');
 Route::get('/mesin', [MesinController::class, 'index'])->middleware('sesauthgitinventory');
+Route::get('/service', [ServiceController::class, 'index'])->middleware('sesauthgitinventory');
 //  **
 //  Material
 // Route::get('/material', [MaterialController::class,'index'])->middleware('sesauthgitinventory');
