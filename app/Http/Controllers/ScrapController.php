@@ -11,6 +11,7 @@ class ScrapController extends Controller
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
     protected $tempat = 'Gudang Scrap';
+    protected $kategori = 8;
 
     public function __construct(){
         if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
@@ -65,6 +66,7 @@ class ScrapController extends Controller
                 'periode' => $periode,
                 'partno' => $partno,
                 'tempat' => $this->tempat,
+                'kategori' => $this->kategori,
                 'page' => 0,
                 'limit' => 1
             ]);

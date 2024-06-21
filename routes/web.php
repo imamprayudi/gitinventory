@@ -73,6 +73,7 @@ Route::get('/wip', [WipController::class, 'index'])->middleware('sesauthgitinven
 Route::get('/bahan_baku', [BahanBakuController::class, 'index'])->middleware('sesauthgitinventory');
 Route::get('/mesin', [MesinController::class, 'index'])->middleware('sesauthgitinventory');
 Route::get('/service', [ServiceController::class, 'index'])->middleware('sesauthgitinventory');
+Route::get('/service/loaddata', [ServiceController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('service.loaddata');
 //  **
 //  Material
 // Route::get('/material', [MaterialController::class,'index'])->middleware('sesauthgitinventory');

@@ -10,7 +10,8 @@ class ServiceController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
-    protected $tempat = '';
+    protected $tempat = 'Gudang Service Part';
+    protected $kategori = '8';
 
     public function __construct()
     {
@@ -57,7 +58,7 @@ class ServiceController extends Controller
             $periode     = $request->get('periode');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+            $counts = Http::get($this->domain . $this->url . "json_mutasi_finishgood.php", [
                 'periode' => $periode,
                 'partno' => $partno,
                 'tempat' => $this->tempat,

@@ -6,27 +6,29 @@
     <!-- Animated -->
     <div class="animated fadeIn">
         <!--  Search data  -->
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row  justify-content-center">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="box-title">Search Data </h4>
                     </div>
                     <div class="card-body card-block">
                         <div class="row form-group">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="card">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-12 text-center">
-                                <div aria-label="Toolbar with button groups">
+                            <div class="col-6 text-center">
+                                <button type="button" class="btn btn-success btn-lg" id="btn_cari">
+                                    <i class="fa-solid fa-magnifying-glass"></i> Search
+                                </button>
+                                {{-- <div aria-label="Toolbar with button groups">
                                     <div class="btn-group" role="group" aria-label="First group">
                                         <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
-                                        <button type="button" class="btn btn-success btn-sm" id="btn_cari">Search</button>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
