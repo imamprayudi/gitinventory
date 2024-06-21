@@ -85,6 +85,21 @@ class Helper
                 </tr>';
 
     }
+    public static function return_data_wip($no, $rowdata){
+        /**"id": "1",
+      "kode_barang": "SCR_MTL_1121/1221/0122",
+      "nama_barang": "SCRAP BESI (EX PERUSAKAN)",
+      "satuan": "KG",
+       */
+        return '<tr>
+                    <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+                    <td>' . $rowdata['product_no'] . '</td>
+                    <td>' . $rowdata['name_template'] . '</td>
+                    <td>' . $rowdata['satuan'] . '</td>
+                    <td></td>
+                </tr>';
+
+    }
 
     public static function no_data(){
         return '

@@ -125,22 +125,22 @@
                                 WIP
                             </a>
                         </li>
-                        <li class="@yield('active_contoh_bahan_baku')">
-                            <a href="{{ url('/contoh_bahan_baku') }}">
+                        <li class="@yield('active_bahan_baku_contoh')">
+                            <a href="{{ url('/bahan_baku_contoh') }}">
                                 <img src="./zlayouts/images/bahanbaku.png"
                                 height="14px" alt="Barang Contoh Bahan Baku">
                                 Barang Contoh Bahan Baku
                             </a>
                         </li>
-                         <li class="@yield('active_contoh_finishgood')">
-                            <a href="{{ url('/contoh_finishgood') }}">
+                         <li class="@yield('active_finishgood_contoh')">
+                            <a href="{{ url('/finishgood_contoh') }}">
                                 <img src="./zlayouts/images/finishgood.png"
                                 height="14px"
                                 alt="Barang Contoh Hasil Produksi">
                                 Barang Contoh Hasil Produksi
                             </a>
                         </li>
-                        <li class="@yield('active_penolong')">
+                        <li class="@yield('active_bahan_penolong')">
                             <a href="{{ url('/bahan_penolong') }}">
                                 <img src="./zlayouts/images/bahan_penolong.png"
                                 height="14px" alt="Bahan Penolong">
@@ -183,19 +183,19 @@
                                 <img src="./zlayouts/images/mold.png"
                                 height="14px"
                                 alt="Barang Modal Mold/ Tooling">
-                                Barang Modal Mold/ Tooling
+                                Barang Modal Mold / Tooling
                             </a>
                         </li>
-                        <li class="@yield('active_peralatan_konstruksi')">
-                            <a href="{{ url('/peralatan_konstruksi') }}">
+                        <li class="@yield('active_konstruksi')">
+                            <a href="{{ url('/konstruksi') }}">
                                 <img src="./zlayouts/images/peralatan_konstruksi.png"
                                 height="14px"
                                 alt="Barang Modal Peralatan Konstruksi">
                                 Barang Modal Peralatan Konstruksi
                             </a>
                         </li>
-                        <li class="@yield('active_peralatan_kantor')">
-                            <a href="{{ url('/peralatan_kantor') }}">
+                        <li class="@yield('active_kantor')">
+                            <a href="{{ url('/kantor') }}">
                                 <img src="./zlayouts/images/peralatan_kantor.png"
                                 height="14px"
                                 alt="Peralatan Kantor">

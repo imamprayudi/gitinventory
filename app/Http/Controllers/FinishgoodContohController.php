@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
 
-class BahanBakuController extends Controller
+class FinishgoodContohController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
-    protected $tempat = 'Gudang Bahan Baku';
+    protected $tempat = 'Gudang Finished Goods';
+    protected $kategori = '12';
 
     public function __construct()
     {
@@ -39,7 +40,7 @@ class BahanBakuController extends Controller
             "Bahan baku - Contoh",
             "Hasil produksi - Contoh"
         ];
-        return view('admins.bahan_baku', compact('gitversions', 'categories'));
+        return view('admins.finishgood_contoh', compact('gitversions', 'categories'));
     }
 
     //  ***
@@ -57,7 +58,7 @@ class BahanBakuController extends Controller
             $periode     = $request->get('periode');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain . $this->url . "json_bahan_baku.php", [
+            $counts = Http::get($this->domain . $this->url . "json_mutasi_finishgood_contoh.php", [
                 'periode' => $periode,
                 'partno' => $partno,
                 'tempat' => $this->tempat,
@@ -83,7 +84,7 @@ class BahanBakuController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+                $sql    = Http::get($this->domain . $this->url . "json_mutasi_finishgood_contoh.php", [
                     'periode' => $periode,
                     'partno' => $partno,
                     'tempat' => $this->tempat,
@@ -149,7 +150,7 @@ class BahanBakuController extends Controller
 
         //  execute database
         // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        $datas = Http::get($this->domain . $this->url . 'json_gudang_scrap.php', [
+        $datas = Http::get($this->domain . $this->url . 'json_mutasi_finishgood_contoh.php', [
             'periode' => $periode,
             'partno' => $partno,
             'tempat' => $tempat

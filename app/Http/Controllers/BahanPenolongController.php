@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
 
-class BahanBakuController extends Controller
+class BahanPenolongController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
     protected $tempat = 'Gudang Bahan Baku';
+    protected $kategori = '1';
 
     public function __construct()
     {
@@ -39,7 +40,7 @@ class BahanBakuController extends Controller
             "Bahan baku - Contoh",
             "Hasil produksi - Contoh"
         ];
-        return view('admins.bahan_baku', compact('gitversions', 'categories'));
+        return view('admins.bahan_penolong', compact('gitversions', 'categories'));
     }
 
     //  ***
@@ -83,7 +84,7 @@ class BahanBakuController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+                $sql    = Http::get($this->domain . $this->url . "json_bahan_baku.php", [
                     'periode' => $periode,
                     'partno' => $partno,
                     'tempat' => $this->tempat,

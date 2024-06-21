@@ -6,46 +6,28 @@
     <!-- Animated -->
     <div class="animated fadeIn">
         <!--  Search data  -->
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row  justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="box-title">Search Data </h4>
                     </div>
                     <div class="card-body card-block">
-                        <div class="row form-group">
-                            {{-- <div class="col-4">
-                                <div class="card">
-                                    <div class="bg-warning text-center"><small>Item Category</small></div>
-                                    <select class="form-control form-control-sm text-uppercase" name="category" id="category">
-                                       @foreach ($categories as $key => $category)
-                                            <option value="{{ $key }}">{{ $category }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div> --}}
+                        <div class="row form-group justify-content-center">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
                             </div>
-                            {{-- <div class="col-6">
-                                <div class="card">
-                                    <div class="bg-warning text-center"><small>Part Number</small></div>
-                                    <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="partno" id="partno" autocomplete="off">
-                                </div>
-                            </div> --}}
                             <div class="col-12 text-center">
-                                <div aria-label="Toolbar with button groups">
-                                    {{-- <div>
-                                        &nbsp;
-                                    </div> --}}
-                                    <div class="btn-group" role="group" aria-label="First group">
-                                        <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
-                                        {{-- <button type="button" class="btn btn-secondary btn-sm" id="btn_download">Download</button> --}}
-                                        <button type="button" class="btn btn-success btn-sm" id="btn_cari">Search</button>
-                                    </div>
+                                {{-- <div aria-label="Toolbar with button groups"> --}}
+                                    {{-- <div class="btn-group" role="group" aria-label="First group"> --}}
+                                        <button type="reset" class="btn btn-warning btn-sm col-4" id="btn_reset">Reset</button>
+                                        <button type="button" class="btn btn-info btn-sm col-4" id="btn_cari">
+                                            Search
+                                        {{-- </button> --}}
+                                    {{-- </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -60,7 +42,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Finished Goods <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Barang Jadi <p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">

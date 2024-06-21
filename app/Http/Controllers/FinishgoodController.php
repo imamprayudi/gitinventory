@@ -84,7 +84,7 @@ class FinishgoodController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+                $sql    = Http::get($this->domain . $this->url . "json_mutasi_finishgood.php", [
                     'periode' => $periode,
                     'partno' => $partno,
                     'tempat' => $this->tempat,

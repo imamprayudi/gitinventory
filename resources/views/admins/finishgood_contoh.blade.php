@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('active_wip', 'active')
+@section('active_finishgood_contoh', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -7,29 +7,17 @@
     <div class="animated fadeIn">
         <!--  Search data  -->
         <div class="row  justify-content-center">
-            <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="box-title">Search Data </h4>
                     </div>
                     <div class="card-body card-block">
                         <div class="row form-group justify-content-center">
-                            <div class="col-4">
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>Kategori</small></div>
-                                    <select required="required" class="form-control-sm" name="category" id="category">
-                                    <option></option>
-                                    @foreach ($categories as $key => $val)
-                                        <option value="{{ $key+1 }}">{{ $val }}</option>
-                                    @endforeach
-                                    </select>
-                                    {{-- <input type="month" class="form-control form-control-sm" name="category" id="category" autocomplete="off"> --}}
                                 </div>
                             </div>
                             <div class="col-12 text-center">
@@ -54,7 +42,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Laporan WIP <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Barang Contoh Hasil Produksi<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -66,10 +54,17 @@
                             <thead>
                                 <tr>
                                     <th class="align-middle">No</th>
-                                    <th class="align-middle">Kode Barang</th>
-                                    <th class="align-middle">Nama Barang</th>
+                                    <th class="align-middle">Kode Brg</th>
+                                    <th class="align-middle">Nama Brg</th>
                                     <th class="align-middle">Sat</th>
-                                    <th class="align-middle">Jumlah</th>
+                                    <th class="align-middle">Saldo Awal</th>
+                                    <th class="align-middle">Pemasukan</th>
+                                    <th class="align-middle">Pengeluaran</th>
+                                    <th class="align-middle">Penyesuaian</th>
+                                    <th class="align-middle">Saldo Buku</th>
+                                    <th class="align-middle">Stock Opname</th>
+                                    <th class="align-middle">Selisih</th>
+                                    <th class="align-middle">Ket</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,19 +89,19 @@
 <script>
 //  ***
 //  load data
-var url = "{{ route('wip.loaddata') }}";
+var url = "{{ route('finishgood.loaddata') }}";
 function loaddata()
 {
     //  variable
     // var stdate      = $("#stdate").val().replace(/-/g, "");
     // var endate      = $("#endate").val().replace(/-/g, "");
-    var category      = $("#category").val();
+    var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : url,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, category:category },
+        data    : { stdate:stdate, endate:endate, partno:partno },
         dataType: 'json',
         success : function(data)
         {
@@ -169,7 +164,7 @@ function search()
     //  variable
     // var category      = $("#category").val();
     var periode      = $("#periode").val().replace(/-/g, "");
-    var category      = $("#category").val();
+    var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     // console.log(url);
@@ -177,8 +172,8 @@ function search()
     $.ajax({
         url     : url,
         method  : 'GET',
-        // data    : { category:category, periode:periode, category:category },
-        data    : {  periode:periode, category:category },
+        // data    : { category:category, periode:periode, partno:partno },
+        data    : {  periode:periode, partno:partno },
         dataType: 'json',
         success : function(data)
         {
