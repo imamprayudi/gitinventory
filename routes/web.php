@@ -13,7 +13,7 @@ use App\Http\Controllers\FinishgoodController;
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\ScrapController;
 use App\Http\Controllers\WipController;
-use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\Bahan_BakuController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BahanBakuContohController;
@@ -66,8 +66,8 @@ Route::get('/output/download', [OutgoingController::class,'download'])->middlewa
 
 //  **
 //  Bahan Baku
-Route::get('/bahan_baku', [BahanBakuController::class, 'index'])->middleware('sesauthgitinventory');
-Route::get('/bahan_baku/loaddata', [BahanBakuController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('bahan_baku.loaddata');
+Route::get('/bahan_baku', [Bahan_BakuController::class, 'index'])->middleware('sesauthgitinventory');
+Route::get('/bahan_baku/loaddata', [Bahan_BakuController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('bahan_baku.loaddata');
 
 //  **
 //  Finished Goods
