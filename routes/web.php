@@ -75,7 +75,7 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
 
     //  **
     //  Mutation
-    Route::get('/bahan_baku', [BahanBakuController::class, 'index']);
+    Route::get('/bahan_baku', [Bahan_BakuController::class, 'index']);
     Route::get('/finishgood', [FinishgoodController::class, 'index']);
     Route::get('/service', [ServiceController::class, 'index']);
     Route::get('/wip', [WipController::class, 'index']);
@@ -123,7 +123,7 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
 // //  **
 // //  Finished Goods
 // Route::get('/finishgood/loaddata', [FinishgoodController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('finishgood.loaddata');
-// Route::get('/finishgood/pagination', [FinishgoodController::class, 'pagination'])->middleware('sesauthgitinventory')->name('finishgood.pagination');
+Route::get('/finishgood/pagination', [FinishgoodController::class, 'pagination'])->middleware('sesauthgitinventory')->name('finishgood.pagination');
 // Route::get('/finishgood/download', [FinishgoodController::class, 'download'])->middleware('sesauthgitinventory')->name('finishgood.download');
 
 // //  **
@@ -132,7 +132,7 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
 
 // //  **
 // //  WIP
-// Route::get('/wip/loaddata', [WipController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('wip.loaddata');
+Route::get('/wip/loaddata', [WipController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('wip.loaddata');
 
 // //  **
 // //  Bahan Baku - Contoh
@@ -178,8 +178,8 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
 
 // //  **
 // //  Scrap
-// Route::get('/scrap/loaddata', [ScrapController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('scrap.loaddata');
-// Route::get('/scrap/pagination', [ScrapController::class, 'pagination'])->middleware('sesauthgitinventory')->name('scrap.pagination');
+Route::get('/scrap/loaddata', [ScrapController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('scrap.loaddata');
+Route::get('/scrap/pagination', [ScrapController::class, 'pagination'])->middleware('sesauthgitinventory')->name('scrap.pagination');
 // Route::get('/scrap/download', [ScrapController::class, 'download'])->middleware('sesauthgitinventory')->name('scrap.download');
 
 
