@@ -131,7 +131,7 @@ class FinishgoodController extends Controller
     //  pagination
     public function pagination(Request $request)
     {
-        return $this->loaddata($request, $request->get('jumlahHalaman'));
+        // return $this->loaddata($request, $request->get('jumlahHalaman'));
     }
 
     //  ***

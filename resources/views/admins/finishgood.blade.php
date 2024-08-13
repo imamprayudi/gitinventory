@@ -42,7 +42,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Jadi <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Hasil Produksi </strong> <p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -89,22 +89,26 @@
 <script>
 //  ***
 //  load data
-var url = "{{ route('finishgood.loaddata') }}";
+var url = "{{ route('mutation') }}";
+var urlpaging = "{{ route('mutation_page') }}";
+var kategori = "Hasil produksi";
+
 function loaddata()
 {
     //  variable
-    // var stdate      = $("#stdate").val().replace(/-/g, "");
-    // var endate      = $("#endate").val().replace(/-/g, "");
-    var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
+
+    // 'periode', 'kode_barang','gudang', 'kategori'
+    console.log('data load');
     $.ajax({
         url     : url,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno },
+        data    : { periode:periode, kategori:kategori},
         dataType: 'json',
         success : function(data)
         {
+            console.log({data});
             var valraquo = data.halamanAktif + 1;
             $("#loadingdata").remove();
             $('thead').html(data.header);
@@ -149,8 +153,8 @@ function loaddata()
                         + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
                         + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
                         + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
+                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick="+ raquo(valraquo)+ "><span aria-hidden='true'>»</span></a></li>"
+                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick="+ last(data.jumlahHalaman) +"><span aria-hidden='true'>Last</span></a></li>"
                     + "</ul>"
                     + "</nav>"
                 + "</div>");
@@ -162,18 +166,21 @@ function loaddata()
 function search()
 {
     //  variable
+    // 'periode', 'kode_barang','gudang', 'kategori']
     // var category      = $("#category").val();
-    var periode      = $("#periode").val().replace(/-/g, "");
-    var partno      = $("#partno").val();
+    var periode       = $("#periode").val();
+
+
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     // console.log(url);
     // return;
+
+    // console.log({url});
     $.ajax({
         url     : url,
         method  : 'GET',
-        // data    : { category:category, periode:periode, partno:partno },
-        data    : {  periode:periode, partno:partno },
+        data    : {  periode,  kategori },
         dataType: 'json',
         success : function(data)
         {
@@ -273,19 +280,17 @@ function search()
 
 //  ***
 //  function pagination
-var urlpaging = "{{ route('finishgood.pagination') }}";
 function first(jumlahHalaman)
 {
     //  variable
-    var stdate      = $("#stdate").val().replace(/-/g, "");
-    var endate      = $("#endate").val().replace(/-/g, "");
-    var partno      = $("#partno").val();
+    var periode       = $("#periode").val(); //.replace(/-/g, "");
+    // var kode_barang   = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : urlpaging,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+        data    : {  periode,  kategori, jumlahHalaman },
         dataType: 'json',
         success : function(data)
         {
@@ -326,15 +331,14 @@ function first(jumlahHalaman)
 function laquo(jumlahHalaman)
 {
     //  variable
-    var stdate      = $("#stdate").val().replace(/-/g, "");
-    var endate      = $("#endate").val().replace(/-/g, "");
-    var partno      = $("#partno").val();
+    var periode       = $("#periode").val(); //.replace(/-/g, "");
+    // var kode_barang   = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : urlpaging,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+        data    : {  periode,  kategori , jumlahHalaman },
         dataType: 'json',
         success : function(data)
         {
@@ -395,15 +399,15 @@ function laquo(jumlahHalaman)
 function raquo(jumlahHalaman)
 {
     //  variable
-    var stdate      = $("#stdate").val().replace(/-/g, "");
-    var endate      = $("#endate").val().replace(/-/g, "");
-    var partno      = $("#partno").val();
+    var periode       = $("#periode").val(); //.replace(/-/g, "");
+    // var kode_barang   = $("#partno").val();
+
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : urlpaging,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+        data    : {  periode, kategori , jumlahHalaman },
         dataType: 'json',
         success : function(data)
         {
@@ -464,15 +468,14 @@ function raquo(jumlahHalaman)
 function last(jumlahHalaman)
 {
     //  variable
-    var stdate      = $("#stdate").val().replace(/-/g, "");
-    var endate      = $("#endate").val().replace(/-/g, "");
-    var partno      = $("#partno").val();
+    var periode       = $("#periode").val(); //.replace(/-/g, "");
+    // var kode_barang   = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
         url     : urlpaging,
         method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+        data    : {  periode, kategori , jumlahHalaman },
         dataType: 'json',
         success : function(data)
         {
@@ -512,10 +515,9 @@ function last(jumlahHalaman)
 
 //  download data
 function download(){
-    var stdate      = $("#stdate").val().replace(/-/g, "");
-    var endate      = $("#endate").val().replace(/-/g, "");
-    var partno      = $("#partno").val();
-    window.open("finishgood/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
+    var periode       = $("#periode").val(); //.replace(/-/g, "");
+    // var kode_barang   = $("#partno").val();
+    // window.open("finishgood/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
 }
 
 //  ***
@@ -547,10 +549,7 @@ $(document).ready(function(){
     $('#endate').change(function (){ search(); });
     $("#partno").keydown(function (e){ if(e.keyCode == 13){ search(); }});
     // $("#btn_cari").click(function(){ search(); });
-    $("#btn_cari").click(
-        // console.log('clicked cari')
-    function(){ search(); }
-    );
+    $("#btn_cari").click(search());
     $("#btn_download").click(function(){ download(); });
     $("#btn_reset").click(function(){
         //  buat tanggal

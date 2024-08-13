@@ -7,20 +7,20 @@
     <div class="animated fadeIn">
         <!--  Search data  -->
         <div class="row  justify-content-center">
-            <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="box-title">Search Data </h4>
                     </div>
                     <div class="card-body card-block">
                         <div class="row form-group justify-content-center">
-                            <div class="col-4">
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-8">
+                            {{-- <div class="col-8">
                                 <div class="card">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Kategori</small></div>
                                     <select required="required" class="form-control-sm" name="category" id="category">
@@ -29,9 +29,9 @@
                                         <option value="{{ $key+1 }}">{{ $val }}</option>
                                     @endforeach
                                     </select>
-                                    {{-- <input type="month" class="form-control form-control-sm" name="category" id="category" autocomplete="off"> --}}
+                                    {{-- <input type="month" class="form-control form-control-sm" name="category" id="category" autocomplete="off"> --}
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-12 text-center">
                                 {{-- <div aria-label="Toolbar with button groups"> --}}
                                     {{-- <div class="btn-group" role="group" aria-label="First group"> --}}
@@ -94,7 +94,7 @@
 <script>
 //  ***
 //  load data
-var url = "{{ route('wip.loaddata') }}";
+// var url = "{{ route('wip.loaddata') }}";
 function loaddata()
 {
     //  variable
@@ -278,7 +278,7 @@ function search()
 
 //  ***
 //  function pagination
-var urlpaging = "{{ route('finishgood.pagination') }}";
+// var urlpaging = "{{ route('finishgood.pagination') }}";
 function first(jumlahHalaman)
 {
     //  variable
@@ -287,45 +287,45 @@ function first(jumlahHalaman)
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
-    $.ajax({
-        url     : urlpaging,
-        method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
-        dataType: 'json',
-        success : function(data)
-        {
-            var valraquo = data.halamanAktif + 1;
-            $("#loadingdata").remove();
-            $('tbody').html(data.table_data);
-            //  total count
-            if(data.totalcount == 1)
-            {
-                $("#spn_totalcount").text("Total data "+data.totalcount+" record");
-            }
-            else if(data.totalcount > 1)
-            {
-                $("#spn_totalcount").text("Total data "+data.totalcount+" records");
-            }
-            else
-            {
-                $("#spn_totalcount").text("Data nothing");
-            }
-            //  pagination
-            $("#navigation").remove();
-            $("#writepagination").append(""
-            + "<div id='navigation'>"
-                + "<nav class='pagination-outer' aria-label='Page navigation'>"
-                + "<ul class='pagination pagination-sm'>"
-                    + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
-                    + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
-                    + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                    + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
-                    + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
-                + "</ul>"
-                + "</nav>"
-            + "</div>");
-        }
-    });
+    // $.ajax({
+    //     url     : urlpaging,
+    //     method  : 'GET',
+    //     data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+    //     dataType: 'json',
+    //     success : function(data)
+    //     {
+    //         var valraquo = data.halamanAktif + 1;
+    //         $("#loadingdata").remove();
+    //         $('tbody').html(data.table_data);
+    //         //  total count
+    //         if(data.totalcount == 1)
+    //         {
+    //             $("#spn_totalcount").text("Total data "+data.totalcount+" record");
+    //         }
+    //         else if(data.totalcount > 1)
+    //         {
+    //             $("#spn_totalcount").text("Total data "+data.totalcount+" records");
+    //         }
+    //         else
+    //         {
+    //             $("#spn_totalcount").text("Data nothing");
+    //         }
+    //         //  pagination
+    //         $("#navigation").remove();
+    //         $("#writepagination").append(""
+    //         + "<div id='navigation'>"
+    //             + "<nav class='pagination-outer' aria-label='Page navigation'>"
+    //             + "<ul class='pagination pagination-sm'>"
+    //                 + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
+    //                 + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
+    //                 + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
+    //                 + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
+    //                 + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
+    //             + "</ul>"
+    //             + "</nav>"
+    //         + "</div>");
+    //     }
+    // });
 }
 
 function laquo(jumlahHalaman)
@@ -336,65 +336,65 @@ function laquo(jumlahHalaman)
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
-    $.ajax({
-        url     : urlpaging,
-        method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
-        dataType: 'json',
-        success : function(data)
-        {
-            var vallaquo = data.halamanAktif - 1;
-            var valraquo = data.halamanAktif + 1;
-            $("#loadingdata").remove();
-            $('tbody').html(data.table_data);
-            //  total count
-            if(data.totalcount == 1)
-            {
-                $("#spn_totalcount").text("Total data "+data.totalcount+" record");
-            }
-            else if(data.totalcount > 1)
-            {
-                $("#spn_totalcount").text("Total data "+data.totalcount+" records");
-            }
-            else
-            {
-                $("#spn_totalcount").text("Data nothing");
-            }
-            //  pagination
-            if(data.halamanAktif > 1)
-            {
-                $("#navigation").remove();
-                $("#writepagination").append(""
-                + "<div id='navigation'>"
-                    + "<nav class='pagination-outer' aria-label='Page navigation'>"
-                    + "<ul class='pagination pagination-sm'>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='First' onclick=\'first(1)\'><span aria-hidden='true'>First</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Previous' onclick=\'laquo("+(vallaquo)+")\'><span aria-hidden='true'>«</span></a></li>"
-                        + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
-                    + "</ul>"
-                    + "</nav>"
-                + "</div>");
-            }
-            else
-            {
-                $("#navigation").remove();
-                $("#writepagination").append(""
-                + "<div id='navigation'>"
-                    + "<nav class='pagination-outer' aria-label='Page navigation'>"
-                    + "<ul class='pagination pagination-sm'>"
-                        + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
-                        + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
-                        + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
-                    + "</ul>"
-                    + "</nav>"
-                + "</div>");
-            }
-        }
-    });
+    // $.ajax({
+    //     url     : urlpaging,
+    //     method  : 'GET',
+    //     data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+    //     dataType: 'json',
+    //     success : function(data)
+    //     {
+    //         var vallaquo = data.halamanAktif - 1;
+    //         var valraquo = data.halamanAktif + 1;
+    //         $("#loadingdata").remove();
+    //         $('tbody').html(data.table_data);
+    //         //  total count
+    //         if(data.totalcount == 1)
+    //         {
+    //             $("#spn_totalcount").text("Total data "+data.totalcount+" record");
+    //         }
+    //         else if(data.totalcount > 1)
+    //         {
+    //             $("#spn_totalcount").text("Total data "+data.totalcount+" records");
+    //         }
+    //         else
+    //         {
+    //             $("#spn_totalcount").text("Data nothing");
+    //         }
+    //         //  pagination
+    //         if(data.halamanAktif > 1)
+    //         {
+    //             $("#navigation").remove();
+    //             $("#writepagination").append(""
+    //             + "<div id='navigation'>"
+    //                 + "<nav class='pagination-outer' aria-label='Page navigation'>"
+    //                 + "<ul class='pagination pagination-sm'>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='First' onclick=\'first(1)\'><span aria-hidden='true'>First</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Previous' onclick=\'laquo("+(vallaquo)+")\'><span aria-hidden='true'>«</span></a></li>"
+    //                     + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
+    //                 + "</ul>"
+    //                 + "</nav>"
+    //             + "</div>");
+    //         }
+    //         else
+    //         {
+    //             $("#navigation").remove();
+    //             $("#writepagination").append(""
+    //             + "<div id='navigation'>"
+    //                 + "<nav class='pagination-outer' aria-label='Page navigation'>"
+    //                 + "<ul class='pagination pagination-sm'>"
+    //                     + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
+    //                     + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
+    //                     + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
+    //                 + "</ul>"
+    //                 + "</nav>"
+    //             + "</div>");
+    //         }
+    //     }
+    // });
 }
 
 function raquo(jumlahHalaman)
@@ -405,65 +405,65 @@ function raquo(jumlahHalaman)
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
-    $.ajax({
-        url     : urlpaging,
-        method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
-        dataType: 'json',
-        success : function(data)
-        {
-            var vallaquo = data.halamanAktif - 1;
-            var valraquo = data.halamanAktif + 1;
-            $("#loadingdata").remove();
-            $('tbody').html(data.table_data);
-            //  total count
-            if(data.totalcount == 1)
-            {
-                $("#spn_totalcount").text("Total data "+data.totalcount+" record");
-            }
-            else if(data.totalcount > 1)
-            {
-                $("#spn_totalcount").text("Total data "+data.totalcount+" records");
-            }
-            else
-            {
-                $("#spn_totalcount").text("Data nothing");
-            }
-            //  pagination
-            if(data.halamanAktif < data.jumlahHalaman)
-            {
-                $("#navigation").remove();
-                $("#writepagination").append(""
-                + "<div id='navigation'>"
-                    + "<nav class='pagination-outer' aria-label='Page navigation'>"
-                    + "<ul class='pagination pagination-sm'>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='First' onclick=\'first(1)\'><span aria-hidden='true'>First</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Previous' onclick=\'laquo("+(vallaquo)+")\'><span aria-hidden='true'>«</span></a></li>"
-                        + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
-                    + "</ul>"
-                    + "</nav>"
-                + "</div>");
-            }
-            else
-            {
-                $("#navigation").remove();
-                $("#writepagination").append(""
-                + "<div id='navigation'>"
-                    + "<nav class='pagination-outer' aria-label='Page navigation'>"
-                    + "<ul class='pagination pagination-sm'>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='First' onclick=\'first(1)\'><span aria-hidden='true'>First</span></a></li>"
-                        + "<li class='page-item '><a href='#' class='page-link' aria-label='Previous' onclick=\'laquo("+(vallaquo)+")\'><span aria-hidden='true'>«</span></a></li>"
-                        + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                        + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Next'><span aria-hidden='true' class='text-muted'>»</span></a></li>"
-                        + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Last'><span aria-hidden='true' class='text-muted'>Last</span></a></li>"
-                    + "</ul>"
-                    + "</nav>"
-                + "</div>");
-            }
-        }
-    });
+    // $.ajax({
+    //     url     : urlpaging,
+    //     method  : 'GET',
+    //     data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+    //     dataType: 'json',
+    //     success : function(data)
+    //     {
+    //         var vallaquo = data.halamanAktif - 1;
+    //         var valraquo = data.halamanAktif + 1;
+    //         $("#loadingdata").remove();
+    //         $('tbody').html(data.table_data);
+    //         //  total count
+    //         if(data.totalcount == 1)
+    //         {
+    //             $("#spn_totalcount").text("Total data "+data.totalcount+" record");
+    //         }
+    //         else if(data.totalcount > 1)
+    //         {
+    //             $("#spn_totalcount").text("Total data "+data.totalcount+" records");
+    //         }
+    //         else
+    //         {
+    //             $("#spn_totalcount").text("Data nothing");
+    //         }
+    //         //  pagination
+    //         if(data.halamanAktif < data.jumlahHalaman)
+    //         {
+    //             $("#navigation").remove();
+    //             $("#writepagination").append(""
+    //             + "<div id='navigation'>"
+    //                 + "<nav class='pagination-outer' aria-label='Page navigation'>"
+    //                 + "<ul class='pagination pagination-sm'>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='First' onclick=\'first(1)\'><span aria-hidden='true'>First</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Previous' onclick=\'laquo("+(vallaquo)+")\'><span aria-hidden='true'>«</span></a></li>"
+    //                     + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick=\'raquo("+(valraquo)+")\'><span aria-hidden='true'>»</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick=\'last("+data.jumlahHalaman+")\'><span aria-hidden='true'>Last</span></a></li>"
+    //                 + "</ul>"
+    //                 + "</nav>"
+    //             + "</div>");
+    //         }
+    //         else
+    //         {
+    //             $("#navigation").remove();
+    //             $("#writepagination").append(""
+    //             + "<div id='navigation'>"
+    //                 + "<nav class='pagination-outer' aria-label='Page navigation'>"
+    //                 + "<ul class='pagination pagination-sm'>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='First' onclick=\'first(1)\'><span aria-hidden='true'>First</span></a></li>"
+    //                     + "<li class='page-item '><a href='#' class='page-link' aria-label='Previous' onclick=\'laquo("+(vallaquo)+")\'><span aria-hidden='true'>«</span></a></li>"
+    //                     + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
+    //                     + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Next'><span aria-hidden='true' class='text-muted'>»</span></a></li>"
+    //                     + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Last'><span aria-hidden='true' class='text-muted'>Last</span></a></li>"
+    //                 + "</ul>"
+    //                 + "</nav>"
+    //             + "</div>");
+    //         }
+    //     }
+    // });
 }
 
 function last(jumlahHalaman)
@@ -474,45 +474,45 @@ function last(jumlahHalaman)
     var partno      = $("#partno").val();
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
-    $.ajax({
-        url     : urlpaging,
-        method  : 'GET',
-        data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
-        dataType: 'json',
-        success : function(data)
-        {
-            var vallaquo = data.halamanAktif - 1;
-            $("#loadingdata").remove();
-            $('tbody').html(data.table_data);
-            //  total count
-            if(data.totalcount == 1)
-            {
-                $("#spn_totalcount").text("Total data "+data.totalcount+" record");
-            }
-            else if(data.totalcount > 1)
-            {
-                $("#spn_totalcount").text("Total data "+data.totalcount+" records");
-            }
-            else
-            {
-                $("#spn_totalcount").text("Data nothing");
-            }
-            //  pagination
-            $("#navigation").remove();
-            $("#writepagination").append(""
-            + "<div id='navigation'>"
-                + "<nav class='pagination-outer' aria-label='Page navigation'>"
-                + "<ul class='pagination pagination-sm'>"
-                    + "<li class='page-item '><a href='#' class='page-link' aria-label='First' onclick=\'first(1)\'><span aria-hidden='true'>First</span></a></li>"
-                    + "<li class='page-item '><a href='#' class='page-link' aria-label='Previous' onclick=\'laquo("+(vallaquo)+")\'><span aria-hidden='true'>«</span></a></li>"
-                    + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                    + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Next'><span aria-hidden='true' class='text-muted'>»</span></a></li>"
-                    + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Last'><span aria-hidden='true' class='text-muted'>Last</span></a></li>"
-                + "</ul>"
-                + "</nav>"
-            + "</div>");
-        }
-    });
+    // $.ajax({
+    //     url     : urlpaging,
+    //     method  : 'GET',
+    //     data    : { stdate:stdate, endate:endate, partno:partno, jumlahHalaman: jumlahHalaman },
+    //     dataType: 'json',
+    //     success : function(data)
+    //     {
+    //         var vallaquo = data.halamanAktif - 1;
+    //         $("#loadingdata").remove();
+    //         $('tbody').html(data.table_data);
+    //         //  total count
+    //         if(data.totalcount == 1)
+    //         {
+    //             $("#spn_totalcount").text("Total data "+data.totalcount+" record");
+    //         }
+    //         else if(data.totalcount > 1)
+    //         {
+    //             $("#spn_totalcount").text("Total data "+data.totalcount+" records");
+    //         }
+    //         else
+    //         {
+    //             $("#spn_totalcount").text("Data nothing");
+    //         }
+    //         //  pagination
+    //         $("#navigation").remove();
+    //         $("#writepagination").append(""
+    //         + "<div id='navigation'>"
+    //             + "<nav class='pagination-outer' aria-label='Page navigation'>"
+    //             + "<ul class='pagination pagination-sm'>"
+    //                 + "<li class='page-item '><a href='#' class='page-link' aria-label='First' onclick=\'first(1)\'><span aria-hidden='true'>First</span></a></li>"
+    //                 + "<li class='page-item '><a href='#' class='page-link' aria-label='Previous' onclick=\'laquo("+(vallaquo)+")\'><span aria-hidden='true'>«</span></a></li>"
+    //                 + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
+    //                 + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Next'><span aria-hidden='true' class='text-muted'>»</span></a></li>"
+    //                 + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Last'><span aria-hidden='true' class='text-muted'>Last</span></a></li>"
+    //             + "</ul>"
+    //             + "</nav>"
+    //         + "</div>");
+    //     }
+    // });
 }
 
 //  download data

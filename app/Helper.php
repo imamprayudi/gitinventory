@@ -57,6 +57,38 @@ class Helper
     }
 
     public static function return_data_mutasi($no, $rowdata){
+        /**`monthly_mutation_report`.`kode_barang`,
+            `monthly_mutation_report`.`nama_barang`,
+            `monthly_mutation_report`.`satuan`,
+            `monthly_mutation_report`.`saldo_awal`,
+            `monthly_mutation_report`.`pemasukan`,
+            `monthly_mutation_report`.`pengeluaran`,
+            `monthly_mutation_report`.`saldo_buku`,
+            `monthly_mutation_report`.`penyesuaian`,
+            `monthly_mutation_report`.`stock_opname`,
+            `monthly_mutation_report`.`selisih`,
+            `monthly_mutation_report`.`keterangan`,
+            `monthly_mutation_report`.`created_at` */
+        // return $rowdata;
+        // <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+        return '<tr>
+                    <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+                    <td>' . $rowdata['kode_barang'] . '</td>
+                    <td>' . $rowdata['nama_barang'] . '</td>
+                    <td>' . $rowdata['satuan'] . '</td>
+                    <td align="right">' . number_format((float) $rowdata['saldo_awal'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['pemasukan'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['pengeluaran'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['penyesuaian'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['saldo_buku'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['stock_opname'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['selisih'],2) . '</td>
+                    <td>' . $rowdata['keterangan'] . '</td>
+                    </tr>';
+                    // <td>' . $rowdata['created_at'] . '</td>
+
+    }
+    public static function return_data_mutasi_old($no, $rowdata){
         /**"id": "1",
       "kode_barang": "SCR_MTL_1121/1221/0122",
       "nama_barang": "SCRAP BESI (EX PERUSAKAN)",

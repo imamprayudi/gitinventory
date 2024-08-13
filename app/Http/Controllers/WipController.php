@@ -65,7 +65,7 @@ class WipController extends Controller
 
             $counts = Http::get($this->domain . $this->url . "json_wip.php", [
                 'periode' => $periode,
-                'category' => $category,
+                'category' => 9,
                 'page' => 0,
                 'limit' => 25
             ]);

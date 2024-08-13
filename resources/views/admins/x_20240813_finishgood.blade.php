@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('active_sparepart', 'active')
+@section('activefinishgood', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -42,7 +42,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Modal Sparepart <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Barang Jadi <p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -89,7 +89,7 @@
 <script>
 //  ***
 //  load data
-var url = "{{ route('bahan_baku.loaddata') }}";
+var url = "{{ route('finishgood.loaddata') }}";
 function loaddata()
 {
     //  variable

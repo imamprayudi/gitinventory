@@ -273,7 +273,7 @@ function search()
 
 //  ***
 //  function pagination
-var urlpaging = "{{ route('finishgood.pagination') }}";
+// var urlpaging = "{{ route('finishgood.pagination') }}";
 function first(jumlahHalaman)
 {
     //  variable

@@ -106,7 +106,7 @@
                                 <img src="./zlayouts/images/finishgood.png"
                                 height="14px"
                                 alt="Finishgood">
-                                Barang Jadi
+                                Hasil Produksi
                             </a>
                         </li>
                         <li class="@yield('active_service')">
