@@ -15,7 +15,8 @@ class BahanPenolongController extends Controller
 
     public function __construct()
     {
-        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost')) {
+        $serverName = $_SERVER['SERVER_NAME'] ?? null;
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
             $this->domain = "http://136.198.117.118/";
         }
     }
