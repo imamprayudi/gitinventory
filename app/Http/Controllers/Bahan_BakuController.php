@@ -65,8 +65,8 @@ class Bahan_BakuController extends Controller
             $counts = Http::get($this->domain . $this->url . "json_mutation.php", [
                 'periode' => $periode,
                 'kode_barang' => $kode_barang,
-                'gudang' => $this->gudang,
-                'kategori' => $this->kategori,
+                'gudang' => $gudang,
+                'kategori' => $kategori,
                 'page' => 0,
                 'limit' => 1
             ]);
@@ -218,6 +218,21 @@ class Bahan_BakuController extends Controller
     //  ***
     //  download
     public function download(Request $request)
+    {
+        $periode     = $request->get('periode');
+        $kode_barang = $request->get('kode_barang');
+
+        //  mengambil data table
+        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
+            'periode' => $periode,
+            'kode_barang' => $kode_barang,
+            'gudang' => $gudang,
+            'kategori' => $kategori,
+        ]);
+        $data = $sql['rows'];
+        return view('download.mutation', compact('data'));
+    }
+    public function download_old(Request $request)
     {
         //  global variable
         // $stdate     = $request->get('stdate');

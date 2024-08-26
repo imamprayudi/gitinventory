@@ -13,17 +13,29 @@
                         <h4 class="box-title">Search Data </h4>
                     </div>
                     <div class="card-body card-block">
-                        <form method="get"></form>
+                        <form method="get">
                             <div class="row form-group justify-content-center">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
-                                <div class="col-6 text-center">
-                                    <button type="submit" class="btn btn-info btn-lg col-5" id="btn_cari" onclick="search()" >
+                                {{-- <div class="col-6 text-center">
+                                    <button type="submit" class="btn btn-info btn-md col-5" id="btn_cari" onclick="search()" >
                                         Search
                                     </button>
-                                    <button type="reset" class="btn btn-warning btn-lg col-5" id="btn_reset">Reset</button>
+                                    <button type="reset" class="btn btn-warning btn-md col-5" id="btn_reset">Reset</button>
+                                </div> --}}
+                            </div>
+                            <div class="col-12">
+                                <div class="justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="First group">
+                                        <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" id="btn_download" onclick="download()">Download</button>
+                                        <button type="submit" class="btn btn-success btn-sm" id="btn_cari" onclick="search()">Search</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -81,7 +93,7 @@
 
 @section('stylejavascript')
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+{{-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> --}}
 <script>
     //  ***
     //  load data
@@ -519,7 +531,7 @@
         var periode       = $("#periode").val(); //.replace(/-/g, "");
         var kode_barang   = $("#partno").val();
         // var kategori      = 'Bahan baku';
-        // window.open("finishgood/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
+        window.open("bahanbaku/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
     }
 
     //  ***
@@ -552,7 +564,7 @@
         $("#partno").keydown(function (e){ if(e.keyCode == 13){ search(); }});
         // $("#btn_cari").click(function(){ search(); });
         // $("#btn_cari").click(search());
-        $("#btn_download").click(function(){ download(); });
+        // $("#btn_download").click(function(){ download(); });
         $("#btn_reset").click(function(){
             //  buat tanggal
             var d       = new Date();
