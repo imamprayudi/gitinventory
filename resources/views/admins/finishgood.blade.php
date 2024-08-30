@@ -518,8 +518,7 @@
     function download(){
         var periode       = $("#periode").val(); //.replace(/-/g, "");
         var kode_barang   = $("#partno").val();
-        // var kategori      = 'Bahan baku';
-        window.open("finishgood/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
+        window.open("mutation-download?periode="+periode+"&kategori="+kategori+"");
     }
 
     //  ***

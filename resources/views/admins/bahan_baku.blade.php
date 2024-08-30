@@ -531,7 +531,7 @@
         var periode       = $("#periode").val(); //.replace(/-/g, "");
         var kode_barang   = $("#partno").val();
         // var kategori      = 'Bahan baku';
-        window.open("bahanbaku/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
+        window.open("bahan_baku/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
     }
 
     //  ***

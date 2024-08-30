@@ -220,16 +220,15 @@ class Bahan_BakuController extends Controller
     public function download(Request $request)
     {
         $periode     = $request->get('periode');
-        $kode_barang = $request->get('kode_barang');
+        $kategori = $request->get('kategori');
 
         //  mengambil data table
         $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
             'periode' => $periode,
-            'kode_barang' => $kode_barang,
-            'gudang' => $gudang,
-            'kategori' => $kategori,
+            'kategori' => $kategori
         ]);
         $data = $sql['rows'];
+        // return $data;
         return view('download.mutation', compact('data'));
     }
     public function download_old(Request $request)

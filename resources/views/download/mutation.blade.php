@@ -1,8 +1,8 @@
 {{ header("Content-type: application/vnd-ms-excel") }}
-{{ header("Content-Disposition: attachment; filename=Data ". $rowdata[0]['kategori'] .".xls") }}
+{{ header("Content-Disposition: attachment; filename=Data ". $data[0]['kategori'] .".xls") }}
 <table>
     <tr>
-        <th colspan="6" style="font-size:18pt;" align="left">LAPORAN PEMASUKAN PER DOKUMEN</th>
+        <th colspan="6" style="font-size:18pt;" align="left">LAPORAN {{ $data[0]['kategori'] }} PER DOKUMEN</th>
     </tr>
     <tr><th></th></tr>
 </table>
@@ -26,24 +26,23 @@
     @php
         $no=1
     @endphp
-    {{dd($data)}}
  
     @foreach ($data as $rowdata)
         <tr>
             <td align="right"><medium class="text-muted">{{ $no }}</medium></td>
-            <td>{{ $rowdata[$i]['kode_barang'] }}</td>
-            <td>{{ $rowdata[$i]['nama_barang'] }}</td>
-            <td>{{ $rowdata[$i]['satuan'] }}</td>
-            <td>{{ $rowdata[$i]['saldo_awal'] }}</td>
-            <td>{{ $rowdata[$i]['pemasukan'] }}</td>
-            <td>{{ $rowdata[$i]['pengeluaran'] }}</td>
-            <td>{{ $rowdata[$i]['saldo_buku'] }}</td>
-            <td>{{ $rowdata[$i]['penyesuaian'] }}</td>
-            <td>{{ $rowdata[$i]['stock_opname'] }}</td>
-            <td>{{ $rowdata[$i]['selisih'] }}</td>
-            <td>{{ $rowdata[$i]['keterangan'] }}</td>
-            <td>{{ $rowdata[$i]['kategori'] }}</td>
-            <td>{{ $rowdata[$i]['created_at'] }}</td>
+            <td>{{ $rowdata['kode_barang'] }}</td>
+            <td>{{ $rowdata['nama_barang'] }}</td>
+            <td>{{ $rowdata['satuan'] }}</td>
+            <td>{{ $rowdata['saldo_awal'] }}</td>
+            <td>{{ $rowdata['pemasukan'] }}</td>
+            <td>{{ $rowdata['pengeluaran'] }}</td>
+            <td>{{ $rowdata['saldo_buku'] }}</td>
+            <td>{{ $rowdata['penyesuaian'] }}</td>
+            <td>{{ $rowdata['stock_opname'] }}</td>
+            <td>{{ $rowdata['selisih'] }}</td>
+            <td>{{ $rowdata['keterangan'] }}</td>
+            {{-- <td>{{ $rowdata['kategori'] }}</td>
+            <td>{{ $rowdata['created_at'] }}</td> --}}
         </tr>
     @php
         $no=$no+1

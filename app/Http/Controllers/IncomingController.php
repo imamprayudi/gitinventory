@@ -350,6 +350,7 @@ class IncomingController extends Controller
         ]);
         // return $this->domain . $this->url . "json_download_incoming.php";
         $data = $sql['rows'];
+        return $data;
         //  menampilkan view
         // return view('download.incoming', compact('sql'));
         return view('download.incoming', compact('data'));

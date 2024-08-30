@@ -95,4 +95,22 @@ class MutationController extends Controller
     {
         return $this->loaddata($request, $request->get('jumlahHalaman'));
     }
+
+    public function download(Request $request)
+    {
+        $periode     = $request->get('periode');
+        $kategori     = $request->get('kategori');
+       
+        //  mengambil data table
+        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
+            'periode' => $periode,
+            'kategori' => $kategori
+        ]);
+        // return $this->domain . $this->url . "json_download_incoming.php";
+        $data = $sql['rows'];
+        // return $data;
+        //  menampilkan view
+        return view('download.mutation', compact('data'));
+    }
+    
 }

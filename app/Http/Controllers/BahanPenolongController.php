@@ -11,7 +11,7 @@ class BahanPenolongController extends Controller
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
     protected $tempat = 'Gudang Bahan Baku';
-    protected $kategori = '1';
+    // protected $kategori = '1';
 
     public function __construct()
     {
@@ -138,6 +138,20 @@ class BahanPenolongController extends Controller
     //  ***
     //  download
     public function download(Request $request)
+    {
+        $periode     = $request->get('periode');
+        $tempat = $this->tempat;
+
+        //  mengambil data table
+        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
+            'periode' => $periode,
+            'gudang' => $tempat
+        ]);
+        $data = $sql['rows'];
+        // return $data;
+        return view('download.mutation', compact('data'));
+    }
+    public function download_old(Request $request)
     {
         //  global variable
         // $stdate     = $request->get('stdate');

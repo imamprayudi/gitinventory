@@ -11,12 +11,12 @@ class BahanBakuContohController extends Controller
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
     // protected $tempat = 'Gudang Bahan Baku';
-    protected $kategori = 'Bahan Baku Contoh';
+    protected $kategori = 'Bahan baku - Contoh';
 
     public function __construct()
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
-        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, 'gitinventory.test')) {
             $this->domain = "http://136.198.117.118/";
         }
     }
@@ -218,7 +218,7 @@ class BahanBakuContohController extends Controller
 
     //  ***
     //  download
-    public function download(Request $request)
+    public function download_old(Request $request)
     {
         //  global variable
         // $stdate     = $request->get('stdate');
@@ -285,5 +285,19 @@ class BahanBakuContohController extends Controller
             $no++;
         }
         echo '</table>';
+    }
+    public function download(Request $request)
+    {
+        $periode     = $request->get('periode');
+        $kategori = $this->kategori;
+
+        //  mengambil data table
+        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
+            'periode' => $periode,
+            'kategori' => $kategori
+        ]);
+        $data = $sql['rows'];
+        // return $data;
+        return view('download.mutation', compact('data'));
     }
 }
