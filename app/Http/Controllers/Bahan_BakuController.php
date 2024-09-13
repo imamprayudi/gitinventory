@@ -8,8 +8,7 @@ use App\Helper;
 
 class Bahan_BakuController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
     protected $tempat = 'Gudang Umum';
     protected $kategori = 'Bahan Baku';
 
@@ -17,14 +16,14 @@ class Bahan_BakuController extends Controller
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
-            $this->domain = "http://136.198.117.118/";
+            $this->domain = "http://136.198.117.86/api_invesa_test/";
         }
     }
     //  **
     //  index
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain . $this->url . "json_version_sync.php");
+        $gitversions = Http::get($this->domain . "json_version_sync.php");
         $gitversions = $gitversions['version'];
         $categories = [
             "Bahan baku",
@@ -62,7 +61,7 @@ class Bahan_BakuController extends Controller
             $kategori     = $request->get('kategori');
 
 
-            $counts = Http::get($this->domain . $this->url . "json_mutation.php", [
+            $counts = Http::get($this->domain . "json_mutation.php", [
                 'periode' => $periode,
                 'kode_barang' => $kode_barang,
                 'gudang' => $gudang,
@@ -83,7 +82,7 @@ class Bahan_BakuController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_mutation.php", [
+                $sql    = Http::get($this->domain . "json_mutation.php", [
                     'periode' => $periode,
                     'kode_barang' => $kode_barang,
                     'gudang' => $this->gudang,
@@ -139,7 +138,7 @@ class Bahan_BakuController extends Controller
             $periode     = $request->get('periode');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain . $this->url . "json_bahan_baku.php", [
+            $counts = Http::get($this->domain . "json_bahan_baku.php", [
                 'periode' => $periode,
                 'partno' => $partno,
                 'tempat' => $this->tempat,
@@ -165,7 +164,7 @@ class Bahan_BakuController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_bahan_baku.php", [
+                $sql    = Http::get($this->domain . "json_bahan_baku.php", [
                     'periode' => $periode,
                     'partno' => $partno,
                     'tempat' => $this->tempat,
@@ -223,7 +222,7 @@ class Bahan_BakuController extends Controller
         $kategori = $request->get('kategori');
 
         //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
+        $sql    = Http::get($this->domain . "json_download_mutation.php", [
             'periode' => $periode,
             'kategori' => $kategori
         ]);
@@ -245,7 +244,7 @@ class Bahan_BakuController extends Controller
 
         //  execute database
         // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        $datas = Http::get($this->domain . $this->url . 'json_bahan_baku.php', [
+        $datas = Http::get($this->domain . 'json_bahan_baku.php', [
             'periode' => $periode,
             'partno' => $partno,
             'tempat' => $tempat

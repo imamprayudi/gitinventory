@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
 {
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
+    public function __construct()
+    {
+        $serverName = $_SERVER['SERVER_NAME'] ?? null;
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
+            $this->domain = env('API_BACKEND_TEST', 'http://localhost/api_invesa_test/');
+        }
+    }
     //  index
     public function index(Request $request)
     {
@@ -17,25 +26,12 @@ class DashboardController extends Controller
         $request->session()->forget('session_gitinventory_userid');
         $request->session()->forget('session_gitinventory_username');
 
-        //  cek ip access
+        //  mengambil data dari json
         //  **
-        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        {
-            //  mengambil data dari json
-            //  **
-            $response           = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
-            $obj                = json_decode($response);
-            $gitversions        = $obj->version;
-        }
-        else
-        {
-            //  mengambil data dari json
-            //  **
-            $response           = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
-            $obj                = json_decode($response);
-            $gitversions        = $obj->version;
-        }
-
+        $response           = Http::get($this->domain . 'json_version_sync.php');
+        $obj                = json_decode($response);
+        $gitversions        = $obj->version;
+        
         //  return view
         //  **
         return view('dashboard', compact('gitversions'));

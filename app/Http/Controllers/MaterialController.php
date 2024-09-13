@@ -8,20 +8,20 @@ use App\Helper;
 
 class MaterialController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
 
     public function __construct(){
         if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
         {
-            $this->domain ="http://136.198.117.118/";
+            $this->domain =env('API_BACKEND_TEST', 'http://localhost/api_invesa_test/');
         }
     }
     //  **
     //  index
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
+        $gitversions = Http::get($this->domain."json_version_sync.php");
         $gitversions = $gitversions['version'];
         return view('admins.material', compact('gitversions'));
     }
@@ -39,7 +39,7 @@ class MaterialController extends Controller
             $partno         = $request->get('partno');
             $awalData       = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
-            $data = Http::get($this->domain.$this->url.'json_material.php',[
+            $data = Http::get($this->domain.'json_material.php',[
                 'valstdate' => $stdate,
                 'valendate' => $endate,
                 'valpartno' => $partno,
@@ -98,7 +98,7 @@ class MaterialController extends Controller
 
         //  execute database
         // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        $datas = Http::get($this->domain.$this->url.'json_material.php',[
+        $datas = Http::get($this->domain.'json_material.php',[
                     'valstdate' => $stdate,
                     'valednate' => $endate,
                     'valpartno' => $partno

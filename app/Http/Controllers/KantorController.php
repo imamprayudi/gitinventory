@@ -8,22 +8,22 @@ use App\Helper;
 
 class KantorController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
     protected $tempat = 'Gudang Bahan Baku';
 
     public function __construct()
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
-            $this->domain = "http://136.198.117.118/";
+            $this->domain = "http://136.198.117.86/api_invesa_test/";
         }
     }
     //  **
     //  index
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain . $this->url . "json_version_sync.php");
+        $gitversions = Http::get($this->domain . "json_version_sync.php");
         $gitversions = $gitversions['version'];
         $categories = [
             "Bahan baku",
@@ -58,7 +58,7 @@ class KantorController extends Controller
             $periode     = $request->get('periode');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain . $this->url . "json_kantor.php", [
+            $counts = Http::get($this->domain . "json_kantor.php", [
                 'periode' => $periode,
                 'partno' => $partno,
                 'tempat' => $this->tempat,
@@ -84,7 +84,7 @@ class KantorController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_kantor.php", [
+                $sql    = Http::get($this->domain . "json_kantor.php", [
                     'periode' => $periode,
                     'partno' => $partno,
                     'tempat' => $this->tempat,
@@ -150,7 +150,7 @@ class KantorController extends Controller
 
         //  execute database
         // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        $datas = Http::get($this->domain . $this->url . 'json_konstruksi.php', [
+        $datas = Http::get($this->domain . 'json_konstruksi.php', [
             'periode' => $periode,
             'partno' => $partno,
             'tempat' => $tempat

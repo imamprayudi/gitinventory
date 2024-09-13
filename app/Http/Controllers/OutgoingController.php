@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Http;
 class OutgoingController extends Controller
 {
 
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
 
     public function __construct(){
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost'))
         {
-            $this->domain ="http://136.198.117.118/";
+            $this->domain =env('API_BACKEND_TEST', 'http://localhost/api_invesa_test/');
         }
     }
 
@@ -25,32 +25,10 @@ class OutgoingController extends Controller
     //  index
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
+        $gitversions = Http::get($this->domain."json_version_sync.php");
         $gitversions = $gitversions['version'];
          return view('admins.output', compact('gitversions'));
 
-        // //  **
-        // //  mengambil data version
-        // //  **
-        // if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        // {
-        //     //  mengambil data dari json
-        //     //  **
-        //     $gitversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
-        // }
-        // else
-        // {
-        //     //  mengambil data dari json
-        //     //  **
-        //     $gitversions = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
-        // }
-
-
-        // // $gitversions = DB::table('tbl_sync_version')->get();
-
-        // //  **
-        // //  return view
-        // return view('admins.output', compact('gitversions'));
     }
 
     //  ***
@@ -69,7 +47,7 @@ class OutgoingController extends Controller
             $nodokbc    = $request->get('nodokbc');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain.$this->url."json_output_sync.php",[
+            $counts = Http::get($this->domain."json_output_sync.php",[
                 'valstdate' => $stdate,
                 'valendate' => $endate,
                 'valjnsdok' => $jnsdokbc,
@@ -97,7 +75,7 @@ class OutgoingController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain.$this->url."json_output_sync.php",[
+                $sql    = Http::get($this->domain."json_output_sync.php",[
                     'valstdate' => $stdate,
                     'valendate' => $endate,
                     'valjnsdok' => $jnsdokbc,
@@ -274,14 +252,14 @@ class OutgoingController extends Controller
         $partno     = $request->get('partno');
 
         //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_outgoing.php", [
+        $sql    = Http::get($this->domain . "json_download_outgoing.php", [
             'valstdate' => $stdate,
             'valendate' => $endate,
             'valjnsdok' => $jnsdokbc,
             'valnodok' => $nodokbc,
             'valpartno' => $partno
         ]);
-        // return $this->domain . $this->url . "json_download_incoming.php";
+        // return $this->domain . "json_download_incoming.php";
         $data = $sql['rows'];
         // return $data;
         //  menampilkan view

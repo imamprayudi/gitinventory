@@ -8,22 +8,22 @@ use App\Helper;
 
 class WipController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
     protected $tempat = '';
 
     public function __construct()
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
-            $this->domain = "http://136.198.117.118/";
+            $this->domain = "http://136.198.117.86/api_invesa_test/";
         }
     }
     //  **
     //  index
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain . $this->url . "json_version_sync.php");
+        $gitversions = Http::get($this->domain . "json_version_sync.php");
         $gitversions = $gitversions['version'];
         // $categories = $this->getCategory();
         $categories = [
@@ -45,7 +45,7 @@ class WipController extends Controller
     }
 
     public function getCategory(){
-        $data    = Http::get($this->domain . $this->url . "json_prduct_category.php");
+        $data    = Http::get($this->domain . "json_prduct_category.php");
         return $data['rows'];
     }
 
@@ -64,7 +64,7 @@ class WipController extends Controller
             $periode     = $request->get('periode');
             $category     = $request->get('category');
 
-            $counts = Http::get($this->domain . $this->url . "json_wip.php", [
+            $counts = Http::get($this->domain . "json_wip.php", [
                 'periode' => $periode,
                 'category' => 9,
                 'page' => 0,
@@ -89,7 +89,7 @@ class WipController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_wip.php", [
+                $sql    = Http::get($this->domain . "json_wip.php", [
                     'periode' => $periode,
                     'category' => $category,
                     'page' => $awalData,
@@ -156,7 +156,7 @@ class WipController extends Controller
 
     //     //  execute database
     //     // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-    //     $datas = Http::get($this->domain . $this->url . 'json_gudang_scrap.php', [
+    //     $datas = Http::get($this->domain . 'json_gudang_scrap.php', [
     //         'periode' => $periode,
     //         'partno' => $partno,
     //         'tempat' => $tempat

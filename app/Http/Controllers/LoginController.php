@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
 {
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
+    public function __construct()
+    {
+        $serverName = $_SERVER['SERVER_NAME'] ?? null;
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
+            $this->domain = env('API_BACKEND_TEST', 'http://localhost/api_invesa_test/');
+        }
+    }
+    
     //  index
     public function index(Request $request)
     {
@@ -32,31 +42,16 @@ class LoginController extends Controller
         $userid     = $request->userid;
         $userpass   = $request->password;
 
-        //  cek ip access
+
+        //  mengambil data dari json
         //  **
-        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        {
-            //  mengambil data dari json
-            //  **
-            $response = Http::get('http://136.198.117.118/api_invesa_test/json_login_sync.php', [
-                'valuserid' => $userid,
-                'valuserpass' => $userpass,
-                'valipaddress' => getenv("REMOTE_ADDR"),
-                'sql'        => "call sync_check_login {$userid}, {$userpass}, {getenv(\"REMOTE_ADDR\")}"
-            ]);
-        }
-        else
-        {
-            //  mengambil data dari json
-            //  **
-            // $response = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_login_sync.php', [
-            $response = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_login_sync.php', [
-                'valuserid' => $userid,
-                'valuserpass' => $userpass,
-                'valipaddress' => getenv("REMOTE_ADDR"),
-                'sql'        => "call sync_check_login {$userid}, {$userpass}, {getenv(\"REMOTE_ADDR\")}"
-            ]);
-        }
+        $response = Http::get($this->domain . 'json_login_sync.php', [
+            'valuserid' => $userid,
+            'valuserpass' => $userpass,
+            'valipaddress' => getenv("REMOTE_ADDR"),
+            'sql'        => "call sync_check_login {$userid}, {$userpass}, {getenv(\"REMOTE_ADDR\")}"
+        ]);
+
 
         //  cek response message
         //  **

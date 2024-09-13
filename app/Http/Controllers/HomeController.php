@@ -8,28 +8,27 @@ use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
+    public function __construct()
+    {
+        $serverName = $_SERVER['SERVER_NAME'] ?? null;
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
+            $this->domain = "http://136.198.117.86/api_invesa_test/";
+        }
+    }
+    
     //  untuk index
     //  **
     public function index(Request $request)
     {
-        //  cek ip access
+    
+        //  mengambil data dari json
         //  **
-        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        {
-            //  mengambil data dari json
-            //  **
-            $response           = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
-            $obj                = json_decode($response);
-            $gitversions        = $obj->version;
-        }
-        else
-        {
-            //  mengambil data dari json
-            //  **
-            $response           = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
-            $obj                = json_decode($response);
-            $gitversions        = $obj->version;
-        }
+        $response           = Http::get($this->domain . 'json_version_sync.php');
+        $obj                = json_decode($response);
+        $gitversions        = $obj->version;
+    
 
         //  return view
         //  **

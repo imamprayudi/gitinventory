@@ -8,8 +8,8 @@ use App\Helper;
 
 class BahanBakuContohController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
     // protected $tempat = 'Gudang Bahan Baku';
     protected $kategori = 'Bahan baku - Contoh';
 
@@ -17,14 +17,14 @@ class BahanBakuContohController extends Controller
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, 'gitinventory.test')) {
-            $this->domain = "http://136.198.117.118/";
+            $this->domain = "http://136.198.117.86/api_invesa_test/";
         }
     }
     //  **
     //  index
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain . $this->url . "json_version_sync.php");
+        $gitversions = Http::get($this->domain . "json_version_sync.php");
         $gitversions = $gitversions['version'];
         $categories = [
             "Bahan baku",
@@ -59,7 +59,7 @@ class BahanBakuContohController extends Controller
             $periode     = $request->get('periode');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain . $this->url . "json_bahan_baku.php", [
+            $counts = Http::get($this->domain . "json_bahan_baku.php", [
                 'periode' => $periode,
                 'partno' => $partno,
                 'tempat' => $this->tempat,
@@ -85,7 +85,7 @@ class BahanBakuContohController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+                $sql    = Http::get($this->domain . "json_gudang_scrap.php", [
                     'periode' => $periode,
                     'partno' => $partno,
                     'tempat' => $this->tempat,
@@ -141,7 +141,7 @@ class BahanBakuContohController extends Controller
             $periode     = $request->get('periode');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain . $this->url . "json_mutation.php", [
+            $counts = Http::get($this->domain . "json_mutation.php", [
                 'periode' => $periode,
                 'kode_barang' => $kode_barang,
                 'gudang' => $this->gudang,
@@ -163,7 +163,7 @@ class BahanBakuContohController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_mutation.php", [
+                $sql    = Http::get($this->domain . "json_mutation.php", [
                     'periode' => $periode,
                     'kode_barang' => $kode_barang,
                     'gudang' => $this->gudang,
@@ -232,7 +232,7 @@ class BahanBakuContohController extends Controller
 
         //  execute database
         // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        $datas = Http::get($this->domain . $this->url . 'json_gudang_scrap.php', [
+        $datas = Http::get($this->domain . 'json_gudang_scrap.php', [
             'periode' => $periode,
             'partno' => $partno,
             'tempat' => $tempat
@@ -292,7 +292,7 @@ class BahanBakuContohController extends Controller
         $kategori = $this->kategori;
 
         //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
+        $sql    = Http::get($this->domain . "json_download_mutation.php", [
             'periode' => $periode,
             'kategori' => $kategori
         ]);

@@ -9,14 +9,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class IncomingController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
 
     public function __construct(){
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost'))
         {
-            $this->domain ="http://136.198.117.118/";
+            $this->domain =env('API_BACKEND_TEST', 'http://localhost/api_invesa_test/');
         }
     }
 
@@ -24,7 +24,7 @@ class IncomingController extends Controller
     //  index
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
+        $gitversions = Http::get($this->domain."json_version_sync.php");
         $gitversions = $gitversions['version'];
         return view('admins.input', compact('gitversions'));
     }
@@ -47,9 +47,9 @@ class IncomingController extends Controller
             $nodokbc    = $request->get('nodokbc');
             $partno     = $request->get('partno');
 
-            // echo $this->domain.$this->url."json_input_sync.php";
+            // echo $this->domain."json_input_sync.php";
             // die();
-            $counts = Http::get($this->domain.$this->url."json_input_sync.php",[
+            $counts = Http::get($this->domain."json_input_sync.php",[
                 'valstdate' => $stdate,
                 'valendate' => $endate,
                 'valjnsdok' => $jnsdokbc,
@@ -80,7 +80,7 @@ class IncomingController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain.$this->url."json_input_sync.php",[
+                $sql    = Http::get($this->domain."json_input_sync.php",[
                     'valstdate' => $stdate,
                     'valendate' => $endate,
                     'valjnsdok' => $jnsdokbc,
@@ -117,88 +117,7 @@ class IncomingController extends Controller
                 'jumlahHalaman' => $jumlahHalaman
             );
             echo json_encode($data);
-            // return [
-            //     "datas" => $totalcount
-            // ];
-
-            /*  // dd($totalcount);
-                // return $totalcount;
-                //  konfigurasi pagination
-                // $totalcount = DB::select("call sync_disp_input(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-                // if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-                // {
-                    //  mengambil data dari json
-                    //  **
-                //     $totalcount = Http::get('http://136.198.117.118/api_invesa_test/json_input_sync.php');
-                // }
-                // else
-                // {
-                    //  mengambil data dari json
-                    //  **
-                //     $totalcount = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_input_sync.php');
-                // }
-                // return $totalcount;
-                // if(empty($totalcount))
-                // {
-                //     $totalcount = 0;
-                // }
-                // else
-                // {
-                //     foreach($counts as &$row)
-                //     {
-                //         $row        = get_object_vars($row);
-                //         $totalcount = $row['totalcount'];
-                //     }
-                // }
-            */
-
-            //  check total data
-            /* if($totalcount > 0)
-                {
-                    $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-                    $halamanAktif           = 1;
-                    $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
-
-                    //  mengambil data table
-                    $sql    = DB::select("call sync_disp_input({$awalData}, {$jumlahDataPerHalaman}, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-                    $nomor  = $awalData;
-                    foreach($sql as $rowdata)
-                    {
-                        $no = ++$nomor;
-                        $output .= '
-                        <tr>
-                            <td align="right"><medium class="text-muted">'.$no.'</medium></td>
-                            <td>'.$rowdata->jnsdokbc.'</td>
-                            <td>'.$rowdata->nodokbc.'</td>
-                            <td>'.$rowdata->datedokbc.'</td>
-                            <td>'.$rowdata->buktiterima.'</td>
-                            <td>'.$rowdata->dateterima.'</td>
-                            <td>'.$rowdata->buktiinvoice.'</td>
-                            <td>'.$rowdata->dateinvoice.'</td>
-                            <td>'.$rowdata->supplier.'</td>
-                            <td>'.$rowdata->partno.'</td>
-                            <td>'.$rowdata->partname.'</td>
-                            <td align="right">'.number_format($rowdata->qty, 0).'</td>
-                            <td>'.$rowdata->unit.'</td>
-                            <td align="right">'.number_format($rowdata->price, 0).'</td>
-                            <td>'.$rowdata->currency.'</td>
-                            <td class="text-center">'.$rowdata->input_user.'<br>'.$rowdata->input_date.'</td>
-                        </tr>
-                        ';
-                    }
-                }
-                else
-                {
-                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-                $halamanAktif           = 0;
-                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
-                $output = '
-                <tr>
-                <td class="text-center" colspan="16">No Data Found</td>
-                </tr>
-                ';
-            } */
-
+            
             //  mengirim data ke view
 
         }
@@ -237,97 +156,7 @@ class IncomingController extends Controller
     public function pagination(Request $request)
     {
         return $this->loaddata($request,$request->get('jumlahHalaman'));
-        // //  action ajax
-        // if($request->ajax())
-        // {
-        //     //  variable
-        //     $output     = '';
-        //     $jumlahDataPerHalaman = 10;
-        //     $valjmlhal  = $request->get('jumlahHalaman');
-        //     $stdate     = $request->get('stdate');
-        //     $endate     = $request->get('endate');
-        //     $jnsdokbc   = $request->get('jnsdokbc');
-        //     $nodokbc    = $request->get('nodokbc');
-        //     $partno     = $request->get('partno');
-
-        //     //  konfigurasi pagination
-        //     $counts = DB::select("call sync_disp_input(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        //     if(empty($counts))
-        //     {
-        //         $totalcount = 0;
-        //     }
-        //     else
-        //     {
-        //         foreach($counts as &$row)
-        //         {
-        //             $row        = get_object_vars($row);
-        //             $totalcount = $row['totalcount'];
-        //         }
-        //     }
-
-        //     //  check total data
-        //     if($totalcount > 0)
-        //     {
-        //         $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-        //         $halamanAktif           = intval($valjmlhal);
-        //         $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
-
-        //         //  mengambil data table
-        //         $sql    = DB::select("call sync_disp_input({$awalData}, {$jumlahDataPerHalaman}, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        //         $nomor  = $awalData;
-        //         foreach($sql as $rowdata)
-        //         {
-        //             $no = ++$nomor;
-        //             $output .= '
-        //             <tr>
-        //                 <td align="right"><medium class="text-muted">'.$no.'</medium></td>
-        //                 <td>'.$rowdata->jnsdokbc.'</td>
-        //                 <td>'.$rowdata->nodokbc.'</td>
-        //                 <td>'.$rowdata->datedokbc.'</td>
-        //                 <td>'.$rowdata->buktiterima.'</td>
-        //                 <td>'.$rowdata->dateterima.'</td>
-        //                 <td>'.$rowdata->buktiinvoice.'</td>
-        //                 <td>'.$rowdata->dateinvoice.'</td>
-        //                 <td>'.$rowdata->supplier.'</td>
-        //                 <td>'.$rowdata->partno.'</td>
-        //                 <td>'.$rowdata->partname.'</td>
-        //                 <td align="right">'.number_format($rowdata->qty, 0).'</td>
-        //                 <td>'.$rowdata->unit.'</td>
-        //                 <td align="right">'.number_format($rowdata->price, 0).'</td>
-        //                 <td>'.$rowdata->currency.'</td>
-        //                 <td class="text-center">'.$rowdata->input_user.'<br>'.$rowdata->input_date.'</td>
-        //             </tr>
-        //             ';
-        //         }
-        //     }
-        //     else
-        //     {
-        //         $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-        //         $halamanAktif           = 0;
-        //         $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
-        //         $output = '
-        //         <tr>
-        //         <td class="text-center" colspan="16">No Data Found</td>
-        //         </tr>
-        //         ';
-        //     }
-
-        //     //  mengirim data ke view
-        //     $data = array(
-        //         'table_data'    => $output,
-        //         'totalcount'    => $totalcount,
-        //         'halamanAktif'  => $halamanAktif,
-        //         'jumlahHalaman' => $jumlahHalaman
-        //     );
-        //     echo json_encode($data);
-        // }
-        // else{
-        //    //  menghapus session
-        //    $request->session()->forget('session_gitinventory_id');
-        //    $request->session()->forget('session_gitinventory_userid');
-        //    $request->session()->forget('session_gitinventory_username');
-        //    return redirect('/login');
-        // }
+        
     }
 
     //  ***
@@ -341,18 +170,17 @@ class IncomingController extends Controller
         $partno     = $request->get('partno');
 
         //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_incoming.php", [
+        $sql    = Http::get($this->domain . "json_download_incoming.php", [
             'valstdate' => $stdate,
             'valendate' => $endate,
             'valjnsdok' => $jnsdokbc,
             'valnodok' => $nodokbc,
             'valpartno' => $partno
         ]);
-        // return $this->domain . $this->url . "json_download_incoming.php";
+        // return $this->domain . "json_download_incoming.php";
         $data = $sql['rows'];
         return $data;
         //  menampilkan view
-        // return view('download.incoming', compact('sql'));
         return view('download.incoming', compact('data'));
     }
 }

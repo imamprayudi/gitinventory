@@ -7,28 +7,24 @@ use Illuminate\Support\Facades\Http;
 
 class MaterialController extends Controller
 {
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
+    public function __construct()
+    {
+        $serverName = $_SERVER['SERVER_NAME'] ?? null;
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
+            $this->domain = env('API_BACKEND_TEST', 'http://localhost/api_invesa_test/');
+        }
+    }
+    
     //  **
     //  index
     public function index(Request $request)
     {
+    
+        //  mengambil data dari json
         //  **
-        //  mengambil data version
-        //  **
-        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        {
-            //  mengambil data dari json
-            //  **
-            $gitversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
-        }
-        else
-        {
-            //  mengambil data dari json
-            //  **
-            $gitversions = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
-        }
-
-
-        // $gitversions = DB::table('tbl_sync_version')->get();
+        $gitversions = Http::get($this->domain . '/json_version_sync.php');
 
         //  **
         //  return view
@@ -57,34 +53,19 @@ class MaterialController extends Controller
 
             //  konfigurasi pagination
             // $totalcount = DB::select("call sync_disp_input(0, 1, '{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-            if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-            {
-                //  mengambil data dari json
-                //  **
-                $data = Http::get('http://136.198.117.118/api_invesa_test/json_material.php',[
-                    'valstdate' => $stdate,
-                    'valednate' => $endate,
-                    'valjnsdok' => $jnsdokbc,
-                    'valnodok' => $nodokbc,
-                    'valpartno' => $partno,
-                    'start' => $awalData,
-                    'limit' => $jumlahDataPerHalaman
-                ]);
-            }
-            else
-            {
-                //  mengambil data dari json
-                //  **
-                $data = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_material.php',[
-                    'valstdate' => $stdate,
-                    'valednate' => $endate,
-                    'valjnsdok' => $jnsdokbc,
-                    'valnodok' => $nodokbc,
-                    'valpartno' => $partno,
-                    'start' => $awalData,
-                    'limit' => $jumlahDataPerHalaman
-                ]);
-            }
+        
+            //  mengambil data dari json
+            //  **
+            $data = Http::get($this->domain . '/json_material.php',[
+                'valstdate' => $stdate,
+                'valednate' => $endate,
+                'valjnsdok' => $jnsdokbc,
+                'valnodok' => $nodokbc,
+                'valpartno' => $partno,
+                'start' => $awalData,
+                'limit' => $jumlahDataPerHalaman
+            ]);
+            
             // return $data;
             $totalcount = $data['totalCount'];
             if($totalcount > 0){

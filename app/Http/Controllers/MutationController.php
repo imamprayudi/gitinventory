@@ -8,14 +8,14 @@ use App\Helper;
 
 class MutationController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    protected $domain = env('API_BACKEND', 'http://localhost/api_invesa_test/');
+    
     
     public function __construct()
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
-            $this->domain = "http://136.198.117.118/";
+            $this->domain = "http://136.198.117.86/api_invesa_test/";
         }
     }
 
@@ -36,7 +36,7 @@ class MutationController extends Controller
         $parameter['page'] = 0;
         $parameter['limit'] = 1;
 
-        $counts = Http::get($this->domain . $this->url . "json_mutation.php", $parameter->toArray());
+        $counts = Http::get($this->domain . "json_mutation.php", $parameter->toArray());
         
         // return $counts;
         empty($counts['totalCount']) ? $totalcount = 0 : $totalcount = $counts['totalCount'];
@@ -71,7 +71,7 @@ class MutationController extends Controller
         $params['page'] = $awalData;
         $params['limit'] = $jumlahDataPerHalaman;
         
-        $sql    = Http::get($this->domain . $this->url . "json_mutation.php", $params->toArray());
+        $sql    = Http::get($this->domain . "json_mutation.php", $params->toArray());
         
         $nomor  = $awalData;
         foreach ($sql['rows'] as $rowdata) {
@@ -102,11 +102,11 @@ class MutationController extends Controller
         $kategori     = $request->get('kategori');
        
         //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
+        $sql    = Http::get($this->domain . "json_download_mutation.php", [
             'periode' => $periode,
             'kategori' => $kategori
         ]);
-        // return $this->domain . $this->url . "json_download_incoming.php";
+        // return $this->domain . "json_download_incoming.php";
         $data = $sql['rows'];
         // return $data;
         //  menampilkan view
