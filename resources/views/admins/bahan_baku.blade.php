@@ -13,8 +13,8 @@
                         <h4 class="box-title">Search Data </h4>
                     </div>
                     <div class="card-body card-block">
-                        <form method="get">
-                            <div class="row form-group justify-content-center">
+                        <form method="get"></form>
+                           <div class="row form-group justify-content-center">
                                 <div class="col-12">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
@@ -93,7 +93,7 @@
 
 @section('stylejavascript')
 
-{{-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> --}}
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script>
     //  ***
     //  load data
@@ -112,7 +112,7 @@
         $.ajax({
             url     : url,
             method  : 'GET',
-            data    : { periode:periode,kategori:kategori },
+            data    : { periode,kategori },
             dataType: 'json',
             success : function(data)
             {
@@ -175,18 +175,12 @@
     {
         console.log("CLICK SEARCH BAHAN BAKU")
         //  variable
-        // 'periode', 'kode_barang','gudang', 'kategori']
-        // var category      = $("#category").val();
         var periode       = $("#periode").val();
         
 
 
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
-        // console.log(url);
-        // return;
-
-        // console.log({url});
         $.ajax({
             url     : url,
             method  : 'GET',
@@ -293,15 +287,14 @@
     function first(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val(); //.replace(/-/g, "");
-        // var kode_barang   = $("#partno").val();
-        // var kategori      = 'Bahan baku';
+        var periode       = $("#periode").val();
+
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode,  kategori, jumlahHalaman: jumlahHalaman },
+            data    : {  periode,  kategori, jumlahHalaman },
             dataType: 'json',
             success : function(data)
             {
@@ -342,15 +335,13 @@
     function laquo(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val(); //.replace(/-/g, "");
-        // var kode_barang   = $("#partno").val();
-        // var kategori      = 'Bahan baku';
+        var periode       = $("#periode").val(); 
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode,  kategori , jumlahHalaman: jumlahHalaman },
+            data    : {  periode,  kategori , jumlahHalaman },
             dataType: 'json',
             success : function(data)
             {
@@ -411,15 +402,14 @@
     function raquo(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val(); //.replace(/-/g, "");
-        // var kode_barang   = $("#partno").val();
-        // var kategori      = 'Bahan baku';
+        var periode       = $("#periode").val();
+
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, kategori , jumlahHalaman: jumlahHalaman },
+            data    : {  periode, kategori , jumlahHalaman },
             dataType: 'json',
             success : function(data)
             {
@@ -480,15 +470,13 @@
     function last(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val(); //.replace(/-/g, "");
-        var kode_barang   = $("#partno").val();
-        // var kategori      = 'Bahan baku';
+        var periode       = $("#periode").val(); 
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, kode_barang, kategori , jumlahHalaman: jumlahHalaman },
+            data    : {  periode, kode_barang, kategori , jumlahHalaman },
             dataType: 'json',
             success : function(data)
             {
@@ -530,8 +518,7 @@
     function download(){
         var periode       = $("#periode").val(); //.replace(/-/g, "");
         var kode_barang   = $("#partno").val();
-        // var kategori      = 'Bahan baku';
-        window.open("bahan_baku/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
+        window.open("mutation-download?periode="+periode+"&kategori="+kategori+"");
     }
 
     //  ***
@@ -564,7 +551,7 @@
         $("#partno").keydown(function (e){ if(e.keyCode == 13){ search(); }});
         // $("#btn_cari").click(function(){ search(); });
         // $("#btn_cari").click(search());
-        // $("#btn_download").click(function(){ download(); });
+        $("#btn_download").click(function(){ download(); });
         $("#btn_reset").click(function(){
             //  buat tanggal
             var d       = new Date();
