@@ -520,6 +520,7 @@
         var kode_barang   = $("#partno").val();
         // var gudang      = 'Bahan baku';
         // window.open("finishgood/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
+        window.open("mutation-download-gudang?periode="+periode+"&gudang="+gudang+"");
     }
 
     //  ***

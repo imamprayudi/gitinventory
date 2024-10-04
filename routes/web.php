@@ -94,6 +94,7 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
     Route::get('/mutation', [MutationController::class,'loaddata'])->name('mutation');
     Route::get('/mutation-pagination', [MutationController::class,'pagination'])->name('mutation_page');
     Route::get('/mutation-download', [MutationController::class,'download'])->name('mutation-download');
+    Route::get('/mutation-download-gudang', [MutationController::class,'download_gudang'])->name('mutation-download-gudang');
 
     Route::get('/wip/loaddata', [WipController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('wip.loaddata');
 
