@@ -14,7 +14,7 @@ class MutationController extends Controller
     public function __construct()
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
-        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, '.test')) {
             $this->domain = "http://136.198.117.118/";
         }
     }
@@ -117,6 +117,7 @@ class MutationController extends Controller
     {
         $periode     = $request->get('periode');
         $gudang     = $request->get('gudang');
+        // return $this->domain . $this->url . "json_download_mutation_gudang.php";
        
         //  mengambil data table
         $sql    = Http::get($this->domain . $this->url . "json_download_mutation_gudang.php", [
