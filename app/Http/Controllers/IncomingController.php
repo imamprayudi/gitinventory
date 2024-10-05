@@ -213,6 +213,7 @@ class IncomingController extends Controller
 
     public function return_data($no,$rowdata)
     {
+        // <td>'.$rowdata['dateinvoice'].'</td>
         return '<tr>
                     <td align="right"><medium class="text-muted">'.$no.'</medium></td>
                     <td>'.$rowdata['jnsdokbc'].'</td>
@@ -221,16 +222,15 @@ class IncomingController extends Controller
                     <td>'.$rowdata['buktiterima'].'</td>
                     <td>'.$rowdata['dateterima'].'</td>
                     <td>'.$rowdata['buktiinvoice'].'</td>
-                    <td>'.$rowdata['dateinvoice'].'</td>
                     <td>'.$rowdata['supplier'].'</td>
                     <td>'.$rowdata['partno'].'</td>
                     <td>'.$rowdata['partname'].'</td>
                     <td align="right">'.$rowdata['qty'].'</td>
                     <td>'.$rowdata['unit'].'</td>
-                    <td align="right">'.$rowdata['price'].'</td>
                     <td>'.$rowdata['currency'].'</td>
-                    <td>'.$rowdata['input_user'].'<br>'.$rowdata['input_date'].'</td>
-                </tr>';
+                    <td align="right">'.$rowdata['price'].'</td>
+                    </tr>';
+                    // <td>'.$rowdata['input_user'].'<br>'.$rowdata['input_date'].'</td>
     }
     //  ***
     //  pagination

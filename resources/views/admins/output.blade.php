@@ -93,7 +93,31 @@
                     </div>
                     <div class="table-stats order-table ov-h">
                         <table class="table table-striped table-hover">
-                            <thead>
+                            <thead class="table-bordered">
+                                <tr>
+                                    <th class=" text-center" rowspan="2">No</th>
+                                    <th class=" text-center" colspan="3">Dokumen Pabean</th>
+                                    <th class=" text-center" colspan="3">Bukti Pengeluaran Barang (BPB)</th>
+                                    {{-- <th class="">Invoice Date</th> --}}
+                                    <th class=" text-center" rowspan="2">Nama Pemasok</th>
+                                    <th class=" text-center" rowspan="2">Kode Barang</th>
+                                    <th class=" text-center" rowspan="2">Nama Barang</th>
+                                    <th class=" text-center" rowspan="2">Jumlah</th>
+                                    <th class=" text-center" rowspan="2">Satuan</th>
+                                    <th class=" text-center" rowspan="2">Kode Valuta</th>
+                                    <th class=" text-center" rowspan="2">Nilai</th>
+                                    {{-- <th class=" text-center" rowspan="2">Create by</th> --}}
+                                </tr>
+                                <tr>
+                                    <th class=" text-center">Jenis BC</th>
+                                    <th class=" text-center">No. Daftar</th>
+                                    <th class=" text-center">Tanggal Daftar</th>
+                                    <th class=" text-center">No. BPB</th>
+                                    <th class=" text-center">Tanggal BPB</th>
+                                    <th class=" text-center">No Invoice</th>
+                                </tr>
+                            </thead>
+                            {{-- <thead>
                                 <tr>
                                     <th class="align-middle">No</th>
                                     <th class="align-middle">BC Type</th>
@@ -112,7 +136,7 @@
                                     <th class="align-middle">Currency</th>
                                     <th class="align-middle">Create by</th>
                                 </tr>
-                            </thead>
+                            </thead> --}}
                             <tbody>
                             </tbody>
                         </table>

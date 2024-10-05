@@ -554,7 +554,7 @@ $(document).ready(function(){
     // $("#btn_cari").click(function(){ search(); });
     $("#btn_cari").click(
         // console.log('clicked cari')
-    function(){ search(); }
+        // function(){ search(); }
     );
     $("#btn_download").click(function(){ download(); });
     $("#btn_reset").click(function(){
