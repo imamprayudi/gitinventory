@@ -75,21 +75,27 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
 
     //  **
     //  Mutation
-    Route::get('/bahan_baku', [Bahan_BakuController::class, 'index']);
-    Route::get('/finishgood', [FinishgoodController::class, 'index']);
-    Route::get('/service', [ServiceController::class, 'index']);
-    Route::get('/wip', [WipController::class, 'index']);
-    Route::get('/bahan_baku_contoh', [BahanBakuContohController::class, 'index']);
-    Route::get('/finishgood_contoh', [FinishgoodContohController::class, 'index']);
-    Route::get('/bahan_penolong', [BahanPenolongController::class, 'index']);
-    Route::get('/pengemas', [PengemasController::class, 'index']);
-    Route::get('/mesin', [MesinController::class, 'index']);
-    Route::get('/sparepart', [SparepartController::class, 'index']);
-    Route::get('/peralatan_pabrik', [PeralatanPabrikController::class, 'index']);
-    Route::get('/mold', [MoldController::class, 'index']);
-    Route::get('/konstruksi', [KonstruksiController::class, 'index']);
-    Route::get('/kantor', [KantorController::class, 'index']);
-    Route::get('/scrap', [ScrapController::class, 'index']);
+    Route::get('/bahan_baku_gm', [MutationController::class, 'gudang_material']);
+    Route::get('/bahan_baku_gu', [MutationController::class, 'gudang_umum']);
+    Route::get('/bahan_penolong', [MutationController::class, 'bahan_penolong']);
+    Route::get('/mesin', [MutationController::class, 'mesin']);
+    Route::get('/sparepart', [MutationController::class, 'sparepart']);
+
+
+    // Route::get('/finishgood', [FinishgoodController::class, 'index']);
+    // Route::get('/service', [ServiceController::class, 'index']);
+    // Route::get('/wip', [WipController::class, 'index']);
+    // Route::get('/bahan_baku_contoh', [BahanBakuContohController::class, 'index']);
+    // Route::get('/finishgood_contoh', [FinishgoodContohController::class, 'index']);
+    // Route::get('/bahan_penolong', [BahanPenolongController::class, 'index']);
+    // Route::get('/pengemas', [PengemasController::class, 'index']);
+    // Route::get('/mesin', [MesinController::class, 'index']);
+    // Route::get('/sparepart', [SparepartController::class, 'index']);
+    // Route::get('/peralatan_pabrik', [PeralatanPabrikController::class, 'index']);
+    // Route::get('/mold', [MoldController::class, 'index']);
+    // Route::get('/konstruksi', [KonstruksiController::class, 'index']);
+    // Route::get('/kantor', [KantorController::class, 'index']);
+    // Route::get('/scrap', [ScrapController::class, 'index']);
 
     Route::get('/mutation', [MutationController::class,'loaddata'])->name('mutation');
     Route::get('/mutation-pagination', [MutationController::class,'pagination'])->name('mutation_page');

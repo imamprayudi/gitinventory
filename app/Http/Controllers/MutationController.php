@@ -11,13 +11,50 @@ class MutationController extends Controller
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
     
-    public function __construct()
+    protected $gudang = 'Gudang Umum';
+    
+     public function __construct()
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, '.test')) {
             $this->domain = "http://136.198.117.118/";
         }
+
+        $getVersion = Http::get($this->domain . $this->url . "json_version_sync.php");
+        $this->version = $getVersion['version'];
     }
+   
+    public function gudang_material(Request $request)
+    {
+        $this->gudang = 'Gudang Material';
+        $gitversions =$this->version;
+        return view('admins.bahan_baku_gm', compact('gitversions'));
+    }
+    public function gudang_umum(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.bahan_baku_gu', compact('gitversions'));
+    }
+    public function bahan_penolong(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.bahan_penolong', compact('gitversions'));
+    }
+    public function mesin(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.mesin', compact('gitversions'));
+    }
+    public function sparepart(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.sparepart', compact('gitversions'));
+    }
+
 
     //  ***
     //  loaddata
@@ -32,6 +69,10 @@ class MutationController extends Controller
         
         $output = '';
         
+        $request->validate([
+            'periode' => 'required|date_format:Y-m',
+            'kategori' => 'required'
+        ]);
         $parameter = $request;
         $parameter['page'] = 0;
         $parameter['limit'] = 1;

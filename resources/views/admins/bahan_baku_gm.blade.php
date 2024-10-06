@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('active_bahan_baku_gu', 'active')
+@section('active_bahan_baku_gm', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -50,7 +50,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Bahan Baku - Gudang Umum<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Bahan Baku - Gudang Material<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -113,7 +113,7 @@
     var url = "{{ route('mutation') }}";
     var urlpaging = "{{ route('mutation_page') }}";
     var kategori      = 'Bahan baku';
-    var gudang      = 'Gudang Umum';
+    var gudang      = 'Gudang Material';
 
     document.querySelectorAll('input[type="text"]').forEach(function(input) {
         input.addEventListener('keydown', function(event) {
@@ -125,76 +125,7 @@
         });
     });
 
-    // function loaddata()
-    // {
-    //     //  variable
-    //     $("#loadingdata").remove();
-    //     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
-
-    //     // 'periode', 'kode_barang','gudang', 'kategori'
-    //     console.log('data load');
-    //     $.ajax({
-    //         url     : url,
-    //         method  : 'GET',
-    //         data    : { periode,kategori },
-    //         dataType: 'json',
-    //         success : function(data)
-    //         {
-    //             console.log({data});
-    //             var valraquo = data.halamanAktif + 1;
-    //             $("#loadingdata").remove();
-    //             $('thead').html(data.header);
-    //             $('tbody').html(data.table_data);
-    //             //  total count
-    //             if(data.totalcount == 1)
-    //             {
-    //                 $("#spn_totalcount").text("Total data "+data.totalcount+" record");
-    //             }
-    //             else if(data.totalcount > 1)
-    //             {
-    //                 $("#spn_totalcount").text("Total data "+data.totalcount+" records");
-    //             }
-    //             else
-    //             {
-    //                 $("#spn_totalcount").text("Data nothing");
-    //             }
-    //             //  pagination
-    //             if(data.halamanAktif === data.jumlahHalaman)
-    //             {
-    //                 $("#navigation").remove();
-    //                 $("#writepagination").append(""
-    //                 + "<div id='navigation'>"
-    //                     + "<nav class='pagination-outer' aria-label='Page navigation'>"
-    //                     + "<ul class='pagination pagination-sm'>"
-    //                         + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
-    //                         + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
-    //                         + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-    //                         + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Next'><span aria-hidden='true' class='text-muted'>»</span></a></li>"
-    //                         + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Last'><span aria-hidden='true' class='text-muted'>Last</span></a></li>"
-    //                     + "</ul>"
-    //                     + "</nav>"
-    //                 + "</div>");
-    //             }
-    //             else
-    //             {
-    //                 $("#navigation").remove();
-    //                 $("#writepagination").append(""
-    //                 + "<div id='navigation'>"
-    //                     + "<nav class='pagination-outer' aria-label='Page navigation'>"
-    //                     + "<ul class='pagination pagination-sm'>"
-    //                         + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
-    //                         + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
-    //                         + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-    //                         + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick="+ raquo(valraquo)+ "><span aria-hidden='true'>»</span></a></li>"
-    //                         + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick="+ last(data.jumlahHalaman) +"><span aria-hidden='true'>Last</span></a></li>"
-    //                     + "</ul>"
-    //                     + "</nav>"
-    //                 + "</div>");
-    //             }
-    //         }
-    //     });
-    // }
-
+    
     function search()
     {
         console.log("CLICK SEARCH BAHAN BAKU")
@@ -631,17 +562,12 @@
         $("#endate").val(endate);
         $("#partno").val('');
 
-        //  load data
-        // loaddata();
-
         //  trigger toogle
         $("#menuToggle").trigger('click');
 
         //  search data
         $('#endate').change(function (){ search(); });
         $("#partno").keydown(function (e){ if(e.keyCode == 13){ search(); }});
-        // $("#btn_cari").click(function(){ search(); });
-        // $("#btn_cari").click(search());
         $("#btn_download").click(function(){ download(); });
         $("#btn_reset").click(function(){
             //  buat tanggal
@@ -659,8 +585,6 @@
             $("#stdate").val(stdate);
             $("#endate").val(endate);
             $("#partno").val('');
-
-            // loaddata();
             window.location.href =  window.location.href.split("#")[0];
         });
     });
