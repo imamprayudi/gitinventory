@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('active_kontruksi', 'active')
+@section('active_bahan_baku_gm', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -19,6 +19,12 @@
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
+                                {{-- <div class="col-6 text-center">
+                                    <button type="submit" class="btn btn-info btn-md col-5" id="btn_cari" onclick="search()" >
+                                        Search
+                                    </button>
+                                    <button type="reset" class="btn btn-warning btn-md col-5" id="btn_reset">Reset</button>
+                                </div> --}}
                             </div>
                             <div class="col-12">
                                 <div class="justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
@@ -44,7 +50,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Modal - Peralatan Konstruksi<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Bahan Baku - Gudang Material<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -106,8 +112,8 @@
     //  load data
     var url = "{{ route('mutation') }}";
     var urlpaging = "{{ route('mutation_page') }}";
-    var kategori      = 'Barang modal - Peralatan konstruksi';
-    var gudang      = 'Gudang Umum';
+    var kategori      = 'Bahan baku';
+    var gudang      = 'Gudang Material';
 
     document.querySelectorAll('input[type="text"]').forEach(function(input) {
         input.addEventListener('keydown', function(event) {
@@ -122,7 +128,7 @@
     
     function search()
     {
-        console.log("CLICK SEARCH Barang modal - Peralatan konstruksi")
+        console.log("CLICK SEARCH BAHAN BAKU")
         //  variable
         var periode       = $("#periode").val();
         var kode_barang = $('#kode_barang').val();

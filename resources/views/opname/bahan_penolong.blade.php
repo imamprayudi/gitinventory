@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('active_kontruksi', 'active')
+@section('active_bahan_penolong', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -44,7 +44,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Modal - Peralatan Konstruksi<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Bahan Penolong<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -106,7 +106,7 @@
     //  load data
     var url = "{{ route('mutation') }}";
     var urlpaging = "{{ route('mutation_page') }}";
-    var kategori      = 'Barang modal - Peralatan konstruksi';
+    var kategori      = 'Bahan Penolong';
     var gudang      = 'Gudang Umum';
 
     document.querySelectorAll('input[type="text"]').forEach(function(input) {
@@ -119,10 +119,9 @@
         });
     });
 
-    
     function search()
     {
-        console.log("CLICK SEARCH Barang modal - Peralatan konstruksi")
+        console.log("CLICK SEARCH BAHAN PENOLONG")
         //  variable
         var periode       = $("#periode").val();
         var kode_barang = $('#kode_barang').val();
@@ -143,7 +142,7 @@
         $.ajax({
             url     : url,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan },
+            data    : {  periode, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan },
             dataType: 'json',
             success : function(data)
             {
@@ -264,7 +263,7 @@
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
+            data    : {  periode, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
             dataType: 'json',
             success : function(data)
             {
@@ -323,7 +322,7 @@
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
+            data    : {  periode, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
             dataType: 'json',
             success : function(data)
             {
@@ -402,7 +401,7 @@
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
+            data    : {  periode, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
             dataType: 'json',
             success : function(data)
             {
@@ -481,7 +480,7 @@
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
+            data    : {  periode, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
             dataType: 'json',
             success : function(data)
             {
@@ -534,7 +533,7 @@
         var selisih = $('#selisih').val();
         var keterangan = $('#keterangan').val();
 
-        window.open("mutation-download?periode="+periode+"&gudang="+gudang+"&kategori="+kategori+"&kode_barang="+kode_barang+"&nama_barang="+nama_barang+"&satuan="+satuan+"&saldo_awal="+saldo_awal+"&pemasukan="+pemasukan+"&pengeluaran="+pengeluaran+"&penyesuaian="+penyesuaian+"&saldo_buku="+saldo_buku+"&stock_opame="+stock_opame+"&selisih="+selisih+"&keterangan="+keterangan);
+        window.open("mutation-download?periode="+periode+"&kategori="+kategori+"&kode_barang="+kode_barang+"&nama_barang="+nama_barang+"&satuan="+satuan+"&saldo_awal="+saldo_awal+"&pemasukan="+pemasukan+"&pengeluaran="+pengeluaran+"&penyesuaian="+penyesuaian+"&saldo_buku="+saldo_buku+"&stock_opame="+stock_opame+"&selisih="+selisih+"&keterangan="+keterangan);
     }
 
     //  ***

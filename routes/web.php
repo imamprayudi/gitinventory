@@ -7,25 +7,26 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\OutgoingController;
-use App\Http\Controllers\GudangumumController;
-use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\FinishgoodController;
-use App\Http\Controllers\ProductionController;
-use App\Http\Controllers\ScrapController;
+// use App\Http\Controllers\GudangumumController;
+// use App\Http\Controllers\MaterialController;
+// use App\Http\Controllers\FinishgoodController;
+// use App\Http\Controllers\ProductionController;
+// use App\Http\Controllers\ScrapController;
 use App\Http\Controllers\WipController;
-use App\Http\Controllers\Bahan_BakuController;
-use App\Http\Controllers\MesinController;
-use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\BahanBakuContohController;
-use App\Http\Controllers\FinishgoodContohController;
-use App\Http\Controllers\BahanPenolongController;
-use App\Http\Controllers\PengemasController;
-use App\Http\Controllers\SparepartController;
-use App\Http\Controllers\PeralatanPabrikController;
-use App\Http\Controllers\MoldController;
-use App\Http\Controllers\KonstruksiController;
-use App\Http\Controllers\KantorController;
+// use App\Http\Controllers\Bahan_BakuController;
+// use App\Http\Controllers\MesinController;
+// use App\Http\Controllers\ServiceController;
+// use App\Http\Controllers\BahanBakuContohController;
+// use App\Http\Controllers\FinishgoodContohController;
+// use App\Http\Controllers\BahanPenolongController;
+// use App\Http\Controllers\PengemasController;
+// use App\Http\Controllers\SparepartController;
+// use App\Http\Controllers\PeralatanPabrikController;
+// use App\Http\Controllers\MoldController;
+// use App\Http\Controllers\KonstruksiController;
+// use App\Http\Controllers\KantorController;
 use App\Http\Controllers\MutationController;
+use App\Http\Controllers\OpnameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,29 +93,43 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
     Route::get('/service', [MutationController::class, 'service']);
     Route::get('/scrap', [MutationController::class, 'scrap']);
 
-
-    // Route::get('/finishgood', [FinishgoodController::class, 'index']);
-    // Route::get('/service', [ServiceController::class, 'index']);
-    // Route::get('/wip', [WipController::class, 'index']);
-    // Route::get('/bahan_baku_contoh', [BahanBakuContohController::class, 'index']);
-    // Route::get('/finishgood_contoh', [FinishgoodContohController::class, 'index']);
-    // Route::get('/bahan_penolong', [BahanPenolongController::class, 'index']);
-    // Route::get('/pengemas', [PengemasController::class, 'index']);
-    // Route::get('/mesin', [MesinController::class, 'index']);
     // Route::get('/sparepart', [SparepartController::class, 'index']);
-    // Route::get('/peralatan_pabrik', [PeralatanPabrikController::class, 'index']);
-    // Route::get('/mold', [MoldController::class, 'index']);
-    // Route::get('/konstruksi', [KonstruksiController::class, 'index']);
-    // Route::get('/kantor', [KantorController::class, 'index']);
-    // Route::get('/scrap', [ScrapController::class, 'index']);
 
     Route::get('/mutation', [MutationController::class,'loaddata'])->name('mutation');
     Route::get('/mutation-pagination', [MutationController::class,'pagination'])->name('mutation_page');
     Route::get('/mutation-download', [MutationController::class,'download'])->name('mutation-download');
-    Route::get('/mutation-download-gudang', [MutationController::class,'download_gudang'])->name('mutation-download-gudang');
 
-    Route::get('/wip/loaddata', [WipController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('wip.loaddata');
+    Route::get('/wip', [WipController::class,'index'])->name('wip');
+    Route::get('/wip-loaddata', [WipController::class,'loaddata'])->name('wip-loaddata');
+    Route::get('/wip-pagination', [WipController::class,'pagination'])->name('wip-page');
+    Route::get('/wip-download', [WipController::class,'download'])->name('wip-download');
 
+    Route::prefix('/opname')->group(function(){
+        //  **
+        //  Stock opname
+        Route::get('/bahan_baku_gm', [OpnameController::class, 'gudang_material'])->name('opname.gudang_material');
+        Route::get('/bahan_baku_gu', [OpnameController::class, 'gudang_umum'])->name('opname.gudang_umum');
+        Route::get('/bahan_penolong', [OpnameController::class, 'bahan_penolong'])->name('opname.bahan_penolong');
+        Route::get('/mesin', [OpnameController::class, 'mesin'])->name('opname.mesin');
+        Route::get('/sparepart', [OpnameController::class, 'sparepart'])->name('opname.sparepart');
+        Route::get('/mold', [OpnameController::class, 'mold'])->name('opname.mold');
+        Route::get('/peralatan_pabrik', [OpnameController::class, 'peralatan_pabrik'])->name('opname.peralatan_pabrik');
+        Route::get('/konstruksi', [OpnameController::class, 'konstruksi'])->name('opname.konstruksi');
+        Route::get('/kantor', [OpnameController::class, 'kantor'])->name('opname.kantor');
+        Route::get('/finishgood_gfg', [OpnameController::class, 'finishgood_gfg'])->name('opname.finishgood_gfg');
+        Route::get('/finishgood_gu', [OpnameController::class, 'finishgood_gu'])->name('opname.finishgood_gu');
+        Route::get('/pengemas', [OpnameController::class, 'pengemas'])->name('opname.pengemas');
+        Route::get('/bahan_baku_contoh', [OpnameController::class, 'bahan_baku_contoh'])->name('opname.bahan_baku_contoh');
+        Route::get('/finishgood_contoh', [OpnameController::class, 'finishgood_contoh'])->name('opname.finishgood_contoh');
+        Route::get('/service', [OpnameController::class, 'service'])->name('opname.service');
+        Route::get('/scrap', [OpnameController::class, 'scrap'])->name('opname.scrap');
+
+        Route::get('/loaddata', [OpnameController::class,'loaddata'])->name('opname.loaddata');
+        Route::get('/opname-pagination', [OpnameController::class,'pagination'])->name('opname.page');
+        Route::get('/opname-download', [OpnameController::class,'download'])->name('opname.download');
+
+
+    });
 });
 
 
@@ -142,7 +157,7 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
 // //  **
 // //  Finished Goods
 // Route::get('/finishgood/loaddata', [FinishgoodController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('finishgood.loaddata');
-Route::get('/finishgood/pagination', [FinishgoodController::class, 'pagination'])->middleware('sesauthgitinventory')->name('finishgood.pagination');
+// Route::get('/finishgood/pagination', [FinishgoodController::class, 'pagination'])->middleware('sesauthgitinventory')->name('finishgood.pagination');
 // Route::get('/finishgood/download', [FinishgoodController::class, 'download'])->middleware('sesauthgitinventory')->name('finishgood.download');
 
 // //  **
@@ -151,7 +166,7 @@ Route::get('/finishgood/pagination', [FinishgoodController::class, 'pagination']
 
 // //  **
 // //  WIP
-Route::get('/wip/loaddata', [WipController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('wip.loaddata');
+// Route::get('/wip/loaddata', [WipController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('wip.loaddata');
 
 // //  **
 // //  Bahan Baku - Contoh
@@ -197,8 +212,8 @@ Route::get('/wip/loaddata', [WipController::class, 'loaddata'])->middleware('ses
 
 // //  **
 // //  Scrap
-Route::get('/scrap/loaddata', [ScrapController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('scrap.loaddata');
-Route::get('/scrap/pagination', [ScrapController::class, 'pagination'])->middleware('sesauthgitinventory')->name('scrap.pagination');
+// Route::get('/scrap/loaddata', [ScrapController::class, 'loaddata'])->middleware('sesauthgitinventory')->name('scrap.loaddata');
+// Route::get('/scrap/pagination', [ScrapController::class, 'pagination'])->middleware('sesauthgitinventory')->name('scrap.pagination');
 // Route::get('/scrap/download', [ScrapController::class, 'download'])->middleware('sesauthgitinventory')->name('scrap.download');
 
 

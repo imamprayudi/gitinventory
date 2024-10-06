@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
 
-class MutationController extends Controller
+class OpnameController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
-    
-    protected $gudang = 'Gudang Umum';
     
      public function __construct()
     {
@@ -28,97 +26,97 @@ class MutationController extends Controller
     {
         $this->gudang = 'Gudang Material';
         $gitversions =$this->version;
-        return view('admins.bahan_baku_gm', compact('gitversions'));
+        return view('opname.bahan_baku_gm', compact('gitversions'));
     }
     public function gudang_umum(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.bahan_baku_gu', compact('gitversions'));
+        return view('opname.bahan_baku_gu', compact('gitversions'));
     }
     public function bahan_penolong(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.bahan_penolong', compact('gitversions'));
+        return view('opname.bahan_penolong', compact('gitversions'));
     }
     public function mesin(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.mesin', compact('gitversions'));
+        return view('opname.mesin', compact('gitversions'));
     }
     public function sparepart(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.sparepart', compact('gitversions'));
+        return view('opname.sparepart', compact('gitversions'));
     }
     public function mold(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.mold', compact('gitversions'));
+        return view('opname.mold', compact('gitversions'));
     }
     public function peralatan_pabrik(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.peralatan_pabrik', compact('gitversions'));
+        return view('opname.peralatan_pabrik', compact('gitversions'));
     }
     public function konstruksi(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.konstruksi', compact('gitversions'));
+        return view('opname.konstruksi', compact('gitversions'));
     }
     public function kantor(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.kantor', compact('gitversions'));
+        return view('opname.kantor', compact('gitversions'));
     }
     public function finishgood_gfg(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.finishgood_gfg', compact('gitversions'));
+        return view('opname.finishgood_gfg', compact('gitversions'));
     }
     public function finishgood_gu(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.finishgood_gu', compact('gitversions'));
+        return view('opname.finishgood_gu', compact('gitversions'));
     }
     public function pengemas(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.pengemas', compact('gitversions'));
+        return view('opname.pengemas', compact('gitversions'));
     }
     public function bahan_baku_contoh(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.bahan_baku_contoh', compact('gitversions'));
+        return view('opname.bahan_baku_contoh', compact('gitversions'));
     }
     public function finishgood_contoh(Request $request)
     {
         $this->gudang = 'Gudang Umum';
         $gitversions =$this->version;
-        return view('admins.finishgood_contoh', compact('gitversions'));
+        return view('opname.finishgood_contoh', compact('gitversions'));
     }
     public function service(Request $request)
     {
         $this->gudang = 'Gudang Service Part';
         $gitversions =$this->version;
-        return view('admins.service', compact('gitversions'));
+        return view('opname.service', compact('gitversions'));
     }
     public function scrap(Request $request)
     {
         $this->gudang = 'Gudang Scrap';
         $gitversions =$this->version;
-        return view('admins.scrap', compact('gitversions'));
+        return view('opname.scrap', compact('gitversions'));
     }
 
     //  ***
@@ -153,7 +151,7 @@ class MutationController extends Controller
         $parameter['page'] = 0;
         $parameter['limit'] = 1;
 
-        $counts = Http::get($this->domain . $this->url . "json_mutation.php", $parameter->toArray());
+        $counts = Http::get($this->domain . $this->url . "json_opname.php", $parameter->toArray());
         
         // return $counts;
         empty($counts['totalCount']) ? $totalcount = 0 : $totalcount = $counts['totalCount'];
@@ -188,7 +186,7 @@ class MutationController extends Controller
         $params['page'] = $awalData;
         $params['limit'] = $jumlahDataPerHalaman;
         
-        $sql    = Http::get($this->domain . $this->url . "json_mutation.php", $params->toArray());
+        $sql    = Http::get($this->domain . $this->url . "json_opname.php", $params->toArray());
         
         $nomor  = $awalData;
         foreach ($sql['rows'] as $rowdata) {
@@ -221,12 +219,12 @@ class MutationController extends Controller
         $params = $request;
         // dd($params);
         //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", $params->toArray());
+        $sql    = Http::get($this->domain . $this->url . "json_download_opname.php", $params->toArray());
         // return $this->domain . $this->url . "json_download_incoming.php";
         $data = $sql['rows'];
         // return $data;
         //  menampilkan view
-        return view('download.mutation', compact('data'));
+        return view('download.opname', compact('data'));
     }
     
 }

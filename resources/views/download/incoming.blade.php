@@ -8,22 +8,27 @@
 </table>
 <table border="1" style="white-space:nowrap !important">
     <thead>
-        <th bgcolor="#C0C0C0">#</th>
-        <th bgcolor="#C0C0C0">BC Type</th>
-        <th bgcolor="#C0C0C0">BC Number</th>
-        <th bgcolor="#C0C0C0">BC Date</th>
-        <th bgcolor="#C0C0C0">Incoming No</th>
-        <th bgcolor="#C0C0C0">Incoming Date</th>
-        <th bgcolor="#C0C0C0">Invoice No</th>
-        <th bgcolor="#C0C0C0">Invoice Date</th>
-        <th bgcolor="#C0C0C0">Supplier</th>
-        <th bgcolor="#C0C0C0">Part No</th>
-        <th bgcolor="#C0C0C0">Part Name</th>
-        <th bgcolor="#C0C0C0">QTY</th>
-        <th bgcolor="#C0C0C0">Unit</th>
-        <th bgcolor="#C0C0C0">Price</th>
-        <th bgcolor="#C0C0C0">Currency</th>
-        <th bgcolor="#C0C0C0">Create At</th>
+        <tr>
+            <th bgcolor="#C0C0C0" rowspan="2">#</th>
+            <th bgcolor="#C0C0C0">Jenis Dokumen</th>
+            <th bgcolor="#C0C0C0">Jenis Dokumen</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Supplier</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Part No</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Part Name</th>
+            <th bgcolor="#C0C0C0" rowspan="2">QTY</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Unit</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Price</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Currency</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Create At</th>
+        </tr>
+        <tr>
+            <th bgcolor="#C0C0C0">BC Type</th>
+            <th bgcolor="#C0C0C0">BC Number</th>
+            <th bgcolor="#C0C0C0">BC Date</th>
+            <th bgcolor="#C0C0C0">Incoming No</th>
+            <th bgcolor="#C0C0C0">Incoming Date</th>
+            <th bgcolor="#C0C0C0">Invoice No</th>
+        </tr>
     </thead>
     @php
         $no=1

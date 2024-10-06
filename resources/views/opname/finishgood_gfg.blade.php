@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('active_kontruksi', 'active')
+@section('activefinishgood_gfg', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -44,7 +44,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Modal - Peralatan Konstruksi<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Hasil Produksi - Gudang Finished Goods<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -106,8 +106,8 @@
     //  load data
     var url = "{{ route('mutation') }}";
     var urlpaging = "{{ route('mutation_page') }}";
-    var kategori      = 'Barang modal - Peralatan konstruksi';
-    var gudang      = 'Gudang Umum';
+    var kategori      = 'Hasil produksi';
+    var gudang      = 'Gudang Finished Goods';
 
     document.querySelectorAll('input[type="text"]').forEach(function(input) {
         input.addEventListener('keydown', function(event) {
@@ -122,7 +122,7 @@
     
     function search()
     {
-        console.log("CLICK SEARCH Barang modal - Peralatan konstruksi")
+        console.log("CLICK SEARCH BARANG MODAL MESIN")
         //  variable
         var periode       = $("#periode").val();
         var kode_barang = $('#kode_barang').val();
