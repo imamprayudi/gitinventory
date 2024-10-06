@@ -180,21 +180,12 @@
         <footer class="site-footer">
             <div class="footer-inner bg-white" style="font-size:8pt;">
                 <div class="row">
-                    @if(date('Y') == 2022)
-                        <div class="col-sm-6">
-                            &copy; {{ date('Y') }} Team G.I.T
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            All Rights Reserved. Version {{ $gitversions }}
-                        </div>
-                    @else
-                        <div class="col-sm-6">
-                            &copy; 2022 - {{ date('Y') }} Team G.I.T
-                        </div>
-                        <div class="col-sm-6 text-right">
-                            All Rights Reserved. Version {{ $gitversions }}
-                        </div>
-                    @endif
+                    <div class="col-sm-6">
+                        &copy; 2022 - {{ date('Y') }} Team G.I.T
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        All Rights Reserved. Version {{ $gitversions }}
+                    </div>
                 </div>
             </div>
         </footer>

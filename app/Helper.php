@@ -56,6 +56,83 @@ class Helper
         return $body;
     }
 
+    public static function return_data_mutasi($no, $rowdata){
+        /**`monthly_mutation_report`.`kode_barang`,
+            `monthly_mutation_report`.`nama_barang`,
+            `monthly_mutation_report`.`satuan`,
+            `monthly_mutation_report`.`saldo_awal`,
+            `monthly_mutation_report`.`pemasukan`,
+            `monthly_mutation_report`.`pengeluaran`,
+            `monthly_mutation_report`.`saldo_buku`,
+            `monthly_mutation_report`.`penyesuaian`,
+            `monthly_mutation_report`.`stock_opname`,
+            `monthly_mutation_report`.`selisih`,
+            `monthly_mutation_report`.`keterangan`,
+            `monthly_mutation_report`.`created_at` */
+        // return $rowdata;
+        // <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+        return '<tr>
+                    <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+                    <td>' . $rowdata['kode_barang'] . '</td>
+                    <td>' . $rowdata['nama_barang'] . '</td>
+                    <td>' . $rowdata['satuan'] . '</td>
+                    <td align="right">' . number_format((float) $rowdata['saldo_awal'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['pemasukan'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['pengeluaran'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['penyesuaian'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['saldo_buku'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['stock_opname'],2) . '</td>
+                    <td align="right">' . number_format((float) $rowdata['selisih'],2) . '</td>
+                    <td>' . $rowdata['keterangan'] . '</td>
+                    </tr>';
+                    // <td>' . $rowdata['created_at'] . '</td>
+
+    }
+    public static function return_data_mutasi_old($no, $rowdata){
+        /**"id": "1",
+      "kode_barang": "SCR_MTL_1121/1221/0122",
+      "nama_barang": "SCRAP BESI (EX PERUSAKAN)",
+      "satuan": "KG",
+      "saldo_awal": "0",
+      "pemasukan": "835.500",
+      "pengeluaran": "835.500",
+      "penyesuaian": "0",
+      "saldo_buku": "0.000",
+      "stock_opname": "0.000",
+      "keterangan": "" */
+        // return $rowdata;
+        return '<tr>
+                    <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+                    <td>' . $rowdata['kode_barang'] . '</td>
+                    <td>' . $rowdata['nama_barang'] . '</td>
+                    <td>' . $rowdata['satuan'] . '</td>
+                    <td align="right">' . $rowdata['saldo_awal'] . '</td>
+                    <td align="right">' . $rowdata['pemasukan'] . '</td>
+                    <td align="right">' . $rowdata['pengeluaran'] . '</td>
+                    <td align="right">' . $rowdata['penyesuaian'] . '</td>
+                    <td align="right">' . $rowdata['saldo_buku'] . '</td>
+                    <td align="right">' . $rowdata['stock_opname'] . '</td>
+                    <td align="right">' . $rowdata['selisih'] . '</td>
+                    <td>' . $rowdata['keterangan'] . '</td>
+                </tr>';
+
+    }
+    public static function return_data_wip($no, $rowdata){
+        /**"id": "1",
+      "kode_barang": "SCR_MTL_1121/1221/0122",
+      "nama_barang": "SCRAP BESI (EX PERUSAKAN)",
+      "satuan": "KG",
+       */
+        return '<tr>
+                    <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+                    <td>' . $rowdata['product_no'] . '</td>
+                    <td>' . $rowdata['name_template'] . '</td>
+                    <td>' . $rowdata['satuan'] . '</td>
+                    <td></td>
+                </tr>';
+
+    }
+
     public static function no_data(){
         return '
                 <tr>

@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
 
-class FinishgoodController extends Controller
+class BahanBakuContohController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
-    protected $tempat = 'Gudang Finished Goods';
-    protected $kategori = '8';
+    // protected $tempat = 'Gudang Bahan Baku';
+    protected $kategori = 'Bahan baku - Contoh';
 
     public function __construct()
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
-        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, 'gitinventory.test')) {
             $this->domain = "http://136.198.117.118/";
         }
     }
@@ -41,12 +41,12 @@ class FinishgoodController extends Controller
             "Bahan baku - Contoh",
             "Hasil produksi - Contoh"
         ];
-        return view('admins.finishgood', compact('gitversions', 'categories'));
+        return view('admins.bahan_baku_contoh', compact('gitversions', 'categories'));
     }
 
     //  ***
     //  loaddata
-    public function loaddata(Request $request, $valjmlhal = 1, $jumlahDataPerHalaman = 10)
+    public function loaddata__OLD(Request $request, $valjmlhal = 1, $jumlahDataPerHalaman = 10)
     {
         // return $request;
         // return $valjmlhal;
@@ -59,7 +59,7 @@ class FinishgoodController extends Controller
             $periode     = $request->get('periode');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain . $this->url . "json_mutasi_finishgood.php", [
+            $counts = Http::get($this->domain . $this->url . "json_bahan_baku.php", [
                 'periode' => $periode,
                 'partno' => $partno,
                 'tempat' => $this->tempat,
@@ -85,7 +85,7 @@ class FinishgoodController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_mutasi_finishgood.php", [
+                $sql    = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
                     'periode' => $periode,
                     'partno' => $partno,
                     'tempat' => $this->tempat,
@@ -127,17 +127,98 @@ class FinishgoodController extends Controller
             return redirect('/login');
         }
     }
+    public function loaddata(Request $request, $valjmlhal = 1, $jumlahDataPerHalaman = 10)
+    {
+        return $request;
+        // return $request;
+        // return $valjmlhal;
+        // return $request;
+        //  action ajax
+        if ($request->ajax()) {
+            //  variable
+            $output     = '';
+            $jumlahDataPerHalaman = 10;
+            $periode     = $request->get('periode');
+            $partno     = $request->get('partno');
+
+            $counts = Http::get($this->domain . $this->url . "json_mutation.php", [
+                'periode' => $periode,
+                'kode_barang' => $kode_barang,
+                'gudang' => $this->gudang,
+                'kategori' => $this->kategori,
+                'page' => 0,
+                'limit' => 1
+            ]);
+
+            // return $counts['totalCount'];
+            if (empty($counts['totalCount'])) {
+                $totalcount = 0;
+            } else {
+                $totalcount = $counts['totalCount'];
+            }
+
+            if ($totalcount > 0) {
+                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
+                $halamanAktif           = intval($valjmlhal);
+                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
+
+                //  mengambil data table
+                $sql    = Http::get($this->domain . $this->url . "json_mutation.php", [
+                    'periode' => $periode,
+                    'kode_barang' => $kode_barang,
+                    'gudang' => $this->gudang,
+                    'kategori' => $this->kategori,
+                    'page' => $awalData,
+                    'limit' => $jumlahDataPerHalaman
+                ]);
+                // return $sql['rows'];
+                $nomor  = $awalData;
+                foreach ($sql['rows'] as $rowdata) {
+                    // return $rowdata;
+                    $no = ++$nomor;
+                    $output .= Helper::return_data_mutasi($no, $rowdata);
+                }
+            } else {
+                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
+                $halamanAktif           = 0;
+                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
+                $output = '
+                <tr>
+                <td class="text-center" colspan="16">No Data Found</td>
+                </tr>
+                ';
+            }
+
+            $data = array(
+                'table_data'    => $output,
+                'totalcount'    => $totalcount,
+                'halamanAktif'  => $halamanAktif,
+                'jumlahHalaman' => $jumlahHalaman
+            );
+
+            return response()->json($data);
+            // echo json_encode($data);
+            //  mengirim data ke view
+
+        } else {
+            //  menghapus session
+            $request->session()->forget('session_gitinventory_id');
+            $request->session()->forget('session_gitinventory_userid');
+            $request->session()->forget('session_gitinventory_username');
+            return redirect('/login');
+        }
+    }
 
     //  ***
     //  pagination
     public function pagination(Request $request)
     {
-        // return $this->loaddata($request, $request->get('jumlahHalaman'));
+        return $this->loaddata($request, $request->get('jumlahHalaman'));
     }
 
     //  ***
     //  download
-    public function download(Request $request)
+    public function download_old(Request $request)
     {
         //  global variable
         // $stdate     = $request->get('stdate');
@@ -204,5 +285,19 @@ class FinishgoodController extends Controller
             $no++;
         }
         echo '</table>';
+    }
+    public function download(Request $request)
+    {
+        $periode     = $request->get('periode');
+        $kategori = $this->kategori;
+
+        //  mengambil data table
+        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", [
+            'periode' => $periode,
+            'kategori' => $kategori
+        ]);
+        $data = $sql['rows'];
+        // return $data;
+        return view('download.mutation', compact('data'));
     }
 }

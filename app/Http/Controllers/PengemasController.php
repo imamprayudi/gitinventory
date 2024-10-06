@@ -6,25 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
 
-class ScrapController extends Controller
+class PengemasController extends Controller
 {
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
-    protected $tempat = 'Gudang Scrap';
-    protected $kategori = 8;
+    protected $tempat = 'Gudang Bahan Baku';
 
-    public function __construct(){
+    public function __construct()
+    {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
-        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost'))
-        {
-            $this->domain ="http://136.198.117.118/";
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost')) {
+            $this->domain = "http://136.198.117.118/";
         }
     }
     //  **
     //  index
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
+        $gitversions = Http::get($this->domain . $this->url . "json_version_sync.php");
         $gitversions = $gitversions['version'];
         $categories = [
             "Bahan baku",
@@ -41,16 +40,12 @@ class ScrapController extends Controller
             "Bahan baku - Contoh",
             "Hasil produksi - Contoh"
         ];
-        return view('admins.scrap',compact('gitversions','categories'));
-        // $categories  = Http::get($this->domain.$this->url."json_category.php");
-        // return view('admins.scrap')
-        //         ->with('gitversion',$gitversions)
-        //         ->with('categories',$categories);
+        return view('admins.pengemas', compact('gitversions', 'categories'));
     }
 
     //  ***
     //  loaddata
-    public function loaddata(Request $request,$valjmlhal=1,$jumlahDataPerHalaman=10)
+    public function loaddata(Request $request, $valjmlhal = 1, $jumlahDataPerHalaman = 10)
     {
         // return $request;
         // return $valjmlhal;
@@ -63,11 +58,10 @@ class ScrapController extends Controller
             $periode     = $request->get('periode');
             $partno     = $request->get('partno');
 
-            $counts = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+            $counts = Http::get($this->domain . $this->url . "json_pengemas.php", [
                 'periode' => $periode,
                 'partno' => $partno,
                 'tempat' => $this->tempat,
-                'kategori' => $this->kategori,
                 'page' => 0,
                 'limit' => 1
             ]);
@@ -90,7 +84,7 @@ class ScrapController extends Controller
                 $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
                 //  mengambil data table
-                $sql    = Http::get($this->domain . $this->url . "json_gudang_scrap.php", [
+                $sql    = Http::get($this->domain . $this->url . "json_pengemas.php", [
                     'periode' => $periode,
                     'partno' => $partno,
                     'tempat' => $this->tempat,
@@ -133,41 +127,11 @@ class ScrapController extends Controller
         }
     }
 
-    // public function return_data($no, $rowdata)
-    // {
-    //     /**"id": "1",
-    //   "kode_barang": "SCR_MTL_1121/1221/0122",
-    //   "nama_barang": "SCRAP BESI (EX PERUSAKAN)",
-    //   "satuan": "KG",
-    //   "saldo_awal": "0",
-    //   "pemasukan": "835.500",
-    //   "pengeluaran": "835.500",
-    //   "penyesuaian": "0",
-    //   "saldo_buku": "0.000",
-    //   "stock_opname": "0.000",
-    //   "keterangan": "" */
-    //     // return $rowdata;
-    //     return '<tr>
-    //                 <td align="right"><medium class="text-muted">' . $no . '</medium></td>
-    //                 <td>' . $rowdata['kode_barang'] . '</td>
-    //                 <td>' . $rowdata['nama_barang'] . '</td>
-    //                 <td>' . $rowdata['satuan'] . '</td>
-    //                 <td align="right">' . $rowdata['saldo_awal'] . '</td>
-    //                 <td align="right">' . $rowdata['pemasukan'] . '</td>
-    //                 <td align="right">' . $rowdata['pengeluaran'] . '</td>
-    //                 <td align="right">' . $rowdata['penyesuaian'] . '</td>
-    //                 <td align="right">' . $rowdata['saldo_buku'] . '</td>
-    //                 <td align="right">' . $rowdata['stock_opname'] . '</td>
-    //                 <td align="right">' . $rowdata['selisih'] . '</td>
-    //                 <td>' . $rowdata['keterangan'] . '</td>
-    //             </tr>';
-    // }
-
     //  ***
     //  pagination
     public function pagination(Request $request)
     {
-        return $this->loaddata($request,$request->get('jumlahHalaman'));
+        return $this->loaddata($request, $request->get('jumlahHalaman'));
     }
 
     //  ***
@@ -186,55 +150,55 @@ class ScrapController extends Controller
 
         //  execute database
         // $datas  = DB::select("call sync_down_input('{$stdate}', '{$endate}', '{$jnsdokbc}', '{$nodokbc}', '{$partno}');");
-        $datas = Http::get($this->domain.$this->url.'json_gudang_scrap.php',[
-                    'periode' => $periode,
-                    'partno' => $partno,
-                    'tempat' => $tempat
-                ]);
+        $datas = Http::get($this->domain . $this->url . 'json_gudang_scrap.php', [
+            'periode' => $periode,
+            'partno' => $partno,
+            'tempat' => $tempat
+        ]);
 
         //  untuk meyimpan data di excel
         header("Content-type: application/vnd-ms-excel");
-        header("Content-Disposition: attachment; filename=". $filename .".xls");
+        header("Content-Disposition: attachment; filename=" . $filename . ".xls");
         echo '<table>';
-            echo '<tr>';
-            echo '<th colspan="6" style="font-size:18pt;" align="left">'.strtoupper($filename).'</th>';
-            echo '</tr>';
-            echo '<tr>';
-                echo '<th></th>';
-            echo '</tr>';
+        echo '<tr>';
+        echo '<th colspan="6" style="font-size:18pt;" align="left">' . strtoupper($filename) . '</th>';
+        echo '</tr>';
+        echo '<tr>';
+        echo '<th></th>';
+        echo '</tr>';
         echo '</table>';
         echo '<table border="1">';
-            echo '<tr>';
-                echo'<th bgcolor="#C0C0C0">No</th>';
-                echo'<th bgcolor="#C0C0C0">Kode Brg</th>';
-                echo'<th bgcolor="#C0C0C0">Nama Brg</th>';
-                echo'<th bgcolor="#C0C0C0">Sat</th>';
-                echo'<th bgcolor="#C0C0C0">Saldo Awal</th>';
-                echo'<th bgcolor="#C0C0C0">Pemasukan</th>';
-                echo'<th bgcolor="#C0C0C0">Pengeluaran</th>';
-                echo'<th bgcolor="#C0C0C0">Penyesuaian</th>';
-                echo'<th bgcolor="#C0C0C0">Saldo Buku</th>';
-                echo'<th bgcolor="#C0C0C0">Stock Opname</th>';
-                echo'<th bgcolor="#C0C0C0">Selisih</th>';
-                echo'<th bgcolor="#C0C0C0">Ket</th>';
-            echo '</tr>';
+        echo '<tr>';
+        echo '<th bgcolor="#C0C0C0">No</th>';
+        echo '<th bgcolor="#C0C0C0">Kode Brg</th>';
+        echo '<th bgcolor="#C0C0C0">Nama Brg</th>';
+        echo '<th bgcolor="#C0C0C0">Sat</th>';
+        echo '<th bgcolor="#C0C0C0">Saldo Awal</th>';
+        echo '<th bgcolor="#C0C0C0">Pemasukan</th>';
+        echo '<th bgcolor="#C0C0C0">Pengeluaran</th>';
+        echo '<th bgcolor="#C0C0C0">Penyesuaian</th>';
+        echo '<th bgcolor="#C0C0C0">Saldo Buku</th>';
+        echo '<th bgcolor="#C0C0C0">Stock Opname</th>';
+        echo '<th bgcolor="#C0C0C0">Selisih</th>';
+        echo '<th bgcolor="#C0C0C0">Ket</th>';
+        echo '</tr>';
         $no = 1;
         for ($i = 0; $i < count($datas['rows']); $i++) {
             $rowdata = $datas['rows'][$i];
 
             echo '<tr>';
-                echo '<td align="right">'.$no.'</td>';
-                echo '<td>'.$rowdata['kode_barang'].'</td>';
-                echo '<td>'.$rowdata['nama_barang'].'</td>';
-                echo '<td>'.$rowdata['satuan'].'</td>';
-                echo '<td>'.$rowdata['saldo_awal'].'</td>';
-                echo '<td>'.$rowdata['pemasukan'].'</td>';
-                echo '<td>'.$rowdata['pengeluaran'].'</td>';
-                echo '<td>'.$rowdata['penyesuaian'].'</td>';
-                echo '<td>'.$rowdata['saldo_buku'].'</td>';
-                echo '<td>'.$rowdata['selisih'].'</td>';
-                echo '<td>'.$rowdata['stock_opname'].'</td>';
-                echo '<td>'.$rowdata['keterangan'].'</td>';
+            echo '<td align="right">' . $no . '</td>';
+            echo '<td>' . $rowdata['kode_barang'] . '</td>';
+            echo '<td>' . $rowdata['nama_barang'] . '</td>';
+            echo '<td>' . $rowdata['satuan'] . '</td>';
+            echo '<td>' . $rowdata['saldo_awal'] . '</td>';
+            echo '<td>' . $rowdata['pemasukan'] . '</td>';
+            echo '<td>' . $rowdata['pengeluaran'] . '</td>';
+            echo '<td>' . $rowdata['penyesuaian'] . '</td>';
+            echo '<td>' . $rowdata['saldo_buku'] . '</td>';
+            echo '<td>' . $rowdata['selisih'] . '</td>';
+            echo '<td>' . $rowdata['stock_opname'] . '</td>';
+            echo '<td>' . $rowdata['keterangan'] . '</td>';
             echo '</tr>';
             $no++;
         }

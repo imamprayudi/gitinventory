@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('activescrap', 'active')
+@section('active_service', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -50,7 +50,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Scrap <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Service Part <p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -99,8 +99,7 @@
     //  load data
     var url = "{{ route('mutation') }}";
     var urlpaging = "{{ route('mutation_page') }}";
-    // var kategori      = 'Hasil produksi';
-    var gudang = 'Gudang Scrap';
+    var gudang      = 'Gudang Service Part';
 
     function loaddata()
     {
@@ -108,7 +107,7 @@
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
 
-        // 'periode', 'kode_barang','gudang', 'kategori'
+        // 'periode', 'kode_barang','gudang', 'gudang'
         console.log('data load');
         $.ajax({
             url     : url,
@@ -521,6 +520,7 @@
         var kode_barang   = $("#partno").val();
         // var gudang      = 'Bahan baku';
         // window.open("finishgood/download?stdate="+stdate+"&endate="+endate+"&partno="+partno+"");
+        window.open("mutation-download-gudang?periode="+periode+"&gudang="+gudang+"");
     }
 
     //  ***
