@@ -80,6 +80,17 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
     Route::get('/bahan_penolong', [MutationController::class, 'bahan_penolong']);
     Route::get('/mesin', [MutationController::class, 'mesin']);
     Route::get('/sparepart', [MutationController::class, 'sparepart']);
+    Route::get('/mold', [MutationController::class, 'mold']);
+    Route::get('/peralatan_pabrik', [MutationController::class, 'peralatan_pabrik']);
+    Route::get('/konstruksi', [MutationController::class, 'konstruksi']);
+    Route::get('/kantor', [MutationController::class, 'kantor']);
+    Route::get('/finishgood_gfg', [MutationController::class, 'finishgood_gfg']);
+    Route::get('/finishgood_gu', [MutationController::class, 'finishgood_gu']);
+    Route::get('/pengemas', [MutationController::class, 'pengemas']);
+    Route::get('/bahan_baku_contoh', [MutationController::class, 'bahan_baku_contoh']);
+    Route::get('/finishgood_contoh', [MutationController::class, 'finishgood_contoh']);
+    Route::get('/service', [MutationController::class, 'service']);
+    Route::get('/scrap', [MutationController::class, 'scrap']);
 
 
     // Route::get('/finishgood', [FinishgoodController::class, 'index']);

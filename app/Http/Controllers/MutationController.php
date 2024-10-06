@@ -54,7 +54,72 @@ class MutationController extends Controller
         $gitversions =$this->version;
         return view('admins.sparepart', compact('gitversions'));
     }
-
+    public function mold(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.mold', compact('gitversions'));
+    }
+    public function peralatan_pabrik(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.peralatan_pabrik', compact('gitversions'));
+    }
+    public function konstruksi(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.konstruksi', compact('gitversions'));
+    }
+    public function kantor(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.kantor', compact('gitversions'));
+    }
+    public function finishgood_gfg(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.finishgood_gfg', compact('gitversions'));
+    }
+    public function finishgood_gu(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.finishgood_gu', compact('gitversions'));
+    }
+    public function pengemas(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.pengemas', compact('gitversions'));
+    }
+    public function bahan_baku_contoh(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.bahan_baku_contoh', compact('gitversions'));
+    }
+    public function finishgood_contoh(Request $request)
+    {
+        $this->gudang = 'Gudang Umum';
+        $gitversions =$this->version;
+        return view('admins.finishgood_contoh', compact('gitversions'));
+    }
+    public function service(Request $request)
+    {
+        $this->gudang = 'Gudang Service Parts';
+        $gitversions =$this->version;
+        return view('admins.service', compact('gitversions'));
+    }
+    public function scrap(Request $request)
+    {
+        $this->gudang = 'Gudang Scrap';
+        $gitversions =$this->version;
+        return view('admins.scrap', compact('gitversions'));
+    }
 
     //  ***
     //  loaddata
@@ -69,10 +134,21 @@ class MutationController extends Controller
         
         $output = '';
         
-        $request->validate([
-            'periode' => 'required|date_format:Y-m',
-            'kategori' => 'required'
-        ]);
+        if($request->gudang=='Gudang Service Part')
+        {
+            $request->validate([
+                'periode' => 'required|date_format:Y-m',
+                'gudang' => 'required'
+            ]);
+        }
+        else{
+            $request->validate([
+                'periode' => 'required|date_format:Y-m',
+                'kategori' => 'required',
+                'gudang' => 'required'
+            ]);
+        }
+
         $parameter = $request;
         $parameter['page'] = 0;
         $parameter['limit'] = 1;
@@ -151,24 +227,6 @@ class MutationController extends Controller
         // return $data;
         //  menampilkan view
         return view('download.mutation', compact('data'));
-    }
-
-     public function download_gudang(Request $request)
-    {
-        $periode     = $request->get('periode');
-        $gudang     = $request->get('gudang');
-        // return $this->domain . $this->url . "json_download_mutation_gudang.php";
-       
-        //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_mutation_gudang.php", [
-            'periode' => $periode,
-            'gudang' => $gudang
-        ]);
-        // return $this->domain . $this->url . "json_download_incoming.php";
-        $data = $sql['rows'];
-        // return $data;
-        //  menampilkan view
-        return view('download.mutation_gudang', compact('data'));
     }
     
 }

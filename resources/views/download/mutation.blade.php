@@ -2,7 +2,7 @@
 {{ header("Content-Disposition: attachment; filename=Data ". $data[0]['kategori'] ."-". $data[0]['gudang'] .".xls") }}
 <table>
     <tr>
-        <th colspan="6" style="font-size:18pt;" align="left">LAPORAN {{ $data[0]['kategori'] }} - {{ $data[0]['gudang'] }} PER DOKUMEN</th>
+        <th colspan="12" style="font-size:18pt;" align="left">LAPORAN {{ $data[0]['kategori'] }} - {{ $data[0]['gudang'] }} PER DOKUMEN</th>
     </tr>
     <tr><th></th></tr>
 </table>
