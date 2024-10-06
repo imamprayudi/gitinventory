@@ -1,8 +1,8 @@
 {{ header("Content-type: application/vnd-ms-excel") }}
-{{ header("Content-Disposition: attachment; filename=Data ". $data[0]['kategori'] .".xls") }}
+{{ header("Content-Disposition: attachment; filename=Data ". $data[0]['kategori'] ."-". $data[0]['gudang'] .".xls") }}
 <table>
     <tr>
-        <th colspan="6" style="font-size:18pt;" align="left">LAPORAN {{ $data[0]['kategori'] }} PER DOKUMEN</th>
+        <th colspan="6" style="font-size:18pt;" align="left">LAPORAN {{ $data[0]['kategori'] }} - {{ $data[0]['gudang'] }} PER DOKUMEN</th>
     </tr>
     <tr><th></th></tr>
 </table>
@@ -10,17 +10,17 @@
         
     <thead>
         <th class="align-middle" bgcolor="#C0C0C0" >No</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >Kode Brg</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >Nama Brg</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >Sat</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Kode Barang</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Nama Barang</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Satuan</th>
         <th class="align-middle" bgcolor="#C0C0C0" >Saldo Awal</th>
         <th class="align-middle" bgcolor="#C0C0C0" >Pemasukan</th>
         <th class="align-middle" bgcolor="#C0C0C0" >Pengeluaran</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >Penyesuaian</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >Saldo Buku</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >Stock Opname</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Penyesuaian (Adjustment)</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Saldo Akhir</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Hasil Pencacahan (Stock Opname)</th>
         <th class="align-middle" bgcolor="#C0C0C0" >Selisih</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >Ket</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Keterangan</th>
     </thead>
 
     @php
