@@ -17,7 +17,7 @@
                            <div class="row form-group justify-content-center">
                                 <div class="col-12">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
-                                    <input type="date" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
+                                    <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-12">
