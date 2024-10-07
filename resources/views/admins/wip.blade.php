@@ -56,8 +56,8 @@
                             <thead>
                                 <tr>
                                     <th class="align-middle" rowspan="2">No</th>
-                                    <th class="align-middle">Work Center</th>
-                                    <th class="align-middle">DIC</th>
+                                    <th class="align-middle">Kode Lokasi</th>
+                                    <th class="align-middle">Nama Lokasi</th>
                                     <th class="align-middle">Kode Barang</th>
                                     <th class="align-middle">Nama Barang</th>
                                     <th class="align-middle">Sat</th>
