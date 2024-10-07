@@ -42,14 +42,14 @@ class WipController extends Controller
         $output = '';
         
         $request->validate([
-            'periode' => 'required|date_format:Y-m-d'
+            'periode' => 'required|date_format:Ymd'
         ]);
         
 
         $parameter = $request;
         $parameter['page'] = 0;
         $parameter['limit'] = 1;
-
+        
         $counts = Http::get($this->domain . $this->url . "json_wip.php", $parameter->toArray());
         
         // return $counts;

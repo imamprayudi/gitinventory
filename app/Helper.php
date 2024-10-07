@@ -125,10 +125,12 @@ class Helper
        */
         return '<tr>
                     <td align="right"><medium class="text-muted">' . $no . '</medium></td>
-                    <td>' . $rowdata['product_no'] . '</td>
-                    <td>' . $rowdata['name_template'] . '</td>
+                    <td>' . $rowdata['work_center'] . '</td>
+                    <td>' . $rowdata['dic'] . '</td>
+                    <td>' . $rowdata['kode_barang'] . '</td>
+                    <td>' . $rowdata['nama_barang'] . '</td>
                     <td>' . $rowdata['satuan'] . '</td>
-                    <td></td>
+                    <td align="right">' . number_format((float) $rowdata['jumlah'],2) . '</td>
                 </tr>';
 
     }

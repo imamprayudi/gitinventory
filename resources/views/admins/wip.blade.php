@@ -94,8 +94,8 @@
 <script>
     //  ***
     //  load data
-    var url = "{{ route('wip') }}";
-    var urlpaging = "{{ route('wip-page') }}";
+    var url = "{{ route('wip_loaddata') }}";
+    var urlpaging = "{{ route('wip_pagination') }}";
 
     document.querySelectorAll('input[type="text"]').forEach(function(input) {
         input.addEventListener('keydown', function(event) {
@@ -110,7 +110,7 @@
     
     function search()
     {
-        console.log("CLICK SEARCH Peralatan perkantoran")
+        console.log("CLICK SEARCH WIP")
         //  variable
         var periode     = $("#periode").val().replace(/-/g, "");
         var work_center = $('#work_center').val();
@@ -491,7 +491,7 @@
         var satuan      = $('#satuan').val();
         var jumlah      = $('#jumlah').val();
 
-        window.open("wip-download?periode="+periode+"&work_center="+work_center+"&dic="+dic+"&kode_barang="+kode_barang+"&nama_barang="+nama_barang+"&satuan="+satuan+"&jumlah="+jumlah);
+        window.open("wip_download?periode="+periode+"&work_center="+work_center+"&dic="+dic+"&kode_barang="+kode_barang+"&nama_barang="+nama_barang+"&satuan="+satuan+"&jumlah="+jumlah);
     }
 
     //  ***

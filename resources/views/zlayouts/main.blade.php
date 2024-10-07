@@ -137,7 +137,7 @@
                                 <img src="../zlayouts/images/mold.png"
                                 height="14px"
                                 alt="Barang Modal Mold/ Tooling">
-                                Barang Modal - Cetakan (Mouling)
+                                Barang Modal - Cetakan (Molding)
                             </a>
                         </li>
                         <li class="@yield('active_peralatan_pabrik')">
