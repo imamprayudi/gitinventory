@@ -10,8 +10,8 @@
         
     <thead>
         <th class="align-middle" bgcolor="#C0C0C0" >No</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >Work Center</th>
-        <th class="align-middle" bgcolor="#C0C0C0" >DIC</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Kode Lokasi</th>
+        <th class="align-middle" bgcolor="#C0C0C0" >Nama Lokasi</th>
         <th class="align-middle" bgcolor="#C0C0C0" >Kode Barang</th>
         <th class="align-middle" bgcolor="#C0C0C0" >Nama Barang</th>
         <th class="align-middle" bgcolor="#C0C0C0" >Satuan</th>
