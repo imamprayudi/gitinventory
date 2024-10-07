@@ -158,8 +158,8 @@ class OutgoingController extends Controller
                     <td>'.$rowdata['partname'].'</td>
                     <td align="right">'.$rowdata['qty'].'</td>
                     <td>'.$rowdata['unit'].'</td>
-                    <td align="right">'.$rowdata['price'].'</td>
                     <td>'.$rowdata['currency'].'</td>
+                    <td align="right">'.$rowdata['price'].'</td>
                     </tr>';
                     // <td>'.$rowdata['dateinvoice'].'</td>
                     // <td>'.$rowdata['input_user'].'<br>'.$rowdata['input_date'].'</td>
