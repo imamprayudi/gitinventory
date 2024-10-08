@@ -104,32 +104,31 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
     Route::get('/wip_pagination', [WipController::class,'pagination'])->name('wip_pagination');
     Route::get('/wip_download', [WipController::class,'download'])->name('wip_download');
 
-    Route::prefix('/opname')->group(function(){
-        //  **
-        //  Stock opname
-        Route::get('/bahan_baku_gm', [OpnameController::class, 'gudang_material'])->name('opname.gudang_material');
-        Route::get('/bahan_baku_gu', [OpnameController::class, 'gudang_umum'])->name('opname.gudang_umum');
-        Route::get('/bahan_penolong', [OpnameController::class, 'bahan_penolong'])->name('opname.bahan_penolong');
-        Route::get('/mesin', [OpnameController::class, 'mesin'])->name('opname.mesin');
-        Route::get('/sparepart', [OpnameController::class, 'sparepart'])->name('opname.sparepart');
-        Route::get('/mold', [OpnameController::class, 'mold'])->name('opname.mold');
-        Route::get('/peralatan_pabrik', [OpnameController::class, 'peralatan_pabrik'])->name('opname.peralatan_pabrik');
-        Route::get('/konstruksi', [OpnameController::class, 'konstruksi'])->name('opname.konstruksi');
-        Route::get('/kantor', [OpnameController::class, 'kantor'])->name('opname.kantor');
-        Route::get('/finishgood_gfg', [OpnameController::class, 'finishgood_gfg'])->name('opname.finishgood_gfg');
-        Route::get('/finishgood_gu', [OpnameController::class, 'finishgood_gu'])->name('opname.finishgood_gu');
-        Route::get('/pengemas', [OpnameController::class, 'pengemas'])->name('opname.pengemas');
-        Route::get('/bahan_baku_contoh', [OpnameController::class, 'bahan_baku_contoh'])->name('opname.bahan_baku_contoh');
-        Route::get('/finishgood_contoh', [OpnameController::class, 'finishgood_contoh'])->name('opname.finishgood_contoh');
-        Route::get('/service', [OpnameController::class, 'service'])->name('opname.service');
-        Route::get('/scrap', [OpnameController::class, 'scrap'])->name('opname.scrap');
+    //  **
+    //  Stock opname
+    Route::get('/opname-bahan_baku_gm', [OpnameController::class, 'gudang_material']);
+    Route::get('/opname-bahan_baku_gu', [OpnameController::class, 'gudang_umum']);
+    Route::get('/opname-bahan_penolong', [OpnameController::class, 'bahan_penolong']);
+    Route::get('/opname-mesin', [OpnameController::class, 'mesin']);
+    Route::get('/opname-sparepart', [OpnameController::class, 'sparepart']);
+    Route::get('/opname-mold', [OpnameController::class, 'mold']);
+    Route::get('/opname-peralatan_pabrik', [OpnameController::class, 'peralatan_pabrik']);
+    Route::get('/opname-konstruksi', [OpnameController::class, 'konstruksi']);
+    Route::get('/opname-kantor', [OpnameController::class, 'kantor']);
+    Route::get('/opname-finishgood_gfg', [OpnameController::class, 'finishgood_gfg']);
+    Route::get('/opname-finishgood_gu', [OpnameController::class, 'finishgood_gu']);
+    Route::get('/opname-pengemas', [OpnameController::class, 'pengemas']);
+    Route::get('/opname-bahan_baku_contoh', [OpnameController::class, 'bahan_baku_contoh']);
+    Route::get('/opname-finishgood_contoh', [OpnameController::class, 'finishgood_contoh']);
+    Route::get('/opname-service', [OpnameController::class, 'service']);
+    Route::get('/opname-scrap', [OpnameController::class, 'scrap']);
 
-        Route::get('/loaddata', [OpnameController::class,'loaddata'])->name('opname.loaddata');
-        Route::get('/opname-pagination', [OpnameController::class,'pagination'])->name('opname.page');
-        Route::get('/opname-download', [OpnameController::class,'download'])->name('opname.download');
+    Route::get('/opname-loaddata', [OpnameController::class,'loaddata'])->name('opname-loaddata');
+    Route::get('/opname-pagination', [OpnameController::class,'pagination'])->name('opname-pagination');
+    Route::get('/opname-download', [OpnameController::class,'download'])->name('opname-download');
 
 
-    });
+    
 });
 
 

@@ -25,98 +25,195 @@ class OpnameController extends Controller
     public function gudang_material(Request $request)
     {
         $this->gudang = 'Gudang Material';
+        $kategori_data = [
+            "active_menu" => "active_opname_bahan_baku_gm",
+            "title" => "(Hasil Pencacahan) Bahan Baku - Gudang Material",
+            "kategori_barang" => "Bahan baku",
+            "gudang" => "Gudang Material",
+        ];
         $gitversions =$this->version;
-        return view('opname.bahan_baku_gm', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
+
     }
     public function gudang_umum(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_bahan_baku_gu",
+            "title" => "(Hasil Pencacahan) Bahan Baku - Gudang Umum",
+            "kategori_barang" => "Bahan baku",
+            "gudang" => "Gudang Umum",
+        ];
         $gitversions =$this->version;
-        return view('opname.bahan_baku_gu', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function bahan_penolong(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_bahan_penolong",
+            "title" => "(Hasil Pencacahan) Bahan Penolong",
+            "kategori_barang" => "Bahan penolong",
+            "gudang" => "Gudang Umum",
+        ];
         $gitversions =$this->version;
-        return view('opname.bahan_penolong', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function mesin(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_mesin",
+            "title" => "(Hasil Pencacahan) Barang modal - Mesin",
+            "kategori_barang" => "Barang modal - Mesin",
+            "gudang" => "Gudang Umum",
+        ];
         $gitversions =$this->version;
-        return view('opname.mesin', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function sparepart(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_sparepart",
+            "title" => "(Hasil Pencacahan) Barang Modal - Spare Part",
+            "kategori_barang" => "Barang modal - Spare part",
+            "gudang" => "Gudang Umum",
+        ];
         $gitversions =$this->version;
-        return view('opname.sparepart', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function mold(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_mold",
+            "title" => "(Hasil Pencacahan) Barang Modal - Cetakan (Moulding)",
+            "kategori_barang" => "Barang modal - Mould / Cetakan",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.mold', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function peralatan_pabrik(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_peralatan_pabrik",
+            "title" => "(Hasil Pencacahan) Barang Modal - Peralatan Pabrik",
+            "kategori_barang" => "Barang modal - Peralatan pabrik",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.peralatan_pabrik', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function konstruksi(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_konstruksi",
+            "title" => "(Hasil Pencacahan) Barang Modal - Peralatan Konstruksi",
+            "kategori_barang" => "Barang modal - Peralatan konstruksi",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.konstruksi', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function kantor(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_kantor",
+            "title" => "(Hasil Pencacahan) Peralatan Perkantoran",
+            "kategori_barang" => "Peralatan perkantoran",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.kantor', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function finishgood_gfg(Request $request)
     {
-        $this->gudang = 'Gudang Umum';
+        $this->gudang = 'Gudang Finished Goods';
+        $kategori_data = [
+            "active_menu" => "active_opname_finishgood_gfg",
+            "title" => "(Hasil Pencacahan) Hasil Produksi - ".$this->gudang,
+            "kategori_barang" => "Hasil produksi",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.finishgood_gfg', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function finishgood_gu(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_finishgood_gu",
+            "title" => "(Hasil Pencacahan) Hasil Produksi - ".$this->gudang,
+            "kategori_barang" => "Hasil produksi",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.finishgood_gu', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function pengemas(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_pengemas",
+            "title" => "(Hasil Pencacahan) Pengemas atau Alat Bantu pengemas",
+            "kategori_barang" => "Barang Pengemas atau Alat bantu pengemas",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.pengemas', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function bahan_baku_contoh(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_bahan_baku_contoh",
+            "title" => "(Hasil Pencacahan) Barang Contoh - Bahan Baku",
+            "kategori_barang" => "Bahan baku - Contoh",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.bahan_baku_contoh', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function finishgood_contoh(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $kategori_data = [
+            "active_menu" => "active_opname_finishgood_contoh",
+            "title" => "(Hasil Pencacahan) Barang Contoh - Barang Jadi",
+            "kategori_barang" => "Hasil produksi - Contoh",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.finishgood_contoh', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function service(Request $request)
     {
         $this->gudang = 'Gudang Service Part';
+        $kategori_data = [
+            "active_menu" => "active_opname_service",
+            "title" => "(Hasil Pencacahan) Service Part",
+            "kategori_barang" => "",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.service', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
     public function scrap(Request $request)
     {
         $this->gudang = 'Gudang Scrap';
+        $kategori_data = [
+            "active_menu" => "active_opname_scrap",
+            "title" => "(Hasil Pencacahan) Scrap",
+            "kategori_barang" => "",
+            "gudang" => $this->gudang,
+        ];
         $gitversions =$this->version;
-        return view('opname.scrap', compact('gitversions'));
+        return view('opname.index', compact('gitversions','kategori_data'));
     }
 
     //  ***
@@ -213,17 +310,9 @@ class OpnameController extends Controller
 
     public function download(Request $request)
     {
-        // $periode     = $request->get('periode');
-        // $kategori     = $request->get('kategori');
-        // $gudang     = $request->get('gudang');
         $params = $request;
-        // dd($params);
-        //  mengambil data table
         $sql    = Http::get($this->domain . $this->url . "json_download_opname.php", $params->toArray());
-        // return $this->domain . $this->url . "json_download_incoming.php";
         $data = $sql['rows'];
-        // return $data;
-        //  menampilkan view
         return view('download.opname', compact('data'));
     }
     

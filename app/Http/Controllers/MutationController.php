@@ -125,6 +125,7 @@ class MutationController extends Controller
     //  loaddata
     public function loaddata(Request $request, $valjmlhal = 1, $jumlahDataPerHalaman = 14)
     {
+
         if($request->ajax() == false){
             $request->session()->forget('session_gitinventory_id');
             $request->session()->forget('session_gitinventory_userid');
@@ -156,6 +157,7 @@ class MutationController extends Controller
         $counts = Http::get($this->domain . $this->url . "json_mutation.php", $parameter->toArray());
         
         // return $counts;
+
         empty($counts['totalCount']) ? $totalcount = 0 : $totalcount = $counts['totalCount'];
 
         if($totalcount == 0){
@@ -189,7 +191,8 @@ class MutationController extends Controller
         $params['limit'] = $jumlahDataPerHalaman;
         
         $sql    = Http::get($this->domain . $this->url . "json_mutation.php", $params->toArray());
-        
+
+        // return $sql;
         $nomor  = $awalData;
         foreach ($sql['rows'] as $rowdata) {
             $no = ++$nomor;
