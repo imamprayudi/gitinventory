@@ -10,7 +10,7 @@
     <div class="animated fadeIn">
         <!--  Search data  -->
         <div class="row  justify-content-center">
-            <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="col-3">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="box-title">Search Data</h4>

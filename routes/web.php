@@ -7,24 +7,7 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\IncomingController;
 use App\Http\Controllers\OutgoingController;
-// use App\Http\Controllers\GudangumumController;
-// use App\Http\Controllers\MaterialController;
-// use App\Http\Controllers\FinishgoodController;
-// use App\Http\Controllers\ProductionController;
-// use App\Http\Controllers\ScrapController;
 use App\Http\Controllers\WipController;
-// use App\Http\Controllers\Bahan_BakuController;
-// use App\Http\Controllers\MesinController;
-// use App\Http\Controllers\ServiceController;
-// use App\Http\Controllers\BahanBakuContohController;
-// use App\Http\Controllers\FinishgoodContohController;
-// use App\Http\Controllers\BahanPenolongController;
-// use App\Http\Controllers\PengemasController;
-// use App\Http\Controllers\SparepartController;
-// use App\Http\Controllers\PeralatanPabrikController;
-// use App\Http\Controllers\MoldController;
-// use App\Http\Controllers\KonstruksiController;
-// use App\Http\Controllers\KantorController;
 use App\Http\Controllers\MutationController;
 use App\Http\Controllers\OpnameController;
 
