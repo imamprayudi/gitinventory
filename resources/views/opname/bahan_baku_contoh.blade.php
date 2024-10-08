@@ -44,7 +44,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Contoh - Bahan Baku<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Hasil Pencacahan - Barang Contoh - Bahan Baku<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -55,20 +55,33 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="align-middle" rowspan="2">No</th>
+                                    <th class="align-middle" rowspan="3">No</th>
+                                    <th class="align-middle" rowspan="2">Jenis/Nama/Uraian Barang</th>
+                                    <th class="align-middle" rowspan="2">Kategori Barang</th>
+                                    <th class="align-middle" rowspan="2">Kode Barang</th>
+                                    <th class="align-middle" rowspan="2">Satuan</th>
+                                    <th class="align-middle" rowspan="2">Jumlah</th>
+                                    <th class="align-middle">ex Dokumen BC</th>
+                                    <th class="align-middle" rowspan="2">Keterangan</th>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle">Jenis/Nama/Uraian Barang</th>
+                                    <th class="align-middle">Kategori Barang</th>
                                     <th class="align-middle">Kode Barang</th>
-                                    <th class="align-middle">Nama Barang</th>
                                     <th class="align-middle">Satuan</th>
-                                    <th class="align-middle">Saldo Buku</th>
-                                    <th class="align-middle">Hasil Pencacahan<br>(Stock Opname)</th>
+                                    <th class="align-middle">Jumlah</th>
+                                    <th class="align-middle">ex Dokumen BC</th>
                                     <th class="align-middle">Keterangan</th>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle"> <input type="text" name="kode_barang" id="kode_barang"/></th>
                                     <th class="align-middle"> <input type="text" name="nama_barang" id="nama_barang"/></th>
+                                    <th class="align-middle"> <input type="text" name="kategori" id="kategori"/></th>
+                                    <th class="align-middle"> <input type="text" name="kode_barang" id="kode_barang"/></th>
                                     <th class="align-middle"> <input type="text" name="satuan" id="satuan"/></th>
-                                    <th class="align-middle"> <input type="text" name="saldo_buku" id="saldo_buku"/></th>
-                                    <th class="align-middle"> <input type="text" name="stock_opame" id="stock_opame"/></th>
+                                    <th class="align-middle"> <input type="text" name="jumlah" id="jumlah"/></th>
+                                    <th class="align-middle"> <input type="text" name="jenis_dokumen_bc" id="jenis_dokumen_bc"/></th>
+                                    <th class="align-middle"> <input type="text" name="nomor_bc" id="nomor_bc"/></th>
+                                    <th class="align-middle"> <input type="text" name="tanggal_bc" id="tanggal_bc"/></th>
                                     <th class="align-middle"> <input type="text" name="keterangan" id="keterangan"/></th>
                                 </tr>
                             </thead>
@@ -94,8 +107,8 @@
 <script>
     //  ***
     //  load data
-    var url         = "{{ route('opname.loaddata') }}";
-    var urlpaging   = "{{ route('opname.page') }}";
+    var url         = "{{ route('opname-loaddata') }}";
+    var urlpaging   = "{{ route('opname-pagination') }}";
     var kategori    = 'Bahan baku - Contoh';
     var gudang      = 'Gudang Umum';
 

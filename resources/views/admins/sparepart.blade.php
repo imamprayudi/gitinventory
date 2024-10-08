@@ -137,21 +137,6 @@
         var selisih = $('#selisih').val();
         var keterangan = $('#keterangan').val();
 
-        console.log([
-                "periode" :periode,
-                "kode_barang" :kode_barang,
-                "nama_barang" :nama_barang,
-                "satuan" :satuan,
-                "saldo_awal" :saldo_awal,
-                "pemasukan" :pemasukan,
-                "pengeluaran" :pengeluaran,
-                "penyesuaian" :penyesuaian,
-                "saldo_buku" :saldo_buku,
-                "stock_opame" :stock_opame,
-                "selisih" :selisih,
-                "keterangan" :keterangan
-        ])
-        return;
 
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");

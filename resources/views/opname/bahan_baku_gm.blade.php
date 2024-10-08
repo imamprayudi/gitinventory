@@ -1,5 +1,5 @@
 @extends('zlayouts.main')
-@section('active_bahan_baku_gm', 'active')
+@section('{{ $kategori_data->active_menu }}', 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -10,21 +10,15 @@
             <div class="col-lg-6 col-md-8 col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="box-title">Search Data </h4>
+                        <h4 class="box-title">Search Data {{ $kategori_data->title }}</h4>
                     </div>
                     <div class="card-body card-block">
                         <form method="get"></form>
                            <div class="row form-group justify-content-center">
                                 <div class="col-12">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
-                                    <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
+                                    <div class="bg-warning bg-opacity-50 text-center"><small>Periode (dd/mm/yyyy)</small></div>
+                                    <input type="date" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
-                                {{-- <div class="col-6 text-center">
-                                    <button type="submit" class="btn btn-info btn-md col-5" id="btn_cari" onclick="search()" >
-                                        Search
-                                    </button>
-                                    <button type="reset" class="btn btn-warning btn-md col-5" id="btn_reset">Reset</button>
-                                </div> --}}
                             </div>
                             <div class="col-12">
                                 <div class="justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
@@ -50,7 +44,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Bahan Baku - Gudang Material<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">{{ $kategori_data->title }}<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -61,30 +55,28 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="align-middle" rowspan="2">No</th>
-                                    <th class="align-middle">Kode Brg</th>
-                                    <th class="align-middle">Nama Brg</th>
-                                    <th class="align-middle">Sat</th>
-                                    <th class="align-middle">Saldo Awal</th>
-                                    <th class="align-middle">Pemasukan</th>
-                                    <th class="align-middle">Pengeluaran</th>
-                                    <th class="align-middle">Penyesuaian<br>(Adjustment)</th>
-                                    <th class="align-middle">Saldo Akhir</th>
-                                    <th class="align-middle">Hasil Pencacahan<br>(Stock Opname)</th>
-                                    <th class="align-middle">Selisih</th>
-                                    <th class="align-middle">Ket</th>
+                                    <th class="align-middle" rowspan="3">No</th>
+                                    <th class="align-middle" rowspan="2">Jenis/Nama/Uraian<br>Barang</th>
+                                    <th class="align-middle" rowspan="2">Kategori<br>Barang</th>
+                                    <th class="align-middle" rowspan="2">Satuan</th>
+                                    <th class="align-middle" rowspan="2">Jumlah</th>
+                                    <th class="align-middle">ex Dokumen BC</th>
+                                    <th class="align-middle" rowspan="2">Keterangan</th>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle"> <input type="text" name="kode_barang" id="kode_barang"/></th>
+                                    <th class="align-middle">Jenis Dokumen</th>
+                                    <th class="align-middle">Nomor</th>
+                                    <th class="align-middle">Tanggal</th>
+                                </tr>
+                                <tr>
                                     <th class="align-middle"> <input type="text" name="nama_barang" id="nama_barang"/></th>
+                                    <th class="align-middle"> <input type="text" name="kategori_barang" id="kategori_barang"/></th>
+                                    <th class="align-middle"> <input type="text" name="kode_barang" id="kode_barang"/></th>
                                     <th class="align-middle"> <input type="text" name="satuan" id="satuan"/></th>
-                                    <th class="align-middle"> <input type="text" name="saldo_awal" id="saldo_awal"/></th>
-                                    <th class="align-middle"> <input type="text" name="pemasukan" id="pemasukan"/></th>
-                                    <th class="align-middle"> <input type="text" name="pengeluaran" id="pengeluaran"/></th>
-                                    <th class="align-middle"> <input type="text" name="penyesuaian" id="penyesuaian"/></th>
-                                    <th class="align-middle"> <input type="text" name="saldo_buku" id="saldo_buku"/></th>
-                                    <th class="align-middle"> <input type="text" name="stock_opame" id="stock_opame"/></th>
-                                    <th class="align-middle"> <input type="text" name="selisih" id="selisih"/></th>
+                                    <th class="align-middle"> <input type="text" name="jumlah" id="jumlah"/></th>
+                                    <th class="align-middle"> <input type="text" name="jenis_dokumen_bc" id="jenis_dokumen_bc"/></th>
+                                    <th class="align-middle"> <input type="text" name="no_bc" id="no_bc"/></th>
+                                    <th class="align-middle"> <input type="text" name="tanggal_bc" id="tanggal_bc"/></th>
                                     <th class="align-middle"> <input type="text" name="keterangan" id="keterangan"/></th>
                                 </tr>
                             </thead>
@@ -110,16 +102,15 @@
 <script>
     //  ***
     //  load data
-    var url = "{{ route('mutation') }}";
-    var urlpaging = "{{ route('mutation_page') }}";
-    var kategori      = 'Bahan baku';
-    var gudang      = 'Gudang Material';
+    var url             = "{{ route('opname-loaddata') }}";
+    var urlpaging       = "{{ route('opname-pagination') }}";
+    var kategori_barang = @{{ $kategori_data->kategori_barang }};
+    var gudang          = @{{ $kategori_data->gudang }};
 
     document.querySelectorAll('input[type="text"]').forEach(function(input) {
         input.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault(); // Mencegah perilaku default form
-                // document.querySelector('form').submit(); // Submit form
                 search();
             }
         });
@@ -128,28 +119,25 @@
     
     function search()
     {
-        console.log("CLICK SEARCH BAHAN BAKU")
+        console.log("CLICK SEARCH Opname Bahan Baku Contoh",url)
         //  variable
-        var periode       = $("#periode").val();
-        var kode_barang = $('#kode_barang').val();
+        var periode = $('#periode').val();
+        // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
         var satuan = $('#satuan').val();
-        var saldo_awal = $('#saldo_awal').val();
-        var pemasukan = $('#pemasukan').val();
-        var pengeluaran = $('#pengeluaran').val();
-        var penyesuaian = $('#penyesuaian').val();
-        var saldo_buku = $('#saldo_buku').val();
-        var stock_opame = $('#stock_opame').val();
-        var selisih = $('#selisih').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
         var keterangan = $('#keterangan').val();
-
 
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : url,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -252,17 +240,15 @@
     function first(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val();
-         var kode_barang = $('#kode_barang').val();
+        var periode = $('#periode').val();
+        // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
         var satuan = $('#satuan').val();
-        var saldo_awal = $('#saldo_awal').val();
-        var pemasukan = $('#pemasukan').val();
-        var pengeluaran = $('#pengeluaran').val();
-        var penyesuaian = $('#penyesuaian').val();
-        var saldo_buku = $('#saldo_buku').val();
-        var stock_opame = $('#stock_opame').val();
-        var selisih = $('#selisih').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
         var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
@@ -270,7 +256,7 @@
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -311,17 +297,15 @@
     function laquo(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val(); 
-         var kode_barang = $('#kode_barang').val();
+        var periode = $('#periode').val();
+        // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
         var satuan = $('#satuan').val();
-        var saldo_awal = $('#saldo_awal').val();
-        var pemasukan = $('#pemasukan').val();
-        var pengeluaran = $('#pengeluaran').val();
-        var penyesuaian = $('#penyesuaian').val();
-        var saldo_buku = $('#saldo_buku').val();
-        var stock_opame = $('#stock_opame').val();
-        var selisih = $('#selisih').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
         var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
@@ -329,7 +313,7 @@
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -390,17 +374,15 @@
     function raquo(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val();
-         var kode_barang = $('#kode_barang').val();
+        var periode = $('#periode').val();
+        // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
         var satuan = $('#satuan').val();
-        var saldo_awal = $('#saldo_awal').val();
-        var pemasukan = $('#pemasukan').val();
-        var pengeluaran = $('#pengeluaran').val();
-        var penyesuaian = $('#penyesuaian').val();
-        var saldo_buku = $('#saldo_buku').val();
-        var stock_opame = $('#stock_opame').val();
-        var selisih = $('#selisih').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
         var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
@@ -408,7 +390,7 @@
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -469,17 +451,15 @@
     function last(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val(); 
-         var kode_barang = $('#kode_barang').val();
+        var periode = $('#periode').val();
+        // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
         var satuan = $('#satuan').val();
-        var saldo_awal = $('#saldo_awal').val();
-        var pemasukan = $('#pemasukan').val();
-        var pengeluaran = $('#pengeluaran').val();
-        var penyesuaian = $('#penyesuaian').val();
-        var saldo_buku = $('#saldo_buku').val();
-        var stock_opame = $('#stock_opame').val();
-        var selisih = $('#selisih').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
         var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
@@ -487,7 +467,7 @@
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, gudang, kategori, kode_barang, nama_barang, satuan, saldo_awal, pemasukan, pengeluaran, penyesuaian, saldo_buku, stock_opame, selisih, keterangan, jumlahHalaman },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -527,20 +507,18 @@
 
     //  download data
     function download(){
-        var periode       = $("#periode").val(); 
-         var kode_barang = $('#kode_barang').val();
+        var periode = $('#periode').val();
+        // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
         var satuan = $('#satuan').val();
-        var saldo_awal = $('#saldo_awal').val();
-        var pemasukan = $('#pemasukan').val();
-        var pengeluaran = $('#pengeluaran').val();
-        var penyesuaian = $('#penyesuaian').val();
-        var saldo_buku = $('#saldo_buku').val();
-        var stock_opame = $('#stock_opame').val();
-        var selisih = $('#selisih').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
         var keterangan = $('#keterangan').val();
 
-        window.open("mutation-download?periode="+periode+"&gudang="+gudang+"&kategori="+kategori+"&kode_barang="+kode_barang+"&nama_barang="+nama_barang+"&satuan="+satuan+"&saldo_awal="+saldo_awal+"&pemasukan="+pemasukan+"&pengeluaran="+pengeluaran+"&penyesuaian="+penyesuaian+"&saldo_buku="+saldo_buku+"&stock_opame="+stock_opame+"&selisih="+selisih+"&keterangan="+keterangan);
+        window.open("opname-download?periode="+periode+"&gudang="+gudang+"&kategori_barang="+kategori_barang+"&kode_barang="+kode_barang+"&nama_barang="+nama_barang+"&satuan="+satuan+"&jumlah="+jumlah+"&jenis_dokumen_bc="+jenis_dokumen_bc+"&no_bc="+no_bc+"&tanggal_bc="+tanggal_bc+"&keterangan="+keterangan);
     }
 
     //  ***

@@ -44,7 +44,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Barang Modal - Cetakan ( Mouling )<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Barang Modal - Cetakan ( Molding )<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
