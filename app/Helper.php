@@ -135,6 +135,21 @@ class Helper
 
     }
 
+    public static function return_data_opname($no, $rowdata){
+        return '<tr>
+                    <td align="right"><medium class="text-muted">' . $no . '</medium></td>
+                    <td>' . $rowdata['nama_barang'] . '</td>
+                    <td>' . $rowdata['kategori_barang'] . '</td>
+                    <td>' . $rowdata['kode_barang'] . '</td>
+                    <td align="right">' . $rowdata['satuan'] . '</td>
+                    <td align="right">' . $rowdata['jumlah'] . '</td>
+                    <td align="right">' . $rowdata['jenis_dokumen_bc'] . '</td>
+                    <td align="right">' . $rowdata['no_bc'] . '</td>
+                    <td align="right">' . $rowdata['tanggal_bc'] . '</td>
+                    <td align="right">' . $rowdata['keterangan'] . '</td>
+                </tr>';
+    }
+
     public static function no_data(){
         return '
                 <tr>

@@ -109,6 +109,7 @@ Route::group(['middleware'=>['sesauthgitinventory']], function () {
     Route::get('/opname-loaddata', [OpnameController::class,'loaddata'])->name('opname-loaddata');
     Route::get('/opname-pagination', [OpnameController::class,'pagination'])->name('opname-pagination');
     Route::get('/opname-download', [OpnameController::class,'download'])->name('opname-download');
+    Route::post('/opname-upload-file', [OpnameController::class, 'store'])->name('opname-upload-post');
 
 
     

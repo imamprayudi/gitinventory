@@ -394,7 +394,12 @@
         </header>
         <!-- /#header -->
 
-        @yield('container')
+        {{-- @yield('container') --}}
+        <main role="main" class="main-content">
+            <div class="container-fluid">
+                @yield('container')
+            </div>
+        </main>
 
         <div class="clearfix"></div>
         <!-- Footer -->

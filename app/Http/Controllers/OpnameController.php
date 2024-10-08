@@ -232,14 +232,14 @@ class OpnameController extends Controller
         if($request->gudang=='Gudang Service Part' || $request->gudang=='Gudang Scrap')
         {
             $request->validate([
-                'periode' => 'required|date_format:Y-m',
+                'periode' => 'required|date_format:Ym',
                 'gudang' => 'required'
             ]);
         }
         else{
             $request->validate([
-                'periode' => 'required|date_format:Y-m',
-                'kategori' => 'required',
+                'periode' => 'required|date_format:Ym',
+                'kategori_barang' => 'required',
                 'gudang' => 'required'
             ]);
         }
@@ -288,7 +288,7 @@ class OpnameController extends Controller
         $nomor  = $awalData;
         foreach ($sql['rows'] as $rowdata) {
             $no = ++$nomor;
-            $output .= Helper::return_data_mutasi($no, $rowdata);
+            $output .= Helper::return_data_opname($no, $rowdata);
         }
 
         $data = [

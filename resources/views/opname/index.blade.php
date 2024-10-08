@@ -22,16 +22,17 @@
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div>
-                                        &nbsp;
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="First group">
-                                        <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
-                                        <button type="button" class="btn btn-secondary btn-sm" id="btn_download" onclick="download()">Download</button>
-                                        <button type="submit" class="btn btn-success btn-sm" id="btn_cari" onclick="search()">Search</button>
+                                <div class="col-12">
+                                    <div class="justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                                        <div>
+                                            &nbsp;
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="First group">
+                                            <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
+                                            <button type="button" class="btn btn-info btn-sm" id="btn_upload"  data-bs-toggle="modal" data-bs-target="#uploadModal">Upload File</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" id="btn_download" onclick="download()">Download</button>
+                                            <button type="submit" class="btn btn-success btn-sm" id="btn_cari" onclick="search()">Search</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -92,6 +93,29 @@
                 </div>
             </div><!-- /# column -->
         </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="uploadModalLabel">Upload File</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form Upload -->
+                        <form action="{{ route('opname-upload-post') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="file" class="form-label">Choose File</label>
+                                <input type="file" class="form-control" name="file" id="file" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--  /Table data -->
         <div class="clearfix"></div>
     </div>
@@ -125,7 +149,7 @@
     {
         console.log("CLICK SEARCH Opname Bahan Baku Contoh",url)
         //  variable
-        var periode = $('#periode').val();
+        var periode = $('#periode').val().replace(/-/g, "");
         // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
         var kode_barang = $('#kode_barang').val();
@@ -244,7 +268,7 @@
     function first(jumlahHalaman)
     {
         //  variable
-        var periode = $('#periode').val();
+        var periode = $('#periode').val().replace(/-/g, "");
         // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
         var kode_barang = $('#kode_barang').val();
@@ -301,7 +325,7 @@
     function laquo(jumlahHalaman)
     {
         //  variable
-        var periode = $('#periode').val();
+        var periode = $('#periode').val().replace(/-/g, "");
         // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
         var kode_barang = $('#kode_barang').val();
@@ -378,7 +402,7 @@
     function raquo(jumlahHalaman)
     {
         //  variable
-        var periode = $('#periode').val();
+        var periode = $('#periode').val().replace(/-/g, "");
         // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
         var kode_barang = $('#kode_barang').val();
@@ -455,7 +479,7 @@
     function last(jumlahHalaman)
     {
         //  variable
-        var periode = $('#periode').val();
+        var periode = $('#periode').val().replace(/-/g, "");
         // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
         var kode_barang = $('#kode_barang').val();
@@ -511,7 +535,7 @@
 
     //  download data
     function download(){
-        var periode = $('#periode').val();
+        var periode = $('#periode').val().replace(/-/g, "");
         // var kategori_barang = $('#kategori_barang').val();
         var nama_barang = $('#nama_barang').val();
         var kode_barang = $('#kode_barang').val();
@@ -525,6 +549,10 @@
         window.open("opname-download?periode="+periode+"&gudang="+gudang+"&kategori_barang="+kategori_barang+"&kode_barang="+kode_barang+"&nama_barang="+nama_barang+"&satuan="+satuan+"&jumlah="+jumlah+"&jenis_dokumen_bc="+jenis_dokumen_bc+"&no_bc="+no_bc+"&tanggal_bc="+tanggal_bc+"&keterangan="+keterangan);
     }
 
+    function upload(){
+        
+    }
+
     //  ***
     //  start ajax
     $(document).ready(function(){
@@ -532,16 +560,10 @@
         var d       = new Date();
         var stmonth   = d.getMonth();
         var enmonth   = d.getMonth()+1;
-        var day     = d.getDate();
-        var stdate  = d.getFullYear() + '-' +
-                        ((''+stmonth).length<2 ? '0' : '') + stmonth + '-' +
-                        '01';
-        var endate  = d.getFullYear() + '-' +
-                        ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
-                        ((''+day).length<2 ? '0' : '') + day;
+        var stdate  = d.getFullYear() + '-' + ((''+stmonth).length<2 ? '0' : '') + stmonth;
+
         //  set value
-        $("#stdate").val(stdate);
-        $("#endate").val(endate);
+        $("#periode").val(stdate);
         $("#partno").val('');
 
         //  trigger toogle
@@ -556,16 +578,11 @@
             var d       = new Date();
             var stmonth   = d.getMonth();
             var enmonth   = d.getMonth()+1;
-            var day     = d.getDate();
             var stdate  = d.getFullYear() + '-' +
-                            ((''+stmonth).length<2 ? '0' : '') + stmonth + '-' +
-                            '01';
-            var endate  = d.getFullYear() + '-' +
-                            ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
-                            ((''+day).length<2 ? '0' : '') + day;
+                            ((''+stmonth).length<2 ? '0' : '') + stmonth;
+
             //  set value
-            $("#stdate").val(stdate);
-            $("#endate").val(endate);
+            $("#periode").val(stdate);
             $("#partno").val('');
             window.location.href =  window.location.href.split("#")[0];
         });

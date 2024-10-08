@@ -503,15 +503,9 @@
         var enmonth   = d.getMonth()+1;
         var day     = d.getDate();
         var stdate  = d.getFullYear() + '-' +
-                        ((''+stmonth).length<2 ? '0' : '') + stmonth + '-' +
-                        '01';
-        var endate  = d.getFullYear() + '-' +
-                        ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
-                        ((''+day).length<2 ? '0' : '') + day;
+                        ((''+stmonth).length<2 ? '0' : '') + stmonth;
         //  set value
-        $("#stdate").val(stdate);
-        $("#endate").val(endate);
-        $("#partno").val('');
+        $("#periode").val(stdate);
 
         //  trigger toogle
         $("#menuToggle").trigger('click');
@@ -527,15 +521,9 @@
             var enmonth   = d.getMonth()+1;
             var day     = d.getDate();
             var stdate  = d.getFullYear() + '-' +
-                            ((''+stmonth).length<2 ? '0' : '') + stmonth + '-' +
-                            '01';
-            var endate  = d.getFullYear() + '-' +
-                            ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
-                            ((''+day).length<2 ? '0' : '') + day;
+                            ((''+stmonth).length<2 ? '0' : '') + stmonth;
             //  set value
-            $("#stdate").val(stdate);
-            $("#endate").val(endate);
-            $("#partno").val('');
+            $("#periode").val(stdate);
             window.location.href =  window.location.href.split("#")[0];
         });
     });

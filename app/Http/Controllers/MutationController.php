@@ -13,7 +13,7 @@ class MutationController extends Controller
     
     protected $gudang = 'Gudang Umum';
     
-     public function __construct()
+    public function __construct()
     {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
         if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, '.test')) {
