@@ -29,7 +29,6 @@
                                         </div>
                                         <div class="btn-group" role="group" aria-label="First group">
                                             <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
-                                            <button type="button" class="btn btn-info btn-sm" id="btn_upload"  data-bs-toggle="modal" data-bs-target="#uploadModal">Upload File</button>
                                             <button type="button" class="btn btn-secondary btn-sm" id="btn_download" onclick="download()">Download</button>
                                             <button type="submit" class="btn btn-success btn-sm" id="btn_cari" onclick="search()">Search</button>
                                         </div>
@@ -94,28 +93,6 @@
             </div><!-- /# column -->
         </div>
         
-        <!-- Modal -->
-        <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="uploadModalLabel">Upload File</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Form Upload -->
-                        <form action="{{ route('opname-upload-post') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="file" class="form-label">Choose File</label>
-                                <input type="file" class="form-control" name="file" id="file" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Upload</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!--  /Table data -->
         <div class="clearfix"></div>
     </div>
