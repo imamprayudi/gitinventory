@@ -313,6 +313,7 @@ class OpnameController extends Controller
         $params = $request;
         $sql    = Http::get($this->domain . $this->url . "json_download_opname.php", $params->toArray());
         $data = $sql['rows'];
+        // return $sql;
         return view('download.opname', compact('data'));
     }
     

@@ -1,4 +1,12 @@
 {{ header("Content-type: application/vnd-ms-excel") }}
+@if (count($data) == 0) 
+    {{ header("Content-Disposition: attachment; filename=Laporan Mutasi Kosong.xls") }}
+    <table>
+    <tr>
+        <th colspan="12" style="font-size:18pt;" align="left">LAPORAN Mutasi Tidak Tersedia</th>
+    </tr>
+    </table>
+@else
 {{ header("Content-Disposition: attachment; filename=Data ". $data[0]['kategori'] ."-". $data[0]['gudang'] .".xls") }}
 <table>
     <tr>
@@ -50,3 +58,4 @@
     @endforeach
     </tbody>
 </table>
+@endif

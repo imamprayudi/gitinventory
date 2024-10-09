@@ -314,17 +314,17 @@ class MutationController extends Controller
 
     public function download(Request $request)
     {
-        // $periode     = $request->get('periode');
-        // $kategori     = $request->get('kategori');
-        // $gudang     = $request->get('gudang');
-        $params = $request;
+        $periode     = $request->get('periode','');
+        $kategori     = $request->get('kategori','');
+        $gudang     = $request->get('gudang','');
+        // $params = $request;
         // dd($params);
         //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php", $params->toArray());
-        // return $this->domain . $this->url . "json_download_incoming.php";
+        $sql    = Http::get($this->domain . $this->url . "json_download_mutation.php?periode=".$periode."&kategori=".$kategori."&gudang=".$gudang);
+        // return $sql;
         $data = $sql['rows'];
-        // return $data;
-        //  menampilkan view
+        // // return $data;
+        // //  menampilkan view
         return view('download.mutation', compact('data'));
     }
     
