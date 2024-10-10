@@ -8,22 +8,27 @@
 </table>
 <table border="1"  style="white-space:nowrap !important">
     <thead>
-        <th bgcolor="#C0C0C0">#</th>
-        <th bgcolor="#C0C0C0">BC Type</th>
-        <th bgcolor="#C0C0C0">BC Number</th>
-        <th bgcolor="#C0C0C0">BC Date</th>
-        <th bgcolor="#C0C0C0">Outcoming No</th>
-        <th bgcolor="#C0C0C0">Outcoming Date</th>
-        <th bgcolor="#C0C0C0">Invoice No</th>
-        <th bgcolor="#C0C0C0">Invoice Date</th>
-        <th bgcolor="#C0C0C0">Supplier</th>
-        <th bgcolor="#C0C0C0">Part No</th>
-        <th bgcolor="#C0C0C0">Part Name</th>
-        <th bgcolor="#C0C0C0">QTY</th>
-        <th bgcolor="#C0C0C0">Unit</th>
-        <th bgcolor="#C0C0C0">Price</th>
-        <th bgcolor="#C0C0C0">Currency</th>
-        <th bgcolor="#C0C0C0">Create At</th>
+        <tr>
+            <th bgcolor="#C0C0C0" rowspan="2">#</th>
+            <th bgcolor="#C0C0C0" colspan="3">Dokumen Pabean</th>
+            <th bgcolor="#C0C0C0" colspan="3">Bukti Pengeluaran Barang (BPB)</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Nama Pemasok</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Kode Barang</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Nama Barang</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Jumlah</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Satuan</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Kode Valuta</th>
+            <th bgcolor="#C0C0C0" rowspan="2">Nilai</th>
+            {{-- <th bgcolor="#C0C0C0" rowspan="2">Create At</th> --}}
+        </tr>
+        <tr>
+            <th bgcolor="#C0C0C0">Jenis BC</th>
+            <th bgcolor="#C0C0C0">No. Daftar</th>
+            <th bgcolor="#C0C0C0">Tanggal Daftar</th>
+            <th bgcolor="#C0C0C0">No. BPB</th>
+            <th bgcolor="#C0C0C0">Tanggal BPB</th>
+            <th bgcolor="#C0C0C0">No Invoice</th>
+        </tr>
     </thead>
     @php
         $no=1
@@ -42,11 +47,11 @@
             <td>{{ $rowdata['supplier'] }}</td>
             <td>{{ $rowdata['partno'] }}</td>
             <td>{{ $rowdata['partname'] }}</td>
-            <td align="right">{{ intval($rowdata['qty'], 0) }}</td>
+            <td align="right">{{ $rowdata['qty'] }}</td>
             <td>{{ $rowdata['unit'] }}</td>
-            <td align="right">{{ intval($rowdata['price'], 0) }}</td>
+            <td align="right">{{ $rowdata['price'] }}</td>
             <td>{{ $rowdata['currency'] }}</td>
-            <td>{{ $rowdata['input_user'] }} {{ $rowdata['input_date'] }}</td>
+            {{-- <td>{{ $rowdata['input_user'] }} {{ $rowdata['input_date'] }}</td> --}}
         </tr>
     @php
         $no=$no+1

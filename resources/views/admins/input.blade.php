@@ -31,11 +31,12 @@
                                 <div class="card">
                                     <div class="bg-warning text-center"><small>BC Type</small></div>
                                     <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
-                                       <option> 23BC </option>
-                                       <option> 262BC </option>
-                                       <option> 27BC </option>
-                                       <option> 27GB </option>
-                                       <option> 40BC </option>
+                                       <option value=''></option>
+                                       <option value='23BC'> 23BC </option>
+                                       <option value='262BC'> 262BC </option>
+                                       <option value='27BC'> 27BC </option>
+                                       <option value='27GB'> 27GB </option>
+                                       <option value='40BC'> 40BC </option>
                                     </select>
                                     {{-- <select name="" id=""></select> --}}
                                     {{-- <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off"> --}}
@@ -210,6 +211,9 @@ function search()
     var jnsdokbc    = $("#jnsdokbc").val();
     var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
+    if (jnsdokbc === 'null') {
+        jnsdokbc = null;
+    }
     $("#loadingdata").remove();
     $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
     $.ajax({
@@ -565,6 +569,9 @@ function download(){
     var jnsdokbc    = $("#jnsdokbc").val();
     var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
+    if (jnsdokbc === 'null') {
+        jnsdokbc = null;
+    }
     window.open("input/download?stdate="+stdate+"&endate="+endate+"&jnsdokbc="+jnsdokbc+"&nodokbc="+nodokbc+"&partno="+partno+"");
 }
 

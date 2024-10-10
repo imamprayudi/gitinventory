@@ -12,13 +12,16 @@ class OutgoingController extends Controller
 
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
-
-    public function __construct(){
+    
+    public function __construct()
+    {
         $serverName = $_SERVER['SERVER_NAME'] ?? null;
-        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost'))
-        {
-            $this->domain ="http://136.198.117.118/";
+        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, '.test')) {
+            $this->domain = "http://136.198.117.118/";
         }
+
+        $getVersion = Http::get($this->domain . $this->url . "json_version_sync.php");
+        $this->version = $getVersion['version'];
     }
 
     //  **
@@ -267,20 +270,23 @@ class OutgoingController extends Controller
     //  download
     public function download(Request $request)
     {
-        $stdate     = $request->get('stdate');
-        $endate     = $request->get('endate');
-        $jnsdokbc   = $request->get('jnsdokbc');
-        $nodokbc    = $request->get('nodokbc');
-        $partno     = $request->get('partno');
+        $stdate     = $request->get('stdate') ?? null;
+        $endate     = $request->get('endate') ?? null;
+        $jnsdokbc   = $request->get('jnsdokbc') ?? null;
+        $nodokbc    = $request->get('nodokbc') ?? null;
+        $partno     = $request->get('partno') ?? null;
+        ($jnsdokbc === 'null') ? null : $jnsdokbc;
+        
+        $sql    = Http::get($this->domain . $this->url . "json_download_outgoing.php?valstdate={$stdate}&valendate={$endate}&valjnsdok={$jnsdokbc}&valnodok={$nodokbc}&valpartno={$partno}");
 
         //  mengambil data table
-        $sql    = Http::get($this->domain . $this->url . "json_download_outgoing.php", [
-            'valstdate' => $stdate,
-            'valendate' => $endate,
-            'valjnsdok' => $jnsdokbc,
-            'valnodok' => $nodokbc,
-            'valpartno' => $partno
-        ]);
+        // $sql    = Http::get($this->domain . $this->url . "json_download_outgoing.php", [
+        //     'valstdate' => $stdate,
+        //     'valendate' => $endate,
+        //     'valjnsdok' => $jnsdokbc,
+        //     'valnodok' => $nodokbc,
+        //     'valpartno' => $partno
+        // ]);
         // return $this->domain . $this->url . "json_download_incoming.php";
         $data = $sql['rows'];
         // return $data;

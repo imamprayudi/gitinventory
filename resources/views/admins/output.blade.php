@@ -32,11 +32,12 @@
                                     <div class="bg-warning bg-opacity-50 text-center"><small>BC Type</small></div>
                                     {{-- <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off"> --}}
                                     <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
-                                        <option> 25BC </option>
-                                        <option> 261BC </option>
-                                        <option> 27BC </option>
-                                        <option> 30BC </option>
-                                        <option> 41BC </option>
+                                        <option value=''></option>
+                                        <option value='25BC'> 25BC </option>
+                                        <option value='261BC'> 261BC </option>
+                                        <option value='27BC'> 27BC </option>
+                                        <option value='30BC'> 30BC </option>
+                                        <option value='41BC'> 41BC </option>
                                     </select>
                                 </div>
                             </div>
@@ -592,6 +593,9 @@ function download(){
     var jnsdokbc    = $("#jnsdokbc").val();
     var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
+    if (jnsdokbc === 'null') {
+        jnsdokbc = null;
+    }
     window.open("output/download?stdate="+stdate+"&endate="+endate+"&jnsdokbc="+jnsdokbc+"&nodokbc="+nodokbc+"&partno="+partno+"");
 }
 
