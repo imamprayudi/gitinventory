@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <th>
-             <th style="font-size:12pt;" align="left">Tgl Stock Opname : {{ left($data[0]['created_at'],10) }}</th>
+             <th style="font-size:12pt;" align="left">Tgl Stock Opname : {{ substr($data[0]['created_at'],0,10) }}</th>
         </th>
     </tr>
     <tr><th></th></tr>
