@@ -18,10 +18,10 @@
     <link rel="stylesheet" href="./dashboard/assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="./dashboard/assets/css/style.css">
 
-   <style>
-    #weatherWidget .currentDesc {
-        color: #ffffff!important;
-    }
+    <style>
+        #weatherWidget .currentDesc {
+            color: #ffffff!important;
+        }
         .traffic-chart {
             min-height: 335px;
         }
@@ -92,7 +92,7 @@
                             <div class="card-body">
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">23569</span></div>
+                                        <div class="stat-text"><span class="count">{{ $sql_bar_onemonth[0]['totaldokinvesa'] }}</span></div>
                                         <div class="stat-heading">Dokumen BC</div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@
                             <div class="card-body">
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">213456</span></div>
+                                        <div class="stat-text"><span class="count">{{ $sql_bar_currmonth[0]['totaldokinvesa'] }}</span></div>
                                         <div class="stat-heading">Dokumen BC</div>
                                     </div>
                                 </div>
@@ -129,37 +129,65 @@
                                     <div class="card-body">
                                         <div class="progress-box progress-1">
                                             <h4 class="por-title">BC 23 Pemasukkan</h4>
-                                            <div class="por-txt">96,930 Dokumen (40%)</div>
+                                            <div class="por-txt">{{ $sql_docin_currmonth[0]['input23bc'] }} Dokumen ({{ $sql_docin_currmonth[0]['percent23bc'] }})</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: {{ $sql_docin_currmonth[0]['percent23bc'] }}%;" aria-valuenow="{{ $sql_docin_currmonth[0]['percent23bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                         <div class="progress-box progress-2">
                                             <h4 class="por-title">BC 27 Pemasukkan</h4>
-                                            <div class="por-txt">96,930 Dokumen (40%)</div>
+                                            <div class="por-txt">{{ $sql_docin_currmonth[0]['input27bc'] }} Dokumen ({{ $sql_docin_currmonth[0]['percent27bc'] }})</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: 40%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: {{ $sql_docin_currmonth[0]['percent27bc'] }}%;" aria-valuenow="{{ $sql_docin_currmonth[0]['percent27bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                         <div class="progress-box progress-2">
                                             <h4 class="por-title">BC 40 Pemasukkan</h4>
-                                            <div class="por-txt">3,220 Dokumen (24%)</div>
+                                            <div class="por-txt">{{ $sql_docin_currmonth[0]['input40bc'] }} Dokumen ({{ $sql_docin_currmonth[0]['percent40bc'] }})</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 24%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: {{ $sql_docin_currmonth[0]['percent40bc'] }}%;" aria-valuenow="{{ $sql_docin_currmonth[0]['percent40bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-box progress-2">
+                                            <h4 class="por-title">BC 262 Pemasukkan</h4>
+                                            <div class="por-txt">{{ $sql_docin_currmonth[0]['input262bc'] }} Dokumen ({{ $sql_docin_currmonth[0]['percent262bc'] }})</div>
+                                            <div class="progress mb-2" style="height: 5px;">
+                                                <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: {{ $sql_docin_currmonth[0]['percent262bc'] }}%;" aria-valuenow="{{ $sql_docin_currmonth[0]['percent262bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                         <div class="progress-box progress-2">
                                             <h4 class="por-title">BC 25 Pengeluaran</h4>
-                                            <div class="por-txt">29,658 Users (60%)</div>
+                                            <div class="por-txt">{{ $sql_docout_currmonth[0]['output25bc'] }} Dokumen ({{ $sql_docout_currmonth[0]['percent25bc'] }})</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: {{ $sql_docout_currmonth[0]['percent25bc'] }}%;" aria-valuenow="{{ $sql_docout_currmonth[0]['percent25bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-box progress-2">
+                                            <h4 class="por-title">BC 27 Pengeluaran</h4>
+                                            <div class="por-txt">{{ $sql_docout_currmonth[0]['output27bc'] }} Dokumen ({{ $sql_docout_currmonth[0]['percent27bc'] }})</div>
+                                            <div class="progress mb-2" style="height: 5px;">
+                                                <div class="progress-bar bg-flat-color-5" role="progressbar" style="width: {{ $sql_docout_currmonth[0]['percent27bc'] }}%;" aria-valuenow="{{ $sql_docout_currmonth[0]['percent27bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                         <div class="progress-box progress-2">
                                             <h4 class="por-title">BC 30 Pengeluaran</h4>
-                                            <div class="por-txt">99,658 Dokumen (90%)</div>
+                                            <div class="por-txt">{{ $sql_docout_currmonth[0]['output30bc'] }} Dokumen ({{ $sql_docout_currmonth[0]['percent30bc'] }})</div>
                                             <div class="progress mb-2" style="height: 5px;">
-                                                <div class="progress-bar bg-flat-color-5" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-flat-color-5" role="progressbar" style="width: {{ $sql_docout_currmonth[0]['percent30bc'] }}%;" aria-valuenow="{{ $sql_docout_currmonth[0]['percent30bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-box progress-2">
+                                            <h4 class="por-title">BC 41 Pengeluaran</h4>
+                                            <div class="por-txt">{{ $sql_docout_currmonth[0]['output41bc'] }} Dokumen ({{ $sql_docout_currmonth[0]['percent41bc'] }})</div>
+                                            <div class="progress mb-2" style="height: 5px;">
+                                                <div class="progress-bar bg-flat-color-5" role="progressbar" style="width: {{ $sql_docout_currmonth[0]['percent41bc'] }}%;" aria-valuenow="{{ $sql_docout_currmonth[0]['percent41bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="progress-box progress-2">
+                                            <h4 class="por-title">BC 261 Pengeluaran</h4>
+                                            <div class="por-txt">{{ $sql_docout_currmonth[0]['output261bc'] }} Dokumen ({{ $sql_docout_currmonth[0]['percent261bc'] }})</div>
+                                            <div class="progress mb-2" style="height: 5px;">
+                                                <div class="progress-bar bg-flat-color-5" role="progressbar" style="width: {{ $sql_docout_currmonth[0]['percent261bc'] }}%;" aria-valuenow="{{ $sql_docout_currmonth[0]['percent261bc'] }}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                     </div> <!-- /.card-body -->
