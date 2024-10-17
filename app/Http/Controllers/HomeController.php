@@ -8,33 +8,6 @@ use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
-    //  untuk index
-    //  **
-    // public function index(Request $request)
-    // {
-    //     //  cek ip access
-    //     //  **
-    //     if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-    //     {
-    //         //  mengambil data dari json
-    //         //  **
-    //         $response           = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
-    //         $obj                = json_decode($response);
-    //         $gitversions        = $obj->version;
-    //     }
-    //     else
-    //     {
-    //         //  mengambil data dari json
-    //         //  **
-    //         $response           = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
-    //         $obj                = json_decode($response);
-    //         $gitversions        = $obj->version;
-    //     }
-
-    //     //  return view
-    //     //  **
-    //     return view('admin.home', compact('gitversions'));
-    // }
     protected $domain = "https://svr1.jkei.jvckenwood.com/";
     protected $url = "api_invesa_test/";
     protected $version = "versioning..";
@@ -50,7 +23,7 @@ class HomeController extends Controller
         $this->version = $getVersion['version'];
     }
 
-     public function index(Request $request)
+    public function index(Request $request)
     {
         //  mengambil data dari database
         $gitversions   = $this->version;
@@ -71,6 +44,8 @@ class HomeController extends Controller
         $sql_bar_currmonth      = $get_info['sql_bar_currmonth'];
         $sql_docin_currmonth    = $get_info['sql_docin_currmonth'];
         $sql_docout_currmonth   = $get_info['sql_docout_currmonth'];
+
+        // dd($get_info);
         
         //  menampilkan view
         return view('admin.home', compact('gitversions', 'fullnames', 'lastsyncinvesaweb', 
