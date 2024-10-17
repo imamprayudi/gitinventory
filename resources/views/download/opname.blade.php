@@ -14,12 +14,14 @@
     </tr>
     <tr>
         <th>
-             <th style="font-size:12pt;" align="left">Periode : {{ $data[0]['periode'] }}</th>
+             <th style="font-size:12pt;" align="left">Periode</th>
+             <th style="font-size:12pt;" align="left">: {{ $data[0]['periode'] }}</th>
         </th>
     </tr>
     <tr>
         <th>
-             <th style="font-size:12pt;" align="left">Tgl Stock Opname : {{ substr($data[0]['created_at'],0,10) }}</th>
+             <th style="font-size:12pt;" align="left">Tgl Stock Opname</th>
+             <th style="font-size:12pt;" align="left">: {{ substr($data[0]['created_at'],0,10) }}</th>
         </th>
     </tr>
     <tr><th></th></tr>
