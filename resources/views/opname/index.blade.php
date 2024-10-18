@@ -1,5 +1,8 @@
 @extends('zlayouts.main')
-@section('active_kantor', 'active')
+@php
+    $activeMenu = $kategori_data['active_menu'] ?? null;
+@endphp
+@section($activeMenu, 'active')
 @section('container')
 <!-- Content -->
 <div class="content">
@@ -7,34 +10,28 @@
     <div class="animated fadeIn">
         <!--  Search data  -->
         <div class="row  justify-content-center">
-            <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="col-3">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="box-title">Search Data </h4>
+                        <h4 class="box-title">Search Data</h4>
                     </div>
                     <div class="card-body card-block">
                         <form method="get"></form>
-                            <div class="row form-group justify-content-center">
+                           <div class="row form-group justify-content-center">
                                 <div class="col-12">
                                     <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
                                     <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
                                 </div>
-                                {{-- <div class="col-6 text-center">
-                                    <button type="submit" class="btn btn-info btn-md col-5" id="btn_cari" onclick="search()" >
-                                        Search
-                                    </button>
-                                    <button type="reset" class="btn btn-warning btn-md col-5" id="btn_reset">Reset</button>
-                                </div> --}}
-                            </div>
-                            <div class="col-12">
-                                <div class="justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div>
-                                        &nbsp;
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="First group">
-                                        <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
-                                        <button type="button" class="btn btn-secondary btn-sm" id="btn_download" onclick="download()">Download</button>
-                                        <button type="submit" class="btn btn-success btn-sm" id="btn_cari" onclick="search()">Search</button>
+                                <div class="col-12">
+                                    <div class="justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                                        <div>
+                                            &nbsp;
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="First group">
+                                            <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" id="btn_download" onclick="download()">Download</button>
+                                            <button type="submit" class="btn btn-success btn-sm" id="btn_cari" onclick="search()">Search</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +47,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="float:left">
-                            <strong class="card-title">Peralatan Perkantoran <p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">{{ $kategori_data['title'] }}<p class="card-text text-muted" id="spn_totalcount"></p></strong>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
@@ -61,18 +58,30 @@
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="align-middle">No</th>
-                                    <th class="align-middle">Kode Brg</th>
-                                    <th class="align-middle">Nama Brg</th>
-                                    <th class="align-middle">Sat</th>
-                                    <th class="align-middle">Saldo Awal</th>
-                                    <th class="align-middle">Pemasukan</th>
-                                    <th class="align-middle">Pengeluaran</th>
-                                    <th class="align-middle">Penyesuaian</th>
-                                    <th class="align-middle">Saldo Buku</th>
-                                    <th class="align-middle">Stock Opname</th>
-                                    <th class="align-middle">Selisih</th>
-                                    <th class="align-middle">Ket</th>
+                                    <th class="align-middle" rowspan="3">No</th>
+                                    <th class="align-middle" rowspan="2">Jenis/Nama/Uraian<br>Barang</th>
+                                    <th class="align-middle" rowspan="2">Kategori<br>Barang</th>
+                                    <th class="align-middle" rowspan="2">Kode Barang</th>
+                                    <th class="align-middle" rowspan="2">Satuan</th>
+                                    <th class="align-middle" rowspan="2">Jumlah</th>
+                                    <th class="align-middle" colspan="3">ex Dokumen BC</th>
+                                    <th class="align-middle" rowspan="2">Keterangan</th>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle">Jenis Dokumen</th>
+                                    <th class="align-middle">Nomor</th>
+                                    <th class="align-middle">Tanggal</th>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle"> <input type="text" name="nama_barang" id="nama_barang"/></th>
+                                    <th class="align-middle"> <input type="text" name="kategori_barang" id="kategori_barang"/></th>
+                                    <th class="align-middle"> <input type="text" name="kode_barang" id="kode_barang"/></th>
+                                    <th class="align-middle"> <input type="text" name="satuan" id="satuan"/></th>
+                                    <th class="align-middle"> <input type="text" name="jumlah" id="jumlah"/></th>
+                                    <th class="align-middle"> <input type="text" name="jenis_dokumen_bc" id="jenis_dokumen_bc"/></th>
+                                    <th class="align-middle"> <input type="text" name="no_bc" id="no_bc"/></th>
+                                    <th class="align-middle"> <input type="text" name="tanggal_bc" id="tanggal_bc"/></th>
+                                    <th class="align-middle"> <input type="text" name="keterangan" id="keterangan"/></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,6 +92,7 @@
                 </div>
             </div><!-- /# column -->
         </div>
+        
         <!--  /Table data -->
         <div class="clearfix"></div>
     </div>
@@ -97,94 +107,42 @@
 <script>
     //  ***
     //  load data
-    var url = "{{ route('mutation') }}";
-    var urlpaging = "{{ route('mutation_page') }}";
-    var kategori      = 'Peralatan perkantoran';
+    var url             = "{{ route('opname-loaddata') }}";
+    var urlpaging       = "{{ route('opname-pagination') }}";
+    var kategori_barang = "{{ $kategori_data['kategori_barang'] }}";
+    var gudang          = "{{ $kategori_data['gudang'] }}";
 
-    function loaddata()
-    {
-        //  variable
-        $("#loadingdata").remove();
-        $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
-
-        // 'periode', 'kode_barang','gudang', 'kategori'
-        console.log('data load');
-        $.ajax({
-            url     : url,
-            method  : 'GET',
-            data    : { periode,kategori },
-            dataType: 'json',
-            success : function(data)
-            {
-                console.log({data});
-                var valraquo = data.halamanAktif + 1;
-                $("#loadingdata").remove();
-                $('thead').html(data.header);
-                $('tbody').html(data.table_data);
-                //  total count
-                if(data.totalcount == 1)
-                {
-                    $("#spn_totalcount").text("Total data "+data.totalcount+" record");
-                }
-                else if(data.totalcount > 1)
-                {
-                    $("#spn_totalcount").text("Total data "+data.totalcount+" records");
-                }
-                else
-                {
-                    $("#spn_totalcount").text("Data nothing");
-                }
-                //  pagination
-                if(data.halamanAktif === data.jumlahHalaman)
-                {
-                    $("#navigation").remove();
-                    $("#writepagination").append(""
-                    + "<div id='navigation'>"
-                        + "<nav class='pagination-outer' aria-label='Page navigation'>"
-                        + "<ul class='pagination pagination-sm'>"
-                            + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
-                            + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
-                            + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                            + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Next'><span aria-hidden='true' class='text-muted'>»</span></a></li>"
-                            + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Last'><span aria-hidden='true' class='text-muted'>Last</span></a></li>"
-                        + "</ul>"
-                        + "</nav>"
-                    + "</div>");
-                }
-                else
-                {
-                    $("#navigation").remove();
-                    $("#writepagination").append(""
-                    + "<div id='navigation'>"
-                        + "<nav class='pagination-outer' aria-label='Page navigation'>"
-                        + "<ul class='pagination pagination-sm'>"
-                            + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true' class='text-muted'>First</span></a></li>"
-                            + "<li class='page-item disabled'><a href='#' class='page-link' aria-label='Previous'><span aria-hidden='true' class='text-muted'>«</span></a></li>"
-                            + "<li class='page-item disabled active'><a href='#' class='page-link' aria-label='First'><span aria-hidden='true'>"+data.halamanAktif+" of about "+data.jumlahHalaman+" page</span></a></li>"
-                            + "<li class='page-item '><a href='#' class='page-link' aria-label='Next' onclick="+ raquo(valraquo)+ "><span aria-hidden='true'>»</span></a></li>"
-                            + "<li class='page-item '><a href='#' class='page-link' aria-label='Last' onclick="+ last(data.jumlahHalaman) +"><span aria-hidden='true'>Last</span></a></li>"
-                        + "</ul>"
-                        + "</nav>"
-                    + "</div>");
-                }
+    document.querySelectorAll('input[type="text"]').forEach(function(input) {
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Mencegah perilaku default form
+                search();
             }
         });
-    }
+    });
 
+    
     function search()
     {
-        console.log("CLICK SEARCH BAHAN BAKU")
+        console.log("CLICK SEARCH Opname Bahan Baku Contoh",url)
         //  variable
-        var periode       = $("#periode").val();
-        
-
+        var periode = $('#periode').val().replace(/-/g, "");
+        // var kategori_barang = $('#kategori_barang').val();
+        var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
+        var satuan = $('#satuan').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
+        var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : url,
             method  : 'GET',
-            data    : {  periode,  kategori },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -287,14 +245,23 @@
     function first(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val();
+        var periode = $('#periode').val().replace(/-/g, "");
+        // var kategori_barang = $('#kategori_barang').val();
+        var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
+        var satuan = $('#satuan').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
+        var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode,  kategori, jumlahHalaman },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -335,13 +302,23 @@
     function laquo(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val(); 
+        var periode = $('#periode').val().replace(/-/g, "");
+        // var kategori_barang = $('#kategori_barang').val();
+        var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
+        var satuan = $('#satuan').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
+        var keterangan = $('#keterangan').val();
+
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode,  kategori , jumlahHalaman },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -402,14 +379,23 @@
     function raquo(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val();
+        var periode = $('#periode').val().replace(/-/g, "");
+        // var kategori_barang = $('#kategori_barang').val();
+        var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
+        var satuan = $('#satuan').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
+        var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, kategori , jumlahHalaman },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -470,13 +456,23 @@
     function last(jumlahHalaman)
     {
         //  variable
-        var periode       = $("#periode").val(); 
+        var periode = $('#periode').val().replace(/-/g, "");
+        // var kategori_barang = $('#kategori_barang').val();
+        var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
+        var satuan = $('#satuan').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
+        var keterangan = $('#keterangan').val();
+
         $("#loadingdata").remove();
         $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
-            data    : {  periode, kode_barang, kategori , jumlahHalaman },
+            data    : {  periode, gudang, kategori_barang, nama_barang, kode_barang, satuan, jumlah, jenis_dokumen_bc,no_bc, tanggal_bc, keterangan},
             dataType: 'json',
             success : function(data)
             {
@@ -516,9 +512,22 @@
 
     //  download data
     function download(){
-        var periode       = $("#periode").val(); //.replace(/-/g, "");
-        var kode_barang   = $("#partno").val();
-        window.open("mutation-download?periode="+periode+"&kategori="+kategori+"");
+        var periode = $('#periode').val().replace(/-/g, "");
+        // var kategori_barang = $('#kategori_barang').val();
+        var nama_barang = $('#nama_barang').val();
+        var kode_barang = $('#kode_barang').val();
+        var satuan = $('#satuan').val();
+        var jumlah = $('#jumlah').val();
+        var jenis_dokumen_bc = $('#jenis_dokumen_bc').val();
+        var no_bc = $('#no_bc').val();
+        var tanggal_bc = $('#tanggal_bc').val();
+        var keterangan = $('#keterangan').val();
+
+        window.open("opname-download?periode="+periode+"&gudang="+gudang+"&kategori_barang="+kategori_barang+"&kode_barang="+kode_barang+"&nama_barang="+nama_barang+"&satuan="+satuan+"&jumlah="+jumlah+"&jenis_dokumen_bc="+jenis_dokumen_bc+"&no_bc="+no_bc+"&tanggal_bc="+tanggal_bc+"&keterangan="+keterangan);
+    }
+
+    function upload(){
+        
     }
 
     //  ***
@@ -528,20 +537,11 @@
         var d       = new Date();
         var stmonth   = d.getMonth();
         var enmonth   = d.getMonth()+1;
-        var day     = d.getDate();
-        var stdate  = d.getFullYear() + '-' +
-                        ((''+stmonth).length<2 ? '0' : '') + stmonth + '-' +
-                        '01';
-        var endate  = d.getFullYear() + '-' +
-                        ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
-                        ((''+day).length<2 ? '0' : '') + day;
-        //  set value
-        $("#stdate").val(stdate);
-        $("#endate").val(endate);
-        $("#partno").val('');
+        var stdate  = d.getFullYear() + '-' + ((''+stmonth).length<2 ? '0' : '') + stmonth;
 
-        //  load data
-        // loaddata();
+        //  set value
+        $("#periode").val(stdate);
+        $("#partno").val('');
 
         //  trigger toogle
         $("#menuToggle").trigger('click');
@@ -549,27 +549,18 @@
         //  search data
         $('#endate').change(function (){ search(); });
         $("#partno").keydown(function (e){ if(e.keyCode == 13){ search(); }});
-        // $("#btn_cari").click(function(){ search(); });
-        // $("#btn_cari").click(search());
         $("#btn_download").click(function(){ download(); });
         $("#btn_reset").click(function(){
             //  buat tanggal
             var d       = new Date();
             var stmonth   = d.getMonth();
             var enmonth   = d.getMonth()+1;
-            var day     = d.getDate();
             var stdate  = d.getFullYear() + '-' +
-                            ((''+stmonth).length<2 ? '0' : '') + stmonth + '-' +
-                            '01';
-            var endate  = d.getFullYear() + '-' +
-                            ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
-                            ((''+day).length<2 ? '0' : '') + day;
-            //  set value
-            $("#stdate").val(stdate);
-            $("#endate").val(endate);
-            $("#partno").val('');
+                            ((''+stmonth).length<2 ? '0' : '') + stmonth;
 
-            // loaddata();
+            //  set value
+            $("#periode").val(stdate);
+            $("#partno").val('');
             window.location.href =  window.location.href.split("#")[0];
         });
     });

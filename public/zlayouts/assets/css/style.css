@@ -1444,8 +1444,8 @@ header .form-inline {
   font-family: 'Open Sans'; }
   .table-stats table th,
   .table-stats table td {
-    border: none;
-    border-bottom: 1px solid #e8e9ef;
+    _border: none;
+    _border-bottom: 1px solid #e8e9ef;
     color: #868e96;
     font-size: 12px;
     font-weight: normal;

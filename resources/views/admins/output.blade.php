@@ -32,11 +32,12 @@
                                     <div class="bg-warning bg-opacity-50 text-center"><small>BC Type</small></div>
                                     {{-- <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off"> --}}
                                     <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
-                                        <option> 25BC </option>
-                                        <option> 261BC </option>
-                                        <option> 27BC </option>
-                                        <option> 30BC </option>
-                                        <option> 41BC </option>
+                                        <option value=''></option>
+                                        <option value='25BC'> 25BC </option>
+                                        <option value='261BC'> 261BC </option>
+                                        <option value='27BC'> 27BC </option>
+                                        <option value='30BC'> 30BC </option>
+                                        <option value='41BC'> 41BC </option>
                                     </select>
                                 </div>
                             </div>
@@ -93,7 +94,31 @@
                     </div>
                     <div class="table-stats order-table ov-h">
                         <table class="table table-striped table-hover">
-                            <thead>
+                            <thead class="table-bordered">
+                                <tr>
+                                    <th class=" text-center" rowspan="2">No</th>
+                                    <th class=" text-center" colspan="3">Dokumen Pabean</th>
+                                    <th class=" text-center" colspan="3">Bukti Pengeluaran Barang (BPB)</th>
+                                    {{-- <th class="">Invoice Date</th> --}}
+                                    <th class=" text-center" rowspan="2">Nama Pemasok</th>
+                                    <th class=" text-center" rowspan="2">Kode Barang</th>
+                                    <th class=" text-center" rowspan="2">Nama Barang</th>
+                                    <th class=" text-center" rowspan="2">Jumlah</th>
+                                    <th class=" text-center" rowspan="2">Satuan</th>
+                                    <th class=" text-center" rowspan="2">Kode Valuta</th>
+                                    <th class=" text-center" rowspan="2">Nilai</th>
+                                    {{-- <th class=" text-center" rowspan="2">Create by</th> --}}
+                                </tr>
+                                <tr>
+                                    <th class=" text-center">Jenis BC</th>
+                                    <th class=" text-center">No. Daftar</th>
+                                    <th class=" text-center">Tanggal Daftar</th>
+                                    <th class=" text-center">No. BPB</th>
+                                    <th class=" text-center">Tanggal BPB</th>
+                                    <th class=" text-center">No Invoice</th>
+                                </tr>
+                            </thead>
+                            {{-- <thead>
                                 <tr>
                                     <th class="align-middle">No</th>
                                     <th class="align-middle">BC Type</th>
@@ -112,7 +137,7 @@
                                     <th class="align-middle">Currency</th>
                                     <th class="align-middle">Create by</th>
                                 </tr>
-                            </thead>
+                            </thead> --}}
                             <tbody>
                             </tbody>
                         </table>
@@ -568,6 +593,9 @@ function download(){
     var jnsdokbc    = $("#jnsdokbc").val();
     var nodokbc     = $("#nodokbc").val();
     var partno      = $("#partno").val();
+    if (jnsdokbc === 'null') {
+        jnsdokbc = null;
+    }
     window.open("output/download?stdate="+stdate+"&endate="+endate+"&jnsdokbc="+jnsdokbc+"&nodokbc="+nodokbc+"&partno="+partno+"");
 }
 
