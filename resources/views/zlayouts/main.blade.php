@@ -122,7 +122,7 @@
                 <span class="nav-link-text">Pemasukan</span>
               </a>
             </li>
-            <li class="nav-item @yield('activeoutput')">
+            <li class="nav-item {{ (request()->is('output')) ? 'active fw-bold' : '' }}">
               <a class="nav-link link-secondary" aria-current="page" href="{{ url('/output') }}">
                 <div class="nav-link-icon text-danger-emphasis">
                   <i class="bi bi-arrow-right-short"></i>
