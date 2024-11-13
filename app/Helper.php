@@ -70,12 +70,11 @@ class Helper
             `monthly_mutation_report`.`keterangan`,
             `monthly_mutation_report`.`created_at` */
         // return $rowdata;
-        // <td align="right"><medium class="text-muted">' . $no . '</medium></td>
         return '<tr>
                     <td align="right"><medium class="text-muted">' . $no . '</medium></td>
                     <td>' . $rowdata['kode_barang'] . '</td>
                     <td>' . $rowdata['nama_barang'] . '</td>
-                    <td>' . $rowdata['satuan'] . '</td>
+                    <td align="center">' . $rowdata['satuan'] . '</td>
                     <td align="right">' . number_format((float) $rowdata['saldo_awal'],2) . '</td>
                     <td align="right">' . number_format((float) $rowdata['pemasukan'],2) . '</td>
                     <td align="right">' . number_format((float) $rowdata['pengeluaran'],2) . '</td>
@@ -85,7 +84,6 @@ class Helper
                     <td align="right">' . number_format((float) $rowdata['selisih'],2) . '</td>
                     <td>' . $rowdata['keterangan'] . '</td>
                     </tr>';
-                    // <td>' . $rowdata['created_at'] . '</td>
 
     }
     public static function return_data_mutasi_old($no, $rowdata){
