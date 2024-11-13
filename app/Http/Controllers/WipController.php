@@ -25,7 +25,8 @@ class WipController extends Controller
     public function index(Request $request)
     {
         $gitversions =$this->version;
-        return view('admins.wip', compact('gitversions'));
+        $fullnames          = $request->session()->get('session_gitinventory_username');
+        return view('admins.wip', compact('gitversions','fullnames'));
     }
 
     //  ***
@@ -45,7 +46,6 @@ class WipController extends Controller
             'periode' => 'required|date_format:Ym'
         ]);
         
-
         $parameter = $request;
         $parameter['page'] = 0;
         $parameter['limit'] = 1;

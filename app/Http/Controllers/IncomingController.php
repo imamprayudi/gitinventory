@@ -28,9 +28,10 @@ class IncomingController extends Controller
     //  index
     public function index(Request $request)
     {
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
         $gitversions = $gitversions['version'];
-        return view('admins.input', compact('gitversions'));
+        return view('admins.input', compact('gitversions','fullnames'));
     }
 
     //  ***

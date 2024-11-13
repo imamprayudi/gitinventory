@@ -28,9 +28,10 @@ class OutgoingController extends Controller
     //  index
     public function index(Request $request)
     {
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
         $gitversions = $gitversions['version'];
-         return view('admins.output', compact('gitversions'));
+         return view('admins.output', compact('gitversions','fullnames'));
 
         // //  **
         // //  mengambil data version

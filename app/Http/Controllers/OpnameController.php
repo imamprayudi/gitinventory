@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class OpnameController extends Controller
 {
@@ -25,6 +33,7 @@ class OpnameController extends Controller
     public function gudang_material(Request $request)
     {
         $this->gudang = 'Gudang Material';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_bahan_baku_gm",
             "title" => "(Hasil Pencacahan) Bahan Baku - Gudang Material",
@@ -32,12 +41,13 @@ class OpnameController extends Controller
             "gudang" => "Gudang Material",
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
 
     }
     public function gudang_umum(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_bahan_baku_gu",
             "title" => "(Hasil Pencacahan) Bahan Baku - Gudang Umum",
@@ -45,11 +55,12 @@ class OpnameController extends Controller
             "gudang" => "Gudang Umum",
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function bahan_penolong(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_bahan_penolong",
             "title" => "(Hasil Pencacahan) Bahan Penolong",
@@ -57,11 +68,12 @@ class OpnameController extends Controller
             "gudang" => "Gudang Umum",
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function mesin(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_mesin",
             "title" => "(Hasil Pencacahan) Barang modal - Mesin",
@@ -69,11 +81,12 @@ class OpnameController extends Controller
             "gudang" => "Gudang Umum",
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function sparepart(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_sparepart",
             "title" => "(Hasil Pencacahan) Barang Modal - Spare Part",
@@ -81,11 +94,12 @@ class OpnameController extends Controller
             "gudang" => "Gudang Umum",
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function mold(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_mold",
             "title" => "(Hasil Pencacahan) Barang Modal - Cetakan (Moulding)",
@@ -93,11 +107,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function peralatan_pabrik(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_peralatan_pabrik",
             "title" => "(Hasil Pencacahan) Barang Modal - Peralatan Pabrik",
@@ -105,11 +120,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function konstruksi(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_konstruksi",
             "title" => "(Hasil Pencacahan) Barang Modal - Peralatan Konstruksi",
@@ -117,11 +133,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function kantor(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_kantor",
             "title" => "(Hasil Pencacahan) Peralatan Perkantoran",
@@ -129,11 +146,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function finishgood_gfg(Request $request)
     {
         $this->gudang = 'Gudang Finished Goods';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_finishgood_gfg",
             "title" => "(Hasil Pencacahan) Hasil Produksi - ".$this->gudang,
@@ -141,11 +159,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function finishgood_gu(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_finishgood_gu",
             "title" => "(Hasil Pencacahan) Hasil Produksi - ".$this->gudang,
@@ -153,11 +172,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function pengemas(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_pengemas",
             "title" => "(Hasil Pencacahan) Pengemas atau Alat Bantu pengemas",
@@ -165,11 +185,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function bahan_baku_contoh(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_bahan_baku_contoh",
             "title" => "(Hasil Pencacahan) Barang Contoh - Bahan Baku",
@@ -177,11 +198,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function finishgood_contoh(Request $request)
     {
         $this->gudang = 'Gudang Umum';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_finishgood_contoh",
             "title" => "(Hasil Pencacahan) Barang Contoh - Barang Jadi",
@@ -189,11 +211,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function service(Request $request)
     {
         $this->gudang = 'Gudang Service Part';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_service",
             "title" => "(Hasil Pencacahan) Service Part",
@@ -201,11 +224,12 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
     public function scrap(Request $request)
     {
         $this->gudang = 'Gudang Scrap';
+        $fullnames          = $request->session()->get('session_gitinventory_username');
         $kategori_data = [
             "active_menu" => "active_opname_scrap",
             "title" => "(Hasil Pencacahan) Scrap",
@@ -213,7 +237,7 @@ class OpnameController extends Controller
             "gudang" => $this->gudang,
         ];
         $gitversions =$this->version;
-        return view('opname.index', compact('gitversions','kategori_data'));
+        return view('opname.index', compact('gitversions','kategori_data','fullnames'));
     }
 
     //  ***
@@ -309,6 +333,121 @@ class OpnameController extends Controller
     }
 
     public function download(Request $request)
+    {
+        $periode    = $request->get('periode', '');
+        $kategori   = $request->get('kategori_barang', '');
+        $gudang     = $request->get('gudang', '');
+        
+        $params = $request;
+        $sql    = Http::get($this->domain . $this->url . "json_download_opname_spreadsheet.php", $params->toArray());
+        $data = $sql['rows'];
+        // return $sql;
+        // Membuat objek Spreadsheet baru
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set judul
+        $sheet->setCellValue('A1', "Laporan Stock Fisik $kategori - $gudang Periode $periode");
+        $sheet->mergeCells('A1:J1');
+        $sheet->getStyle('A1')->getFont()->setBold(true)->setSize(16);
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        // Set header
+        // Mengatur judul header
+        $sheet->setCellValue('A3', 'No')
+            ->setCellValue('B3', 'Jenis/Nama/Uraian Barang')
+            ->setCellValue('C3', 'Kategori Barang')
+            ->setCellValue('D3', 'Kode Barang')
+            ->setCellValue('E3', 'Satuan')
+            ->setCellValue('F3', 'Jumlah')
+            ->setCellValue('G3', 'ex Dokumen BC')
+            ->setCellValue('J3', 'Keterangan');
+
+        // Mengatur merge cells untuk header
+        $sheet->mergeCells('A3:A4'); // No
+        $sheet->mergeCells('B3:B4'); // Jenis/Nama/Uraian Barang
+        $sheet->mergeCells('C3:C4'); // Kategori Barang
+        $sheet->mergeCells('D3:D4'); // Kode Barang
+        $sheet->mergeCells('E3:E4'); // Satuan
+        $sheet->mergeCells('F3:F4'); // Jumlah
+        $sheet->mergeCells('G3:I3'); // ex Dokumen BC
+        $sheet->mergeCells('J3:J4'); // Keterangan
+
+        // Mengatur sub-header pada baris kedua
+        $sheet->setCellValue('G4', 'Jenis Dokumen')
+            ->setCellValue('H4', 'Nomor')
+            ->setCellValue('I4', 'Tanggal');
+
+        // Mengatur style header
+        $sheet->getStyle('A3:J4')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:J4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A3:J4')->getFont()->setBold(true);
+
+        // Isi data ke dalam spreadsheet
+        $rowNo = 4;
+        // return $data;
+        foreach ($data as $rowIndex => $row) {
+            foreach (array_values($row) as $colIndex => $value) {
+                if($colIndex > 9)
+                {
+                    continue;
+                }
+
+                 // Menghitung kolom dengan huruf (A, B, C, dst.)
+                $cellCoordinate = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($colIndex + 1) . ($rowNo + 1);
+
+                // Set nilai berdasarkan tipe data
+                if ($colIndex == 1 || $colIndex == 2 || $colIndex == 3 || $colIndex == 4) {
+                    $sheet->setCellValueExplicit($cellCoordinate, $value, DataType::TYPE_STRING);
+                    $sheet->getStyle($cellCoordinate)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_TEXT);
+                    continue;
+                } 
+
+                $sheet->setCellValue($cellCoordinate, $value);
+                
+            }
+            $rowNo++;
+        }
+        
+        $sheet->getStyle('A3:J4')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => '0ee39c',
+                ],
+            ],
+        ]);
+
+        // Set border untuk header dan data
+        $sheet->getStyle('A3:J' . ($rowNo - 1))->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+        ]);
+
+        // Set auto width
+        foreach (range('A', 'J') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        $filename = 'Laporan_Stock_Fisik_' . $kategori . '_' . $gudang . '.xlsx';
+        $writer = new Xlsx($spreadsheet);
+
+        // StreamedResponse untuk unduhan file
+        $response = new StreamedResponse(function() use ($writer) {
+            $writer->save('php://output');
+        });
+
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        return $response;
+    }
+    public function download_withblade(Request $request)
     {
         $params = $request;
         $sql    = Http::get($this->domain . $this->url . "json_download_opname.php", $params->toArray());
