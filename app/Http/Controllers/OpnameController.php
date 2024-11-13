@@ -332,7 +332,7 @@ class OpnameController extends Controller
         return $this->loaddata($request, $request->get('jumlahHalaman'));
     }
 
-    public function download(Request $request)
+    public function download_spreadsheet_ok(Request $request)
     {
         $periode    = $request->get('periode', '');
         $kategori   = $request->get('kategori_barang', '');
@@ -447,7 +447,7 @@ class OpnameController extends Controller
 
         return $response;
     }
-    public function download_withblade(Request $request)
+    public function download(Request $request)
     {
         $params = $request;
         $sql    = Http::get($this->domain . $this->url . "json_download_opname.php", $params->toArray());

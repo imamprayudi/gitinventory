@@ -336,7 +336,7 @@ class MutationController extends Controller
         return $this->loaddata($request, $request->get('jumlahHalaman'));
     }
 
-    public function download(Request $request)
+    public function download_spreadsheet_ok(Request $request)
     {
         $periode    = $request->get('periode', '');
         $kategori   = $request->get('kategori', '');
@@ -490,7 +490,7 @@ class MutationController extends Controller
 
         return $response;
     }
-    public function download_old_withblade(Request $request)
+    public function download(Request $request)
     {
         $periode     = $request->get('periode','');
         $kategori     = $request->get('kategori','');
