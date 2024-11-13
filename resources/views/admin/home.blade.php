@@ -1,5 +1,6 @@
 @extends('zlayouts.main')
-@section('activehome', 'active')
+{{-- @section('activehome', 'active fw-bold text-primary-emphasis')
+@section('collapsed_dashboard', 'bg-light collapsed') --}}
 
 @section('container')
 <div class="row justify-content-center">

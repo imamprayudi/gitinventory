@@ -1,5 +1,9 @@
 @extends('zlayouts.main')
-@section('activeoutput', 'active')
+{{-- @section('activeoutput', 'active fw-bold text-primary-emphasis')
+@section('show_laper', 'show')
+@section('collapsed_laper', 'bg-light active collapsed')
+@section('aria_laper', 'true') --}}
+
 @section('container')
 <!-- Content -->
 <div class="content">

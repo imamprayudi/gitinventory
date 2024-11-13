@@ -10,426 +10,799 @@
     <meta name="description" content="GIT Inventory Custom">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="./images/icon_gitinventory.ico">
-
-    <link rel="stylesheet" href="./zlayouts/css/normalize.min.css">
-    {{-- <link rel="stylesheet" href="./zlayouts/css/bootstrap.min.css"> --}}
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icon/themify-icons@1.0.1-alpha.3/themify-icons.min.css">
-    <link rel="stylesheet" href="./zlayouts/css/themify-icons.css">
-    <link rel="stylesheet" href="./zlayouts/assets/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="./zlayouts/assets/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/sidebars/sidebar-1/assets/css/sidebar-1.css">
+    
 
     @yield('stylecss')
 
-   <style>
-    #weatherWidget .currentDesc {
-        color: #ffffff!important;
-    }
-    .traffic-chart {
-        min-height: 335px;
-    }
-    #flotPie1  {
-        height: 150px;
-    }
-    #flotPie1 td {
-        padding:3px;
-    }
-    #flotPie1 table {
-        top: 20px!important;
-        right: -10px!important;
-    }
-    .chart-container {
-        display: table;
-        min-width: 270px ;
-        text-align: left;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    #flotLine5  {
-            height: 105px;
-    }
-
-    #flotBarChart {
-        height: 150px;
-    }
-    #cellPaiChart{
-        height: 160px;
-    }
-    </style>
+   
 </head>
 
 <body>
-    <!-- Left Panel -->
-    <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm navbar-default">
-            <div id="main-menu" class="main-menu collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="menu-title">Main</li><!-- /.menu-title -->
-                        <ul>
-                            <li class="@yield('activehome')">
-                                <a href="{{ url('/home') }}">
-                                    <img src="./zlayouts/images/home.png"
-                                    height="14px"
-                                    alt="Main">
-                                    Home
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-title">LAP. PER DOKUMEN PABEAN</li><!-- /.menu-title -->
-                        <ul>    
-                            <li class="@yield('activeinput')">
-                                    <a href="{{ url('/input') }}">
-                                        <img src="./zlayouts/images/input.png"
-                                        height="14px"
-                                        alt="Pemasukkan" />
-                                        Pemasukan
-                                    </a>
-                                </li>
-                                <li class="@yield('activeoutput')">
-                                    <a href="{{ url('/output') }}">
-                                        <img src="./zlayouts/images/output.png"
-                                        height="14px"
-                                        alt="Pengeluaran" />
-                                        Pengeluaran
-                                    </a>
-                                </li>
-                            </li>
-                        </ul>
-                    <li class="menu-title">Laporan Mutasi</li><!-- /.menu-title -->
-                        <ul>     
-                            <li class="@yield('active_bahan_baku_gm')">
-                                <a href="{{ url('/bahan_baku_gm') }}">
-                                    <img src="./zlayouts/images/bahanbaku.png"
-                                    height="14px" alt="Bahan Baku">
-                                    Bahan Baku - GM
-                                </a>
-                            </li>
-                            <li class="@yield('active_bahan_baku_gu')">
-                                <a href="{{ url('/bahan_baku_gu') }}">
-                                    <img src="./zlayouts/images/bahanbaku.png"
-                                    height="14px" alt="Bahan Baku">
-                                    Bahan Baku - GU
-                                </a>
-                            </li>
-                            <li class="@yield('active_bahan_penolong')">
-                                <a href="{{ url('/bahan_penolong') }}">
-                                    <img src="./zlayouts/images/bahan_penolong.png"
-                                    height="14px" alt="Bahan Penolong">
-                                    Bahan Penolong
-                                </a>
-                            </li>
-                            <li class="@yield('active_mesin')">
-                                <a href="{{ url('/mesin') }}">
-                                    <img src="./zlayouts/images/mesin.png"
-                                    height="14px"
-                                    alt="Barang Modal Mesin">
-                                    Barang Modal - Mesin
-                                </a>
-                            </li>
-                            <li class="@yield('active_sparepart')">
-                                <a href="{{ url('/sparepart') }}">
-                                    <img src="./zlayouts/images/sparepart.png"
-                                    height="14px"
-                                    alt="Barang Modal Spare Part">
-                                    Barang Modal - Spare Part
-                                </a>
-                            </li>
-                            <li class="@yield('active_mold')">
-                                <a href="{{ url('/mold') }}">
-                                    <img src="./zlayouts/images/mold.png"
-                                    height="14px"
-                                    alt="Barang Modal Mold/ Tooling">
-                                    Barang Modal - Cetakan (Molding)
-                                </a>
-                            </li>
-                            <li class="@yield('active_peralatan_pabrik')">
-                                <a href="{{ url('/peralatan_pabrik') }}">
-                                    <img src="./zlayouts/images/peralatan_pabrik.png"
-                                    height="14px"
-                                    alt="Barang Modal Peralatan Pabrik">
-                                    Barang Modal - Peralatan Pabrik
-                                </a>
-                            </li>
-                            <li class="@yield('active_konstruksi')">
-                                <a href="{{ url('/konstruksi') }}">
-                                    <img src="./zlayouts/images/peralatan_konstruksi.png"
-                                    height="14px"
-                                    alt="Barang Modal Peralatan Konstruksi">
-                                    Barang Modal - Peralatan Konstruksi
-                                </a>
-                            </li>
-                            <li class="@yield('active_kantor')">
-                                <a href="{{ url('/kantor') }}">
-                                    <img src="./zlayouts/images/peralatan_kantor.png"
-                                    height="14px"
-                                    alt="Peralatan Kantor">
-                                    Peralatan Perkantoran
-                                </a>
-                            </li>
-                            <li class="@yield('activefinishgood_gfg')">
-                                <a href="{{ url('/finishgood_gfg') }}">
-                                    <img src="./zlayouts/images/finishgood.png"
-                                    height="14px"
-                                    alt="Finishgood">
-                                    Hasil Produksi - GFG
-                                </a>
-                            </li>
-                            <li class="@yield('activefinishgood_gu')">
-                                <a href="{{ url('/finishgood_gu') }}">
-                                    <img src="./zlayouts/images/finishgood.png"
-                                    height="14px"
-                                    alt="Finishgood">
-                                    Hasil Produksi - GU
-                                </a>
-                            </li>
-                            <li class="@yield('active_pengemas')">
-                                <a href="{{ url('/pengemas') }}">
-                                    <img src="./zlayouts/images/pengemas.png"
-                                    height="14px" alt="Barang Pengemas">
-                                    Pengemas atau Alat Bantu pengemas
-                                </a>
-                            </li>
-                            <li class="@yield('active_bahan_baku_contoh')">
-                                <a href="{{ url('/bahan_baku_contoh') }}">
-                                    <img src="./zlayouts/images/bahanbaku.png"
-                                    height="14px" alt="Barang Contoh Bahan Baku">
-                                    Barang Contoh - Bahan Baku
-                                </a>
-                            </li>
-                            <li class="@yield('active_finishgood_contoh')">
-                                <a href="{{ url('/finishgood_contoh') }}">
-                                    <img src="./zlayouts/images/finishgood.png"
-                                    height="14px"
-                                    alt="Barang Contoh Hasil Produksi">
-                                    Barang Contoh - Barang Jadi
-                                </a>
-                            </li>
-                            <li class="@yield('active_service')">
-                                <a href="{{ url('/service') }}">
-                                    <img src="./zlayouts/images/service.png"
-                                    height="14px"
-                                    alt="Service Part">
-                                    Service Part
-                                </a>
-                            </li>
-                            <li class="@yield('activescrap')">
-                                <a href="{{ url('/scrap') }}">
-                                    <img src="./zlayouts/images/scrap.png"
-                                    height="14px"
-                                    alt="Scrap">
-                                    Scrap
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-title">Laporan Posisi</li>
-                        <ul>
-                            <li class="@yield('active_wip')">
-                                <a href="{{ url('/wip') }}">
-                                    <img src="./zlayouts/images/wip.png"
-                                    height="14px"
-                                    alt="WIP" />
-                                    Barang Dalam Proses (WIP)
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-title">Laporan Stock Opname</li><!-- /.menu-title -->
-                     <ul>    
-                        <li class="@yield('active_opname_bahan_baku_gm')">
-                            <a href="{{ url('/opname-bahan_baku_gm') }}">
-                                <img src="./zlayouts/images/bahanbaku.png"
-                                height="14px" alt="Bahan Baku GM">
-                                Bahan Baku - GM
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_bahan_baku_gu')">
-                            <a href="{{ url('/opname-bahan_baku_gu') }}">
-                                <img src="./zlayouts/images/bahanbaku.png"
-                                height="14px" alt="Bahan Baku">
-                                Bahan Baku - GU
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_bahan_penolong')">
-                            <a href="{{ url('/opname-bahan_penolong') }}">
-                                <img src="./zlayouts/images/bahan_penolong.png"
-                                height="14px" alt="Bahan Penolong">
-                                Bahan Penolong
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_mesin')">
-                            <a href="{{ url('/opname-mesin') }}">
-                                <img src="./zlayouts/images/mesin.png"
-                                height="14px"
-                                alt="Barang Modal Mesin">
-                                Barang Modal - Mesin
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_sparepart')">
-                            <a href="{{ url('/opname-sparepart') }}">
-                                <img src="./zlayouts/images/sparepart.png"
-                                height="14px"
-                                alt="Barang Modal Spare Part">
-                                Barang Modal - Spare Part
-                            </a>
-                        </li>
-                         <li class="@yield('active_opname_mold')">
-                            <a href="{{ url('/opname-mold') }}">
-                                <img src="./zlayouts/images/mold.png"
-                                height="14px"
-                                alt="Barang Modal Mold/ Tooling">
-                                Barang Modal - Cetakan (Moulding)
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_peralatan_pabrik')">
-                            <a href="{{ url('/opname-peralatan_pabrik') }}">
-                                <img src="./zlayouts/images/peralatan_pabrik.png"
-                                height="14px"
-                                alt="Barang Modal Peralatan Pabrik">
-                                Barang Modal - Peralatan Pabrik
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_konstruksi')">
-                            <a href="{{ url('/opname-konstruksi') }}">
-                                <img src="./zlayouts/images/peralatan_konstruksi.png"
-                                height="14px"
-                                alt="Barang Modal Peralatan Konstruksi">
-                                Barang Modal - Peralatan Konstruksi
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_kantor')">
-                            <a href="{{ url('/opname-kantor') }}">
-                                <img src="./zlayouts/images/peralatan_kantor.png"
-                                height="14px"
-                                alt="Peralatan Kantor">
-                                Peralatan Perkantoran
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_finishgood_gfg')">
-                            <a href="{{ url('/opname-finishgood_gfg') }}">
-                                <img src="./zlayouts/images/finishgood.png"
-                                height="14px"
-                                alt="Finishgood">
-                                Hasil Produksi - GFG
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_finishgood_gu')">
-                            <a href="{{ url('/opname-finishgood_gu') }}">
-                                <img src="./zlayouts/images/finishgood.png"
-                                height="14px"
-                                alt="Finishgood">
-                                Hasil Produksi - GU
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_pengemas')">
-                            <a href="{{ url('/opname-pengemas') }}">
-                                <img src="./zlayouts/images/pengemas.png"
-                                height="14px" alt="Barang Pengemas">
-                                Pengemas atau Alat Bantu pengemas
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_bahan_baku_contoh')">
-                            <a href="{{ url('/opname-bahan_baku_contoh') }}">
-                                <img src="./zlayouts/images/bahanbaku.png"
-                                height="14px" alt="Barang Contoh Bahan Baku">
-                                Barang Contoh - Bahan Baku
-                            </a>
-                        </li>
-                         <li class="@yield('active_opname_finishgood_contoh')">
-                            <a href="{{ url('/opname-finishgood_contoh') }}">
-                                <img src="./zlayouts/images/finishgood.png"
-                                height="14px"
-                                alt="Barang Contoh Hasil Produksi">
-                                Barang Contoh - Barang Jadi
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_service')">
-                            <a href="{{ url('/opname-service') }}">
-                                <img src="./zlayouts/images/service.png"
-                                height="14px"
-                                alt="Service Part">
-                                Service Part
-                            </a>
-                        </li>
-                        <li class="@yield('active_opname_scrap')">
-                            <a href="{{ url('/opname-scrap') }}">
-                                <img src="./zlayouts/images/scrap.png"
-                                height="14px"
-                                alt="Scrap">
-                                Scrap
-                            </a>
-                        </li>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </nav>
-    </aside>
-    <!-- /#left-panel -->
-
-    <!-- Right Panel -->
-    <div id="right-panel" class="right-panel">
-        <!-- Header-->
-        <header id="header" class="header">
-            <div class="top-left">
-                <div class="navbar-header">
-                    {{-- <a class="navbar-brand" href="{{ url('/home') }}"><img src="./images/logo_gitinventory.png" alt="Logo"></a> --}}
-                    <a id="menuToggle" class="menutoggle"><img src="./zlayouts/images/bar.jpg" height="12px" alt="Bar"></a>
-                </div>
-            </div>
-            <div class="top-right">
-                <div class="header-menu">
-                    <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="./zlayouts/images/userlogo.png" alt="Logout Image">
-                        </a>
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="{{ url('/login') }}"><i class="fa fa-power -off"></i>Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- /#header -->
-
-        {{-- @yield('container') --}}
-        <main role="main" class="main-content">
-            <div class="container-fluid">
-                @yield('container')
-            </div>
-        </main>
-
-        <div class="clearfix"></div>
-        <!-- Footer -->
-        <footer class="site-footer">
-            <div class="footer-inner bg-white" style="font-size:8pt;">
-                <div class="row">
-                    <div class="col-sm-6">
-                        &copy; 2022 - {{ date('Y') }} Team G.I.T
-                    </div>
-                    <div class="col-sm-6 text-right">
-                        All Rights Reserved. Version {{ $gitversions }}
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- /.site-footer -->
+    <!-- Header -->
+<header id="header-demo">
+  <nav class="navbar navbar-expand-sm bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand d-sm-none" href="#!">
+        {{-- <img src="./assets/img/bsb-logo.svg" class="img-fluid" alt="BootstrapBrain Logo" width="135" height="44"> --}}
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#bsbNavbar" aria-controls="bsbNavbar" aria-label="Toggle Navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="bsbNavbar" aria-labelledby="bsbNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="bsbNavbarLabel">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex justify-content-between">
+          <ul class="navbar-nav">
+            <li class="nav-item me-3">
+              <a class="nav-link" href="#!" data-bs-toggle="offcanvas" data-bs-target="#bsbSidebar1" aria-controls="bsbSidebar1">
+                  <i class="bi-filter-left"></i>
+                  MENU
+              </a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <ul class="navbar-nav">
+            {{-- <div class="header-menu"> --}}
+                <li class="nav-item">
+                    <a class="nav-link"> {{ strtoupper($fullnames) }} |</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/login') }}"><i class="fa fa-power -off"></i>Logout</a>
+                </li>
+            </ul >
+        </form>
+        </div>
+      </div>
     </div>
-    <!-- /#right-panel -->
+  </nav>
+</header>
 
-    <!-- Scripts -->
-    {{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+<!-- Main -->
+<div id="main-demo mx-auto p-2">
+    <div class="mx-auto p-2">
+        @yield('container')
+    </div>
+</div>
 
-    {{-- <script src="./zlayouts/js/jquery.matchHeight.min.js"></script>
-    <script src="./zlayouts/assets/js/main.js"></script> --}}
+<!-- Aside -->
+<aside class="bsb-sidebar-1 offcanvas offcanvas-start" tabindex="-1" id="bsbSidebar1" aria-labelledby="bsbSidebarLabel1">
+  <div class="offcanvas-header">
+    {{-- <a class="sidebar-brand" href="#!"> --}}
+      JKEI IT INVENTORY
 
+      {{-- <img src="./assets/img/bsb-logo.svg" id="bsbSidebarLabel1" class="img-fluid" alt="BootstrapBrain Logo" width="135" height="44"> --}}
+    {{-- </a> --}}
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body pt-0">
+    <hr class="sidebar-divider mb-3">
+    <ul class="navbar-nav">
+      <li class="nav-item {{ (request()->is('home')) ? 'bg-light collapsed' : '' }}">
+        <a class="nav-link p-3 {{ (request()->is('home')) ? 'bg-light rounded' : '' }}" data-bs-toggle="collapse" href="#dashboardExamples" role="button" aria-expanded="{{ (request()->is('home')) ? 'true':''}}" aria-controls="dashboardExamples">
+          <div class="nav-link-icon text-primary">
+            <i class="bi bi-house-gear"></i>
+          </div>
+          <span class="nav-link-text fw-bold">Dashboards</span>
+        </a>
+        <div class="collapse {{ (request()->is('home')) ? 'show' : '' }}" id="dashboardExamples">
+          <ul class="nav flex-column ms-4">
+            <li class="nav-item {{ (request()->is('home')) ? 'active fw-bold text-primary-emphasis' : '' }}">
+              <a class="nav-link" aria-current="page" href="{{ url('/home') }}">
+                <div class="nav-link-icon text-primary-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Home</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item mt-3">
+        <h6 class="py-1 text-secondary text-uppercase fs-7">Pages</h6>
+      </li>
+      <li class="nav-item {{ (request()->is('input') or request()->is('output')) ? 'bg-light collapsed' : '' }}">
+        <a class="nav-link p-3 {{ (request()->is('input') or request()->is('output')) ? 'bg-light rounded' : '' }}" data-bs-toggle="collapse" href="#pageExamples" role="button" aria-expanded="{{ (request()->is('input') or request()->is('output')) ? 'true':''}}" aria-controls="pageExamples">
+          <div class="nav-link-icon text-danger">
+            <i class="bi bi-folder"></i>
+          </div>
+          <span class="nav-link-text fw-bold">LAP. PER DOKUMEN PABEAN</span>
+        </a>
+        <div class="collapse {{ (request()->is('input') or request()->is('output')) ? 'show' : '' }}" id="pageExamples">
+          <ul class="nav flex-column ms-4">
+            <li class="nav-item {{ (request()->is('input')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/input') }}">
+                <div class="nav-link-icon text-danger-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Pemasukan</span>
+              </a>
+            </li>
+            <li class="nav-item @yield('activeoutput')">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/output') }}">
+                <div class="nav-link-icon text-danger-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Pengeluaran</span>
+              </a>
+            </li>
+            {{-- <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-danger-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Users</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-danger-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Projects</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-danger-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Invoice</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-danger-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Pricing</span>
+              </a>
+            </li> --}}
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item {{ (request()->is('bahan_baku_gm') or
+                                request()->is('bahan_baku_gu') or
+                                request()->is('bahan_penolong') or
+                                request()->is('mesin') or
+                                request()->is('sparepart') or
+                                request()->is('mold') or
+                                request()->is('peralatan_pabrik') or
+                                request()->is('konstruksi') or
+                                request()->is('kantor') or
+                                request()->is('finishgood_gfg') or
+                                request()->is('finishgood_gu') or
+                                request()->is('pengemas') or
+                                request()->is('bahan_baku_contoh') or
+                                request()->is('finishgood_contoh') or
+                                request()->is('service') or
+                                request()->is('scrap')
+                                ) ? 'bg-light collapsed' : '' }}">
+        <a class="nav-link p-3 {{ (request()->is('bahan_baku_gm') or
+                                    request()->is('bahan_baku_gu') or
+                                    request()->is('bahan_penolong') or
+                                    request()->is('mesin') or
+                                    request()->is('sparepart') or
+                                    request()->is('mold') or
+                                    request()->is('peralatan_pabrik') or
+                                    request()->is('konstruksi') or
+                                    request()->is('kantor') or
+                                    request()->is('finishgood_gfg') or
+                                    request()->is('finishgood_gu') or
+                                    request()->is('pengemas') or
+                                    request()->is('bahan_baku_contoh') or
+                                    request()->is('finishgood_contoh') or
+                                    request()->is('service') or
+                                    request()->is('scrap')
+                                    ) ? 'bg-light rounded' : '' }}" data-bs-toggle="collapse" href="#mutasi" role="button" aria-expanded="{{ (request()->is('bahan_baku_gm') or
+                                    request()->is('bahan_baku_gu') or
+                                    request()->is('bahan_penolong') or
+                                    request()->is('mesin') or
+                                    request()->is('sparepart') or
+                                    request()->is('mold') or
+                                    request()->is('peralatan_pabrik') or
+                                    request()->is('konstruksi') or
+                                    request()->is('kantor') or
+                                    request()->is('finishgood_gfg') or
+                                    request()->is('finishgood_gu') or
+                                    request()->is('pengemas') or
+                                    request()->is('bahan_baku_contoh') or
+                                    request()->is('finishgood_contoh') or
+                                    request()->is('service') or
+                                    request()->is('scrap')
+                                    ) ? 'true':''}}" aria-controls="mutasi">
+          <div class="nav-link-icon text-success">
+            <i class="bi bi-pen"></i>
+          </div>
+          <span class="nav-link-text fw-bold">Laporan Mutasi</span>
+        </a>
+        <div class="collapse {{ (request()->is('bahan_baku_gm') or
+                                    request()->is('bahan_baku_gu') or
+                                    request()->is('bahan_penolong') or
+                                    request()->is('mesin') or
+                                    request()->is('sparepart') or
+                                    request()->is('mold') or
+                                    request()->is('peralatan_pabrik') or
+                                    request()->is('konstruksi') or
+                                    request()->is('kantor') or
+                                    request()->is('finishgood_gfg') or
+                                    request()->is('finishgood_gu') or
+                                    request()->is('pengemas') or
+                                    request()->is('bahan_baku_contoh') or
+                                    request()->is('finishgood_contoh') or
+                                    request()->is('service') or
+                                    request()->is('scrap')
+                                    ) ? 'show' : '' }}" id="mutasi">
+          <ul class="nav flex-column ms-4">
+            
+            <li class="nav-item {{ (request()->is('bahan_baku_gm')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/bahan_baku_gm') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Bahan Baku - GM</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('bahan_baku_gu')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/bahan_baku_gu') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Bahan Baku - GU</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('bahan_penolong')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/bahan_penolong') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Bahan Penolong</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('mesin')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/mesin') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Mesin</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('sparepart')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/sparepart') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Spare Part</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('mold')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/mold') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Cetakan (Molding)</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('peralatan_pabrik')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/peralatan_pabrik') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Peralatan Pabrik</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('konstruksi')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/konstruksi') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Peralatan Konstruksi</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('kantor')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/kantor') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Peralatan Perkantoran</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('finishgood_gfg')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/finishgood_gfg') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Hasil Produksi - GFG</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('finishgood_gu')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/finishgood_gu') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Hasil Produksi - GU</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('pengemas')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/pengemas') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Pengemas atau Alat Bantu pengemas</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('bahan_baku_contoh')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/bahan_baku_contoh') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Contoh - Bahan Baku</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('finishgood_contoh')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/finishgood_contoh') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Contoh - Barang Jadi</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('service')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/service') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Service Part</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('scrap')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/scrap') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Scrap</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item {{ (request()->is('wip')) ? 'bg-light collapsed' : '' }}">
+        <a class="nav-link p-3 {{ (request()->is('wip')) ? 'bg-light rounded' : '' }}" data-bs-toggle="collapse" href="#wip" role="button" aria-expanded="{{ (request()->is('wip')) ? 'true':''}}" aria-controls="wip">
+          <div class="nav-link-icon text-success">
+            <i class="bi bi-cart"></i>
+          </div>
+          <span class="nav-link-text fw-bold">Laporan Posisi</span>
+        </a>
+        <div class="collapse {{ (request()->is('wip')) ? 'show' : '' }}" id="wip">
+          <ul class="nav flex-column ms-4">
+            <li class="nav-item {{ (request()->is('wip')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/wip') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Dalam Proses (WIP)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item {{ (request()->is('opname-bahan_baku_gm') or
+                                request()->is('opname-bahan_baku_gu') or
+                                request()->is('opname-bahan_penolong') or
+                                request()->is('opname-mesin') or
+                                request()->is('opname-sparepart') or
+                                request()->is('opname-mold') or
+                                request()->is('opname-peralatan_pabrik') or
+                                request()->is('opname-konstruksi') or
+                                request()->is('opname-kantor') or
+                                request()->is('opname-finishgood_gfg') or
+                                request()->is('opname-finishgood_gu') or
+                                request()->is('opname-pengemas') or
+                                request()->is('opname-bahan_baku_contoh') or
+                                request()->is('opname-finishgood_contoh') or
+                                request()->is('opname-service') or
+                                request()->is('opname-scrap')
+                                ) ? 'bg-light collapsed' : '' }}">
+        <a class="nav-link p-3 {{ (request()->is('opname-bahan_baku_gm') or
+                                    request()->is('opname-bahan_baku_gu') or
+                                    request()->is('opname-bahan_penolong') or
+                                    request()->is('opname-mesin') or
+                                    request()->is('opname-sparepart') or
+                                    request()->is('opname-mold') or
+                                    request()->is('opname-peralatan_pabrik') or
+                                    request()->is('opname-konstruksi') or
+                                    request()->is('opname-kantor') or
+                                    request()->is('opname-finishgood_gfg') or
+                                    request()->is('opname-finishgood_gu') or
+                                    request()->is('opname-pengemas') or
+                                    request()->is('opname-bahan_baku_contoh') or
+                                    request()->is('opname-finishgood_contoh') or
+                                    request()->is('opname-service') or
+                                    request()->is('opname-scrap')
+                                    ) ? 'bg-light rounded' : '' }}" data-bs-toggle="collapse" href="#stockopname" role="button" aria-expanded="{{ (request()->is('opname-bahan_baku_gm') or
+                                    request()->is('opname-bahan_baku_gu') or
+                                    request()->is('opname-bahan_penolong') or
+                                    request()->is('opname-mesin') or
+                                    request()->is('opname-sparepart') or
+                                    request()->is('opname-mold') or
+                                    request()->is('opname-peralatan_pabrik') or
+                                    request()->is('opname-konstruksi') or
+                                    request()->is('opname-kantor') or
+                                    request()->is('opname-finishgood_gfg') or
+                                    request()->is('opname-finishgood_gu') or
+                                    request()->is('opname-pengemas') or
+                                    request()->is('opname-bahan_baku_contoh') or
+                                    request()->is('opname-finishgood_contoh') or
+                                    request()->is('opname-service') or
+                                    request()->is('opname-scrap')
+                                    ) ? 'true':''}}" aria-controls="stockopname">
+          <div class="nav-link-icon text-success">
+            <i class="bi bi-database-check"></i>
+          </div>
+          <span class="nav-link-text fw-bold">Stock Opname</span>
+        </a>
+        <div class="collapse {{ (request()->is('opname-bahan_baku_gm') or
+                                    request()->is('opname-bahan_baku_gu') or
+                                    request()->is('opname-bahan_penolong') or
+                                    request()->is('opname-mesin') or
+                                    request()->is('opname-sparepart') or
+                                    request()->is('opname-mold') or
+                                    request()->is('opname-peralatan_pabrik') or
+                                    request()->is('opname-konstruksi') or
+                                    request()->is('opname-kantor') or
+                                    request()->is('opname-finishgood_gfg') or
+                                    request()->is('opname-finishgood_gu') or
+                                    request()->is('opname-pengemas') or
+                                    request()->is('opname-bahan_baku_contoh') or
+                                    request()->is('opname-finishgood_contoh') or
+                                    request()->is('opname-service') or
+                                    request()->is('opname-scrap')
+                                    ) ? 'show' : '' }}" id="stockopname">
+          <ul class="nav flex-column ms-4">
+            
+            <li class="nav-item {{ (request()->is('opname-bahan_baku_gm')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-bahan_baku_gm') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Bahan Baku - GM</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-bahan_baku_gu')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-bahan_baku_gu') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Bahan Baku - GU</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-bahan_penolong')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-bahan_penolong') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Bahan Penolong</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-mesin')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-mesin') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Mesin</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-sparepart')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-sparepart') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Spare Part</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-mold')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-mold') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Cetakan (Molding)</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-peralatan_pabrik')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-peralatan_pabrik') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Peralatan Pabrik</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-konstruksi')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-konstruksi') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Modal - Peralatan Konstruksi</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-kantor')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-kantor') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Peralatan Perkantoran</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-finishgood_gfg')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-finishgood_gfg') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Hasil Produksi - GFG</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-finishgood_gu')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-finishgood_gu') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Hasil Produksi - GU</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-pengemas')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-pengemas') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Pengemas atau Alat Bantu pengemas</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-bahan_baku_contoh')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-bahan_baku_contoh') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Contoh - Bahan Baku</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-finishgood_contoh')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-finishgood_contoh') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Barang Contoh - Barang Jadi</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-service')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-service') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Service Part</span>
+              </a>
+            </li>
+            <li class="nav-item {{ (request()->is('opname-scrap')) ? 'active fw-bold' : '' }}">
+              <a class="nav-link link-secondary" aria-current="page" href="{{ url('/opname-scrap') }}">
+                <div class="nav-link-icon text-success-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Scrap</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      {{-- <li class="nav-item">
+        <a class="nav-link p-3" data-bs-toggle="collapse" href="#ecommerceExamples" role="button" aria-expanded="false" aria-controls="ecommerceExamples">
+          <div class="nav-link-icon text-info">
+            <i class="bi bi-cart"></i>
+          </div>
+          <span class="nav-link-text fw-bold">Ecommerce</span>
+        </a>
+        <div class="collapse" id="ecommerceExamples">
+          <ul class="nav flex-column ms-4">
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-info-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Overview</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-info-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Products</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-info-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Orders</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-info-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Referral</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li> --}}
+      {{-- <li class="nav-item">
+        <a class="nav-link p-3" data-bs-toggle="collapse" href="#componentExamples" role="button" aria-expanded="false" aria-controls="componentExamples">
+          <div class="nav-link-icon text-warning">
+            <i class="bi bi-database-check"></i>
+          </div>
+          <span class="nav-link-text fw-bold">Stock Opname</span>
+        </a>
+        <div class="collapse" id="componentExamples">
+          <ul class="nav flex-column ms-4">
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-warning-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Buttons</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-warning-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Charts</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-warning-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Forms</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-warning-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Icons</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-warning-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Widgets</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-warning-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Notifications</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li> --}}
+      {{-- <li class="nav-item mt-3">
+        <h6 class="py-1 text-secondary text-uppercase fs-7">Docs</h6>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link p-3" data-bs-toggle="collapse" href="#basicExamples" role="button" aria-expanded="false" aria-controls="basicExamples">
+          <div class="nav-link-icon text-dark">
+            <i class="bi bi-pen"></i>
+          </div>
+          <span class="nav-link-text fw-bold">Basic</span>
+        </a>
+        <div class="collapse" id="basicExamples">
+          <ul class="nav flex-column ms-4">
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-dark-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Getting Started</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-dark-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Foundation</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-dark-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">FAQs</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link p-3" data-bs-toggle="collapse" href="#frameworkExamples" role="button" aria-expanded="false" aria-controls="frameworkExamples">
+          <div class="nav-link-icon text-dark">
+            <i class="bi bi-shield-plus"></i>
+          </div>
+          <span class="nav-link-text fw-bold">Framework</span>
+        </a>
+        <div class="collapse" id="frameworkExamples">
+          <ul class="nav flex-column ms-4">
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-dark-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Developers</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-dark-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">API</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link link-secondary" aria-current="page" href="#!">
+                <div class="nav-link-icon text-dark-emphasis">
+                  <i class="bi bi-arrow-right-short"></i>
+                </div>
+                <span class="nav-link-text">Changelog</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li> --}}
+    </ul>
+    <hr class="sidebar-divider my-4">
+    <div class="bg-light rounded-3 position-relative px-4 pt-5 pb-4 mt-7">
+      <div class="bsb-w-80 bsb-h-80 d-flex align-items-center justify-content-center text-bg-primary border border-5 border-white rounded-circle position-absolute top-0 start-50 translate-middle">
+        <i class="bi bi-rocket-takeoff lh-1 fs-3"></i>
+      </div>
+      <div class="text-center">
+        <h3 class="h5">GIT ver. 2.0.0</h3>
+        <p class="fs-7">JKEI IT INVENTORY</p>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- Footer -->
+<footer class="footer bg-body-tertiary fixed-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="py-3">
+          JKEI IT Inventory v.2.0.0 since {{ date('Y')=='2024' ? '2024' : '2024 - ' . date('Y') }}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+<script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @yield('stylejavascript')
 </body>
 </html>

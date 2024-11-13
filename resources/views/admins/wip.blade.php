@@ -6,7 +6,7 @@
     <!-- Animated -->
     <div class="animated fadeIn">
         <!--  Search data  -->
-        <div class="row  justify-content-center">
+        {{-- <div class="row  justify-content-center">
             <div class="col-3">
                 <div class="card">
                     <div class="card-header">
@@ -36,47 +36,69 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+        <div class="row  justify-content-center">
+            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-6 mb-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="box-title">Search Data </h6>
+                    </div>
+                    <div class="card-body">
+                        {{-- <form method="get"> --}}
+                            <div class="input-group input-group-md">
+                                <span class="input-group-text bg-warning bg-opacity-50 text-center"><i class="bi bi-calendar3"></i> Periode (mm/yyyy)</span>
+                                
+                                <input type="month" class="form-control" name="periode" id="periode" autocomplete="off">
+                                <button type="submit" class="btn btn-info" id="btn_cari" onclick="search()"><i class="bi bi-search"></i> Search</button>
+                                <button type="button" class="btn btn-secondary" id="btn_download" onclick="download()"><i class="bi bi-download"></i> Download</button>
+                                <button type="reset" class="btn btn-warning" id="btn_reset"><i class="bi bi-x-lg"></i> Reset </button>
+                            </div>
+                        {{-- </form> --}}
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!--  Table data  -->
         <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
+            <div class="col-12">
+                <div class="card mb-5">
+                    <div class="card-header bg-warning-subtle">
                         <div style="float:left">
-                            <strong class="card-title">Laporan Posisi Barang Dalam Proses (WIP)<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">Laporan Posisi Barang Dalam Proses (WIP)</strong>
+                            <p class="card-text text-muted mb-0" id="spn_totalcount"></p>
                             <div id="writeloading"></div>
                         </div>
                         <div style="float:right">
                             <div id="writepagination"></div>
                         </div>
                     </div>
-                    <div class="table-stats order-table ov-h">
+                    <div class="table-responsive table-sm">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="align-middle" rowspan="2">No</th>
-                                    <th class="align-middle">Kode Lokasi</th>
-                                    <th class="align-middle">Nama Lokasi</th>
-                                    <th class="align-middle">Kode Barang</th>
-                                    <th class="align-middle">Nama Barang</th>
-                                    <th class="align-middle">Sat</th>
-                                    <th class="align-middle">Jumlah</th>
+                                    <th class="text-center align-middle"rowspan="2">No</th>
+                                    <th class="text-center align-middle">Kode Lokasi</th>
+                                    <th class="text-center align-middle">Nama Lokasi</th>
+                                    <th class="text-center align-middle">Kode Barang</th>
+                                    <th class="text-center align-middle">Nama Barang</th>
+                                    <th class="text-center align-middle" width="7%" >Satuan</th>
+                                    <th class="text-center align-middle" width="10%">Jumlah</th>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle"> <input type="text" name="work_center" id="work_center"/></th>
-                                    <th class="align-middle"> <input type="text" name="dic" id="dic"/></th>
-                                    <th class="align-middle"> <input type="text" name="kode_barang" id="kode_barang"/></th>
-                                    <th class="align-middle"> <input type="text" name="nama_barang" id="nama_barang"/></th>
-                                    <th class="align-middle"> <input type="text" name="satuan" id="satuan"/></th>
-                                    <th class="align-middle"> <input type="text" name="jumlah" id="jumlah"/></th
+                                    <th> <input type="text" class="form-control input-group-sm" name="work_center" id="work_center"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="dic" id="dic"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="kode_barang" id="kode_barang"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="nama_barang" id="nama_barang"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="satuan" id="satuan"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="jumlah" id="jumlah"/></th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div> <!-- /.table-stats -->
-                    <div class="card-footer"></div>
+                    <div class="card-footer bg-warning-subtle"></div>
                 </div>
             </div><!-- /# column -->
         </div>
@@ -503,7 +525,7 @@
         var enmonth   = d.getMonth()+1;
         var day     = d.getDate();
         var stdate  = d.getFullYear() + '-' +
-                        ((''+stmonth).length<2 ? '0' : '') + stmonth;
+                        ((''+enmonth).length<2 ? '0' : '') + enmonth;
         //  set value
         $("#periode").val(stdate);
 
@@ -521,7 +543,7 @@
             var enmonth   = d.getMonth()+1;
             var day     = d.getDate();
             var stdate  = d.getFullYear() + '-' +
-                            ((''+stmonth).length<2 ? '0' : '') + stmonth;
+                            ((''+enmonth).length<2 ? '0' : '') + enmonth;
             //  set value
             $("#periode").val(stdate);
             window.location.href =  window.location.href.split("#")[0];
