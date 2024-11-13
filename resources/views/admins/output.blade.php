@@ -10,30 +10,30 @@
     <!-- Animated -->
     <div class="animated fadeIn">
         <!--  Search data  -->
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row justify-content-center">
+            <div class="col-12 mb-2">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="box-title">Search Data </h4>
+                        <h6 class="box-title">Search Data </h6>
                         {{-- <div class="text-muted font-italic"><small>Please fill the box if you want to know</small></div> --}}
                     </div>
                     <div class="card-body card-block">
                         <div class="row form-group">
                             <div class="col-2">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>Start Date (mm/dd/yyyy)</small></div>
+                                    <div class="bg-warning-subtle text-center"><small>Start Date (mm/dd/yyyy)</small></div>
                                     <input type="date" class="form-control form-control-sm" name="stdate" id="stdate" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>End Date (mm/dd/yyyy)</small></div>
+                                    <div class="bg-warning-subtle text-center"><small>End Date (mm/dd/yyyy)</small></div>
                                     <input type="date" class="form-control form-control-sm" name="endate" id="endate" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>BC Type</small></div>
+                                    <div class="bg-warning-subtle text-center"><small>BC Type</small></div>
                                     {{-- <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="jnsdokbc" id="jnsdokbc" autocomplete="off"> --}}
                                     <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
                                         <option value=''></option>
@@ -47,7 +47,7 @@
                             </div>
                             <div class="col-2">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>BC Number</small></div>
+                                    <div class="bg-warning-subtle text-center"><small>BC Number</small></div>
                                     <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="nodokbc" id="nodokbc" autocomplete="off">
                                     {{-- <select class="form-control form-control-sm text-uppercase" name="jnsdokbc" id="jnsdokbc">
                                         <option> 23BC </option>
@@ -61,11 +61,11 @@
                             </div>
                             <div class="col-4">
                                 <div class="card">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>Part Number</small></div>
+                                    <div class="bg-warning-subtle text-center"><small>Part Number</small></div>
                                     <input type="text" class="form-control form-control-sm text-uppercase" placeholder="please fill in" name="partno" id="partno" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <div class="col-12 mt-2">
                                 <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                                     <div>
                                         &nbsp;

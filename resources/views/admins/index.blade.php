@@ -14,7 +14,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h6 class="box-title">Filter</h6>
-                        <h6 style="float:right" >Mutation</h6>
                     </div>
                     <div class="card-body">
                             <div class="input-group input-group-md">
