@@ -609,11 +609,11 @@ $(document).ready(function()
 {
     //  buat tanggal
     var d       = new Date();
-    var stmonth   = d.getMonth();
+    // var stmonth   = d.getMonth();
     var enmonth   = d.getMonth()+1;
     var day     = d.getDate();
     var stdate  = d.getFullYear() + '-' +
-                    ((''+stmonth).length<2 ? '0' : '') + stmonth + '-' +
+                    ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
                     '01';
     var endate  = d.getFullYear() + '-' +
                     ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
@@ -641,11 +641,11 @@ $(document).ready(function()
     $("#btn_reset").click(function(){
         //  buat tanggal
         var d       = new Date();
-        var stmonth   = d.getMonth();
+        // var stmonth   = d.getMonth();
         var enmonth   = d.getMonth()+1;
         var day     = d.getDate();
         var stdate  = d.getFullYear() + '-' +
-                        ((''+stmonth).length<2 ? '0' : '') + stmonth + '-' +
+                        ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
                         '01';
         var endate  = d.getFullYear() + '-' +
                         ((''+enmonth).length<2 ? '0' : '') + enmonth + '-' +
