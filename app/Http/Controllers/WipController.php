@@ -43,7 +43,7 @@ class WipController extends Controller
         $output = '';
         
         $request->validate([
-            'periode' => 'required|date_format:Ym'
+            'periode' => 'required|date_format:Ymd'
         ]);
         
         $parameter = $request;

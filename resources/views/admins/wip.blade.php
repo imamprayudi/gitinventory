@@ -48,7 +48,7 @@
                             <div class="input-group input-group-md">
                                 <span class="input-group-text bg-warning bg-opacity-50 text-center"><i class="bi bi-calendar3"></i> Periode (mm/yyyy)</span>
                                 
-                                <input type="month" class="form-control" name="periode" id="periode" autocomplete="off">
+                                <input type="date" class="form-control" name="periode" id="periode" autocomplete="off">
                                 <button type="submit" class="btn btn-info" id="btn_cari" onclick="search()"><i class="bi bi-search"></i> Search</button>
                                 <button type="button" class="btn btn-secondary" id="btn_download" onclick="download()"><i class="bi bi-download"></i> Download</button>
                                 <button type="reset" class="btn btn-warning" id="btn_reset"><i class="bi bi-x-lg"></i> Reset </button>
