@@ -28,6 +28,7 @@ class HomeController extends Controller
         //  mengambil data dari database
         $gitversions   = $this->version;
         $fullnames          = $request->session()->get('session_gitinventory_username');
+        $userid          = $request->session()->get('session_gitinventory_userid');
 
         $get_info           = Http::get($this->domain . $this->url . "json_information.php");
 
@@ -51,6 +52,7 @@ class HomeController extends Controller
         return view('admin.home', compact('gitversions', 'fullnames', 'lastsyncinvesaweb', 
                     'sql_bar_twomonth', 'sql_docin_twomonth', 'sql_docout_twomonth',
                     'sql_bar_onemonth', 'sql_docin_onemonth', 'sql_docout_onemonth',
-                    'sql_bar_currmonth', 'sql_docin_currmonth', 'sql_docout_currmonth'));
+                    'sql_bar_currmonth', 'sql_docin_currmonth', 'sql_docout_currmonth',
+                    'userid'));
     }
 }

@@ -49,7 +49,7 @@
             <ul class="navbar-nav">
             {{-- <div class="header-menu"> --}}
                 <li class="nav-item">
-                    <a class="nav-link"> {{ strtoupper($fullnames) }} |</a>
+                    <a class="nav-link"> {{ strtoupper($fullnames) }} </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/login') }}"><i class="fa fa-power -off"></i>Logout</a>
@@ -247,7 +247,9 @@
                 <span class="nav-link-text">Bahan Baku - GM</span>
               </a>
             </li>
-            {{-- <li class="nav-item {{ (request()->is('bahan_baku_gu')) ? 'active fw-bold' : '' }}">
+            @if($userid != 'customs')
+            
+            <li class="nav-item {{ (request()->is('bahan_baku_gu')) ? 'active fw-bold' : '' }}">
               <a class="nav-link link-secondary" aria-current="page" href="{{ url('/bahan_baku_gu') }}">
                 <div class="nav-link-icon text-success-emphasis">
                   <i class="bi bi-arrow-right-short"></i>
@@ -310,7 +312,8 @@
                 </div>
                 <span class="nav-link-text">Peralatan Perkantoran</span>
               </a>
-            </li> --}}
+            </li>
+            @endif
             <li class="nav-item {{ (request()->is('finishgood_gfg')) ? 'active fw-bold' : '' }}">
               <a class="nav-link link-secondary" aria-current="page" href="{{ url('/finishgood_gfg') }}">
                 <div class="nav-link-icon text-success-emphasis">
@@ -319,7 +322,8 @@
                 <span class="nav-link-text">Hasil Produksi - GFG</span>
               </a>
             </li>
-            {{-- <li class="nav-item {{ (request()->is('finishgood_gu')) ? 'active fw-bold' : '' }}">
+            @if($userid!= 'customs')
+            <li class="nav-item {{ (request()->is('finishgood_gu')) ? 'active fw-bold' : '' }}">
               <a class="nav-link link-secondary" aria-current="page" href="{{ url('/finishgood_gu') }}">
                 <div class="nav-link-icon text-success-emphasis">
                   <i class="bi bi-arrow-right-short"></i>
@@ -366,7 +370,8 @@
                 </div>
                 <span class="nav-link-text">Scrap</span>
               </a>
-            </li> --}}
+            </li>
+            @endif
           </ul>
         </div>
       </li>
