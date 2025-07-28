@@ -13,31 +13,28 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Http\Traits\ApiConfigurationTrait;
 
 class MutationController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
+    use ApiConfigurationTrait;
     
     protected $gudang = 'Gudang Umum';
     
+    /**
+     * Constructor - inisialisasi konfigurasi API
+     */
     public function __construct()
     {
-        $serverName = $_SERVER['SERVER_NAME'] ?? null;
-        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, '.test')) {
-            $this->domain = "http://136.198.117.118/";
-        }
-
-        $getVersion = Http::get($this->domain . $this->url . "json_version_sync.php");
-        $this->version = $getVersion['version'];
+        $this->initializeApiConfiguration();
     }
    
     public function gudang_material(Request $request)
     {
         $this->gudang = 'Gudang Material';
-        $gitversions =$this->version;
-        $fullnames          = $request->session()->get('session_gitinventory_username');
-        $userid          = $request->session()->get('session_gitinventory_userid');
+        $gitversions = $this->getVersionSafely(); // Menggunakan method yang robust
+        $fullnames = $request->session()->get('session_gitinventory_username');
+        $userid = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
             "active_menu" => "active_bahan_baku_gm",
             "title" => "Bahan Baku - ".$this->gudang,
@@ -46,10 +43,11 @@ class MutationController extends Controller
         ];
         return view('admins.index', compact('gitversions','kategori_data','fullnames','userid'));
     }
+    
     public function gudang_umum(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -63,7 +61,7 @@ class MutationController extends Controller
     public function bahan_penolong(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -74,10 +72,11 @@ class MutationController extends Controller
         ];
         return view('admins.index', compact('gitversions','kategori_data','fullnames','userid'));
     }
+    // Method mesin()
     public function mesin(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -88,10 +87,11 @@ class MutationController extends Controller
         ];
         return view('admins.index', compact('gitversions','kategori_data','fullnames','userid'));
     }
+    // Method sparepart()
     public function sparepart(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -102,10 +102,11 @@ class MutationController extends Controller
         ];
         return view('admins.index', compact('gitversions','kategori_data','fullnames','userid'));
     }
+    // Method mold()
     public function mold(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -119,7 +120,7 @@ class MutationController extends Controller
     public function peralatan_pabrik(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -133,7 +134,7 @@ class MutationController extends Controller
     public function konstruksi(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -147,7 +148,7 @@ class MutationController extends Controller
     public function kantor(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -161,7 +162,7 @@ class MutationController extends Controller
     public function finishgood_gfg(Request $request)
     {
         $this->gudang = 'Gudang Finished Goods';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -175,7 +176,7 @@ class MutationController extends Controller
     public function finishgood_gu(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -189,7 +190,7 @@ class MutationController extends Controller
     public function pengemas(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -203,7 +204,7 @@ class MutationController extends Controller
     public function bahan_baku_contoh(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -217,7 +218,7 @@ class MutationController extends Controller
     public function finishgood_contoh(Request $request)
     {
         $this->gudang = 'Gudang Umum';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -231,7 +232,7 @@ class MutationController extends Controller
     public function service(Request $request)
     {
         $this->gudang = 'Gudang Service Part';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -245,7 +246,7 @@ class MutationController extends Controller
     public function scrap(Request $request)
     {
         $this->gudang = 'Gudang Scrap';
-        $gitversions =$this->version;
+        $gitversions = $this->getVersionSafely(); // Ganti dari $this->version
         $fullnames          = $request->session()->get('session_gitinventory_username');
         $userid          = $request->session()->get('session_gitinventory_userid');
         $kategori_data = [
@@ -290,17 +291,14 @@ class MutationController extends Controller
         $parameter['page'] = 0;
         $parameter['limit'] = 1;
 
-        $counts = Http::get($this->domain . $this->url . "json_mutation.php", $parameter->toArray());
+        $counts = $this->makeApiRequest('json_mutation.php', $parameter->toArray());
         
-        // return $counts;
-
-        empty($counts['totalCount']) ? $totalcount = 0 : $totalcount = $counts['totalCount'];
+        $totalcount = $counts['totalCount'] ?? 0;
 
         if($totalcount == 0){
-
-            $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-            $halamanAktif           = 0;
-            $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
+            $jumlahHalaman = ceil($totalcount / $jumlahDataPerHalaman);
+            $halamanAktif = 0;
+            $awalData = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
             $output = '
             <tr>
             <td class="text-center" colspan="16">No Data Found</td>
@@ -314,25 +312,24 @@ class MutationController extends Controller
                 'jumlahHalaman' => $jumlahHalaman
             ];
             return response()->json($data);
-
         }
 
         $params = $request;
-        // $totalcount = 32987;
-        $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-        $halamanAktif           = intval($valjmlhal);
-        $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
+        $jumlahHalaman = ceil($totalcount / $jumlahDataPerHalaman);
+        $halamanAktif = intval($valjmlhal);
+        $awalData = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
         $params['page'] = $awalData;
         $params['limit'] = $jumlahDataPerHalaman;
         
-        $sql    = Http::get($this->domain . $this->url . "json_mutation.php", $params->toArray());
+        $sql = $this->makeApiRequest('json_mutation.php', $params->toArray());
 
-        // return $sql;
-        $nomor  = $awalData;
-        foreach ($sql['rows'] as $rowdata) {
-            $no = ++$nomor;
-            $output .= Helper::return_data_mutasi($no, $rowdata);
+        if ($sql && isset($sql['rows'])) {
+            $nomor = $awalData;
+            foreach ($sql['rows'] as $rowdata) {
+                $no = ++$nomor;
+                $output .= Helper::return_data_mutasi($no, $rowdata);
+            }
         }
 
         $data = [

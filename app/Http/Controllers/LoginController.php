@@ -4,77 +4,72 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Http;
+use App\Http\Traits\ApiConfigurationTrait;
 
 class LoginController extends Controller
 {
-    //  index
+    use ApiConfigurationTrait;
+    
+    /**
+     * Constructor - inisialisasi konfigurasi API
+     */
+    public function __construct()
+    {
+        $this->initializeApiConfiguration();
+    }
+
+    /**
+     * Tampilkan halaman login
+     * 
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function index(Request $request)
     {
-        //  menghapus session
-        //  **
+        // Menghapus session
         $request->session()->forget('session_gitinventory_id');
         $request->session()->forget('session_gitinventory_userid');
         $request->session()->forget('session_gitinventory_username');
 
-        //  return view
-        //  **
         return view('login');
     }
 
-    //  post login
+    /**
+     * Proses login user
+     * 
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postlogin(Request $request)
     {
-        //  daftarpustaka
-        //  https://www.parthpatel.net/php-json-decode-function/
-
-        //  variable
-        $userid     = $request->userid;
-        $userpass   = $request->password;
-
-        //  cek ip access
-        //  **
-        if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        {
-            //  mengambil data dari json
-            //  **
-            $response = Http::get('http://136.198.117.118/api_invesa_test/json_login_sync.php', [
-                'valuserid' => $userid,
-                'valuserpass' => $userpass,
-                'valipaddress' => getenv("REMOTE_ADDR"),
-                'sql'        => "call sync_check_login {$userid}, {$userpass}, {getenv(\"REMOTE_ADDR\")}"
-            ]);
+        // Validasi input
+        $request->validate([
+            'userid' => 'required|string',
+            'password' => 'required|string'
+        ]);
+        
+        $userid = $request->userid;
+        $userpass = $request->password;
+        
+        // Menggunakan method dari trait untuk login API
+        $response = $this->makeLoginRequest($userid, $userpass);
+        
+        if (!$response) {
+            return redirect('/login')->with('status', 'Terjadi kesalahan koneksi ke server.');
         }
-        else
-        {
-            //  mengambil data dari json
-            //  **
-            // $response = Http::get('https://svr1.jvc-jein.co.id/api_invesa_test/json_login_sync.php', [
-            $response = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_login_sync.php', [
-                'valuserid' => $userid,
-                'valuserpass' => $userpass,
-                'valipaddress' => getenv("REMOTE_ADDR"),
-                'sql'        => "call sync_check_login {$userid}, {$userpass}, {getenv(\"REMOTE_ADDR\")}"
-            ]);
+        
+        // Cek response message
+        $obj = json_decode($response->body());
+        
+        if (!$obj || $obj->message == 'Failure') {
+            return redirect('/login')->with('status', 'Kombinasi email dan password salah.');
         }
 
-        //  cek response message
-        //  **
-        $obj = json_decode($response);
-        // return $obj;
-        if ($obj->message == 'Failure')
-        {
-            return redirect('/login')->with('status', 'Wrong email and password combination.');
-        }
+        // Buat session
+        $request->session()->put('session_gitinventory_id', $obj->id);
+        $request->session()->put('session_gitinventory_userid', $obj->login);
+        $request->session()->put('session_gitinventory_username', $obj->name);
 
-        //  buat session
-        //  **
-        $request->session()->put('session_gitinventory_id',$obj->id);
-        $request->session()->put('session_gitinventory_userid',$obj->login);
-        $request->session()->put('session_gitinventory_username',$obj->name);
-
-        //  return view
-        //  **
         return redirect('/home');
     }
 }

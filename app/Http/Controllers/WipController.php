@@ -5,32 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Helper;
+use App\Http\Traits\ApiConfigurationTrait;
 
 class WipController extends Controller
 {
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";    
+    use ApiConfigurationTrait;
 
+    /**
+     * Constructor - inisialisasi konfigurasi API
+     */
     public function __construct()
     {
-        $serverName = $_SERVER['SERVER_NAME'] ?? null;
-        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, '.test')) {
-            $this->domain = "http://136.198.117.118/";
-        }
-
-        $getVersion = Http::get($this->domain . $this->url . "json_version_sync.php");
-        $this->version = $getVersion['version'];
+        $this->initializeApiConfiguration();
     }
    
     public function index(Request $request)
     {
-        $gitversions =$this->version;
-        $fullnames          = $request->session()->get('session_gitinventory_username');
+        $gitversions = $this->getVersionSafely(); // Ganti dari getVersion()
+        $fullnames = $request->session()->get('session_gitinventory_username');
         return view('admins.wip', compact('gitversions','fullnames'));
     }
 
-    //  ***
-    //  loaddata
     public function loaddata(Request $request, $valjmlhal = 1, $jumlahDataPerHalaman = 14)
     {
         if($request->ajax() == false){
@@ -50,16 +45,14 @@ class WipController extends Controller
         $parameter['page'] = 0;
         $parameter['limit'] = 1;
         
-        $counts = Http::get($this->domain . $this->url . "json_wip.php", $parameter->toArray());
+        $counts = $this->makeApiRequest('json_wip.php', $parameter->toArray());
         
-        // return $counts;
-        empty($counts['totalCount']) ? $totalcount = 0 : $totalcount = $counts['totalCount'];
+        $totalcount = $counts['totalCount'] ?? 0;
 
         if($totalcount == 0){
-
-            $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-            $halamanAktif           = 0;
-            $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
+            $jumlahHalaman = ceil($totalcount / $jumlahDataPerHalaman);
+            $halamanAktif = 0;
+            $awalData = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
             $output = '
             <tr>
             <td class="text-center" colspan="16">No Data Found</td>
@@ -73,23 +66,24 @@ class WipController extends Controller
                 'jumlahHalaman' => $jumlahHalaman
             ];
             return response()->json($data);
-
         }
 
         $params = $request;
-        $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-        $halamanAktif           = intval($valjmlhal);
-        $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
+        $jumlahHalaman = ceil($totalcount / $jumlahDataPerHalaman);
+        $halamanAktif = intval($valjmlhal);
+        $awalData = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
 
         $params['page'] = $awalData;
         $params['limit'] = $jumlahDataPerHalaman;
         
-        $sql    = Http::get($this->domain . $this->url . "json_wip.php", $params->toArray());
+        $sql = $this->makeApiRequest('json_wip.php', $params->toArray());
         
-        $nomor  = $awalData;
-        foreach ($sql['rows'] as $rowdata) {
-            $no = ++$nomor;
-            $output .= Helper::return_data_wip($no, $rowdata);
+        if ($sql && isset($sql['rows'])) {
+            $nomor = $awalData;
+            foreach ($sql['rows'] as $rowdata) {
+                $no = ++$nomor;
+                $output .= Helper::return_data_wip($no, $rowdata);
+            }
         }
 
         $data = [
@@ -99,11 +93,8 @@ class WipController extends Controller
             'jumlahHalaman' => $jumlahHalaman
         ];
         return response()->json($data);
-        
     }
 
-    //  ***
-    //  pagination
     public function pagination(Request $request)
     {
         return $this->loaddata($request, $request->get('jumlahHalaman'));
@@ -113,9 +104,8 @@ class WipController extends Controller
     {
         $params = $request;
         
-        $sql    = Http::get($this->domain . $this->url . "json_download_wip.php", $params->toArray());
-        $data = $sql['rows'];
+        $sql = $this->makeApiRequest('json_download_wip.php', $params->toArray());
+        $data = $sql['rows'] ?? [];
         return view('download.wip', compact('data'));
     }
-    
 }
