@@ -30,7 +30,7 @@
     @php
         $no=1
     @endphp
-    <tbody>  
+    <tbody> 
         @foreach ($data as $rowdata)
             <tr>
                 <td align="right"><medium class="text-muted">{{ $no }}</medium></td>

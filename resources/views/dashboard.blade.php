@@ -92,7 +92,8 @@
                             <div class="card-body">
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">{{ $sql_bar_onemonth[0]['totaldokinvesa'] }}</span></div>
+                                        <!-- Perbaikan dengan null check -->
+                                        <div class="stat-text"><span class="count">{{ isset($sql_bar_onemonth[0]['totaldokinvesa']) ? $sql_bar_onemonth[0]['totaldokinvesa'] : 0 }}</span></div>
                                         <div class="stat-heading">Dokumen BC</div>
                                     </div>
                                 </div>
@@ -108,7 +109,8 @@
                             <div class="card-body">
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count">{{ $sql_bar_currmonth[0]['totaldokinvesa'] }}</span></div>
+                                        <!-- Perbaikan dengan null check -->
+                                        <div class="stat-text"><span class="count">{{ isset($sql_bar_currmonth[0]['totaldokinvesa']) ? $sql_bar_currmonth[0]['totaldokinvesa'] : 0 }}</span></div>
                                         <div class="stat-heading">Dokumen BC</div>
                                     </div>
                                 </div>

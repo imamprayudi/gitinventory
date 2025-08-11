@@ -3,147 +3,103 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Http;
+use App\Http\Traits\ApiConfigurationTrait;
 
 class OutgoingController extends Controller
 {
+    use ApiConfigurationTrait;
 
-    protected $domain = "https://svr1.jkei.jvckenwood.com/";
-    protected $url = "api_invesa_test/";
-    
+    /**
+     * Constructor - inisialisasi konfigurasi API
+     */
     public function __construct()
     {
-        $serverName = $_SERVER['SERVER_NAME'] ?? null;
-        if (str_contains($serverName, '136.198.117.') || str_contains($serverName, 'localhost') || str_contains($serverName, '.test')) {
-            $this->domain = "http://136.198.117.118/";
-        }
-
-        $getVersion = Http::get($this->domain . $this->url . "json_version_sync.php");
-        $this->version = $getVersion['version'];
+        $this->initializeApiConfiguration();
     }
 
-    //  **
-    //  index
+    /**
+     * ✅ PERBAIKAN: Tambahkan userid ke view
+     * 
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function index(Request $request)
     {
-        $gitversions = Http::get($this->domain.$this->url."json_version_sync.php");
-        $gitversions = $gitversions['version'];
-         return view('admins.output', compact('gitversions'));
-
-        // //  **
-        // //  mengambil data version
-        // //  **
-        // if (str_contains($_SERVER['SERVER_NAME'], '136.198.117.') || str_contains($_SERVER['SERVER_NAME'], 'localhost'))
-        // {
-        //     //  mengambil data dari json
-        //     //  **
-        //     $gitversions = Http::get('http://136.198.117.118/api_invesa_test/json_version_sync.php');
-        // }
-        // else
-        // {
-        //     //  mengambil data dari json
-        //     //  **
-        //     $gitversions = Http::get('https://svr1.jkei.jvckenwood.com/api_invesa_test/json_version_sync.php');
-        // }
-
-
-        // // $gitversions = DB::table('tbl_sync_version')->get();
-
-        // //  **
-        // //  return view
-        // return view('admins.output', compact('gitversions'));
+        $fullnames = $request->session()->get('session_gitinventory_username');
+        $userid = $request->session()->get('session_gitinventory_userid'); // ✅ TAMBAHAN
+        $gitversions = $this->getVersionSafely();
+        
+        // ✅ PERBAIKAN: Sertakan userid dalam compact
+        return view('admins.output', compact('gitversions', 'fullnames', 'userid'));
     }
 
-    //  ***
-    //  loaddata
-    public function loaddata(Request $request, $valjmlhal=1)
+    /**
+     * Load data dengan pagination
+     * 
+     * @param Request $request
+     * @param int $valjmlhal
+     * @return void
+     */
+    public function loaddata(Request $request, $valjmlhal = 1)
     {
-        //  action ajax
-        // if($request->ajax())
-        // {
-            //  variable
-            $output     = '';
-            $jumlahDataPerHalaman = 10;
-            $stdate     = $request->get('stdate');
-            $endate     = $request->get('endate');
-            $jnsdokbc   = $request->get('jnsdokbc');
-            $nodokbc    = $request->get('nodokbc');
-            $partno     = $request->get('partno');
+        $output = '';
+        $jumlahDataPerHalaman = 10;
+        $stdate = $request->get('stdate');
+        $endate = $request->get('endate');
+        $jnsdokbc = $request->get('jnsdokbc');
+        $nodokbc = $request->get('nodokbc');
+        $partno = $request->get('partno');
 
-            $counts = Http::get($this->domain.$this->url."json_output_sync.php",[
+        // Gunakan method dari trait untuk API call
+        $counts = $this->makeApiRequest('json_output_sync.php', [
+            'valstdate' => $stdate,
+            'valendate' => $endate,
+            'valjnsdok' => $jnsdokbc,
+            'valnodok' => $nodokbc,
+            'valpartno' => $partno,
+            'page' => 0,
+            'limit' => 1
+        ]);
+
+        $totalcount = $counts['totalCount'] ?? 0;
+
+        if ($totalcount > 0) {
+            $jumlahHalaman = ceil($totalcount / $jumlahDataPerHalaman);
+            $halamanAktif = intval($valjmlhal);
+            $awalData = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
+
+            // Ambil data dengan pagination
+            $sql = $this->makeApiRequest('json_output_sync.php', [
                 'valstdate' => $stdate,
                 'valendate' => $endate,
                 'valjnsdok' => $jnsdokbc,
                 'valnodok' => $nodokbc,
                 'valpartno' => $partno,
-                'page' => 0,
-                'limit' => 1
+                'page' => $awalData,
+                'limit' => $jumlahDataPerHalaman
             ]);
-
-            //  konfigurasi pagination
-            if(empty($counts['totalCount']))
-            {
-                $totalcount = 0;
+            
+            $nomor = $awalData;
+            foreach ($sql['rows'] as $rowdata) {
+                $no = ++$nomor;
+                $output .= $this->return_data($no, $rowdata);
             }
-            else
-            {
-                $totalcount = $counts['totalCount'];
-            }
+        } else {
+            $jumlahHalaman = ceil($totalcount / $jumlahDataPerHalaman);
+            $halamanAktif = 0;
+            $awalData = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
+            $output = '<tr><td class="text-center" colspan="16">No Data Found</td></tr>';
+        }
 
-            //  check total data
-            if($totalcount > 0)
-            {
-                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-                $halamanAktif           = intval($valjmlhal);;
-                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman);
-
-                //  mengambil data table
-                $sql    = Http::get($this->domain.$this->url."json_output_sync.php",[
-                    'valstdate' => $stdate,
-                    'valendate' => $endate,
-                    'valjnsdok' => $jnsdokbc,
-                    'valnodok' => $nodokbc,
-                    'valpartno' => $partno,
-                    'page' => $awalData,
-                    'limit' => $jumlahDataPerHalaman
-                ]);
-                $nomor  = $awalData;
-                foreach($sql['rows'] as $rowdata)
-                {
-                    $no = ++$nomor;
-                    $output .= $this->return_data($no,$rowdata);
-                }
-            }
-            else
-            {
-                $jumlahHalaman          = ceil($totalcount / $jumlahDataPerHalaman);
-                $halamanAktif           = 0;
-                $awalData               = (($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman) + 1;
-                $output = '
-                <tr>
-                <td class="text-center" colspan="16">No Data Found</td>
-                </tr>
-                ';
-            }
-
-            //  mengirim data ke view
-            $data = array(
-                'table_data'    => $output,
-                'totalcount'    => $totalcount,
-                'halamanAktif'  => $halamanAktif,
-                'jumlahHalaman' => $jumlahHalaman
-            );
-            echo json_encode($data);
-        // }
-        // else{
-        //    //  menghapus session
-        //    $request->session()->forget('session_gitinventory_id');
-        //    $request->session()->forget('session_gitinventory_userid');
-        //    $request->session()->forget('session_gitinventory_username');
-        //    return redirect('/login');
-        // }
+        $data = [
+            'table_data' => $output,
+            'totalcount' => $totalcount,
+            'halamanAktif' => $halamanAktif,
+            'jumlahHalaman' => $jumlahHalaman
+        ];
+        
+        echo json_encode($data);
     }
 
     public function return_data($no,$rowdata)

@@ -10,32 +10,20 @@
     <div class="animated fadeIn">
         <!--  Search data  -->
         <div class="row  justify-content-center">
-            <div class="col-3">
+            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-6 mb-2">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="box-title">Search Data </h4>
+                        <h6 class="box-title">Filter</h6>
                     </div>
-                    <div class="card-body card-block">
-                        <form method="get"></form>
-                           <div class="row form-group justify-content-center">
-                                <div class="col-12">
-                                    <div class="bg-warning bg-opacity-50 text-center"><small>Periode (mm/yyyy)</small></div>
-                                    <input type="month" class="form-control form-control-sm" name="periode" id="periode" autocomplete="off">
-                                </div>
+                    <div class="card-body">
+                            <div class="input-group input-group-md">
+                                <span class="input-group-text bg-warning bg-opacity-50 text-center"><i class="bi bi-calendar3"></i>&nbsp;Periode (mm/yyyy)</span>
+                                
+                                <input type="month" class="form-control" name="periode" id="periode" autocomplete="off">
+                                <button type="submit" class="btn btn-info" id="btn_cari" onclick="search()"><i class="bi bi-search"></i> Search</button>
+                                <button type="button" class="btn btn-secondary" id="btn_download" onclick="download()"><i class="bi bi-download"></i> Download</button>
+                                <button type="reset" class="btn btn-warning" id="btn_reset"><i class="bi bi-x-lg"></i> Reset </button>
                             </div>
-                            <div class="col-12">
-                                <div class="justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div>
-                                        &nbsp;
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="First group">
-                                        <button type="reset" class="btn btn-warning btn-sm" id="btn_reset">Reset Search</button>
-                                        <button type="button" class="btn btn-secondary btn-sm" id="btn_download" onclick="download()">Download</button>
-                                        <button type="submit" class="btn btn-success btn-sm" id="btn_cari" onclick="search()">Search</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -43,53 +31,57 @@
 
         <!--  Table data  -->
         <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
+            <div class="col-12">
+                <div class="card mb-5">
+                    <div class="card-header bg-secondary text-white">
                         <div style="float:left">
-                            <strong class="card-title">{{ $kategori_data['title'] }}<p class="card-text text-muted" id="spn_totalcount"></p></strong>
+                            <strong class="card-title">{{ $kategori_data['title'] }}</strong>
+                            <p id="spn_totalcount" class="text-sm mb-0"></p>
+                        </div>
+                        <div style="float:right" class="d-flex d-inline-block align-middle">
+                            <div id="writepagination" class="align-middle"></div>
                             <div id="writeloading"></div>
                         </div>
-                        <div style="float:right">
-                            <div id="writepagination"></div>
-                        </div>
                     </div>
-                    <div class="table-stats order-table ov-h">
+                    {{-- <div class="card-body">                     --}}
+                    <div class="table-responsive table-sm">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="align-middle" rowspan="2">No</th>
-                                    <th class="align-middle">Kode Brg</th>
-                                    <th class="align-middle">Nama Brg</th>
-                                    <th class="align-middle">Sat</th>
-                                    <th class="align-middle">Saldo Awal</th>
-                                    <th class="align-middle">Pemasukan</th>
-                                    <th class="align-middle">Pengeluaran</th>
-                                    <th class="align-middle">Penyesuaian<br>(Adjustment)</th>
-                                    <th class="align-middle">Saldo Akhir</th>
-                                    <th class="align-middle">Hasil Pencacahan<br>(Stock Opname)</th>
-                                    <th class="align-middle">Selisih</th>
-                                    <th class="align-middle">Ket</th>
+                                    <th class="text-center align-middle"  rowspan="2">No</th>
+                                    <th class="text-center align-middle"  width="10%">Kode Barang</th>
+                                    <th class="text-center align-middle"  width="20%">Nama Barang</th>
+                                    <th class="text-center align-middle" >Satuan</th>
+                                    <th class="text-center align-middle" >Saldo Awal</th>
+                                    <th class="text-center align-middle" >Pemasukan</th>
+                                    <th class="text-center align-middle" >Pengeluaran</th>
+                                    <th class="text-center align-middle" >Penyesuaian<br>(Adjustment)</th>
+                                    <th class="text-center align-middle" >Saldo Akhir</th>
+                                    <th class="text-center align-middle" >Hasil Pencacahan<br>(Stock Opname)</th>
+                                    <th class="text-center align-middle" >Selisih</th>
+                                    <th class="text-center align-middle" >Keterangan</th>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle"> <input type="text" name="kode_barang" id="kode_barang"/></th>
-                                    <th class="align-middle"> <input type="text" name="nama_barang" id="nama_barang"/></th>
-                                    <th class="align-middle"> <input type="text" name="satuan" id="satuan"/></th>
-                                    <th class="align-middle"> <input type="text" name="saldo_awal" id="saldo_awal"/></th>
-                                    <th class="align-middle"> <input type="text" name="pemasukan" id="pemasukan"/></th>
-                                    <th class="align-middle"> <input type="text" name="pengeluaran" id="pengeluaran"/></th>
-                                    <th class="align-middle"> <input type="text" name="penyesuaian" id="penyesuaian"/></th>
-                                    <th class="align-middle"> <input type="text" name="saldo_buku" id="saldo_buku"/></th>
-                                    <th class="align-middle"> <input type="text" name="stock_opame" id="stock_opame"/></th>
-                                    <th class="align-middle"> <input type="text" name="selisih" id="selisih"/></th>
-                                    <th class="align-middle"> <input type="text" name="keterangan" id="keterangan"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="kode_barang" id="kode_barang"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="nama_barang" id="nama_barang"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="satuan" id="satuan"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="saldo_awal" id="saldo_awal"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="pemasukan" id="pemasukan"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="pengeluaran" id="pengeluaran"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="penyesuaian" id="penyesuaian"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="saldo_buku" id="saldo_buku"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="stock_opame" id="stock_opame"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="selisih" id="selisih"/></th>
+                                    <th> <input type="text" class="form-control input-group-sm" name="keterangan" id="keterangan"/></th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div> <!-- /.table-stats -->
-                    <div class="card-footer"></div>
+                    {{-- </div> --}}
+
+                    <div class="card-footer bg-secondary"></div>
                 </div>
             </div><!-- /# column -->
         </div>
@@ -142,7 +134,7 @@
 
 
         $("#loadingdata").remove();
-        $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
+        $("#writeloading").append("<div id='loadingdata' class='font-italic text-white'> <img src='./zlayouts/images/loadingdata.gif' height='30'>&nbsp;Loading data...</div>");
         $.ajax({
             url     : url,
             method  : 'GET',
@@ -263,7 +255,7 @@
         var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
-        $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
+        $("#writeloading").append("<div id='loadingdata' class='text-white font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
@@ -322,7 +314,7 @@
         var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
-        $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
+        $("#writeloading").append("<div id='loadingdata' class='text-white font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
@@ -401,7 +393,7 @@
         var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
-        $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
+        $("#writeloading").append("<div id='loadingdata' class='text-white font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
@@ -480,7 +472,7 @@
         var keterangan = $('#keterangan').val();
 
         $("#loadingdata").remove();
-        $("#writeloading").append("<div id='loadingdata' class='text-muted font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
+        $("#writeloading").append("<div id='loadingdata' class='text-white font-italic'> <img src='./zlayouts/images/loadingdata.gif' height='20'><small>&nbsp;Loading data...</small> </div>");
         $.ajax({
             url     : urlpaging,
             method  : 'GET',
@@ -545,10 +537,10 @@
     $(document).ready(function(){
         //  buat tanggal
         var d       = new Date();
-        var stmonth   = d.getMonth();
+        // var stmonth   = d.getMonth();
         var enmonth   = d.getMonth()+1;
         var stdate  = d.getFullYear() + '-' +
-                        ((''+stmonth).length<2 ? '0' : '') + stmonth;
+                        ((''+enmonth).length<2 ? '0' : '') + enmonth;
         //  set value
         $("#periode").val(stdate);
         $("#partno").val('');
@@ -563,10 +555,10 @@
         $("#btn_reset").click(function(){
             //  buat tanggal
             var d       = new Date();
-            var stmonth   = d.getMonth();
+            // var stmonth   = d.getMonth();
             var enmonth   = d.getMonth()+1;
             var stdate  = d.getFullYear() + '-' +
-                            ((''+stmonth).length<2 ? '0' : '') + stmonth;
+                            ((''+enmonth).length<2 ? '0' : '') + enmonth;
            
             //  set value
             $("#periode").val(stdate);
